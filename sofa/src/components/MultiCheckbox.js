@@ -35,14 +35,14 @@ const MultiCheckbox = () => {
         </label>
       ))}
 
-      <div>
+      {/* <div>
         <h3>Selected Options:</h3>
         {Object.keys(checkboxes)
           .filter((key) => checkboxes[key])
           .map((key) => (
             <p key={key}>{key}</p>
           ))}
-      </div>
+      </div> */}
     </div>
   );
 };

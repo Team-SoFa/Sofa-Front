@@ -11,7 +11,7 @@ const Checkbox = () => {
     <div>
       <label>
         <input type="checkbox" checked={checked} onChange={handleChange} />
-        {checked ? "Checkec" : "Unchecked"}
+        content
       </label>
     </div>
   );
