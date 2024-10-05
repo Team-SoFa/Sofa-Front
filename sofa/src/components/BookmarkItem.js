@@ -1,6 +1,7 @@
 // BookmarkItem.js
 
 import React from "react";
+import "../styles/BookmarkItem.css";
 
 //boomark : 북마크 데이터(id, title, url) 저장하는 객체
 //onDelete : 북마크의 id를 인자로 받아 삭제처리하는 콜백 함수
