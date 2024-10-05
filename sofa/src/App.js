@@ -1,15 +1,14 @@
 import "./App.css";
 import Checkbox from "./components/Checkbox";
+import Dropdown from "./components/Dropdown";
 import MultiCheckbox from "./components/MultiCheckbox";
 
 function App() {
   return (
     <div className="App">
-      <h1>checkbox example</h1>
+      <h1>Dropdown Example</h1>
+      <Dropdown />
       <Checkbox />
-
-      <h1>MultiCheckbox Example</h1>
-      <MultiCheckbox />
     </div>
   );
 }
