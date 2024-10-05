@@ -1,6 +1,8 @@
 import React, { useState } from "react";
+import { BrowserRouter as Router, Route, Routes, Link } from "react-router-dom";
 import BookmarkForm from "./components/BookmarkForm";
 import BookmarkList from "./components/BookmarkList";
+import HomePage from "./pages/HomePage";
 import "./App.css";
 
 function App() {
@@ -28,11 +30,27 @@ function App() {
   };
 
   return (
-    <div className="App">
-      <h1>Bookmark</h1>
-      <BookmarkForm onSubmit={addBookmark} />
-      <BookmarkList bookmarks={bookmarks} onDelete={deleteBookmark} />
-    </div>
+    <Router>
+      <div className="App">
+        <nav>
+          <Link to="/">Home</Link>
+          <Link to="/bookmarks">Bookmarks</Link>
+        </nav>
+        <Routes>
+          <Route path="/" element={<HomePage />} />
+          <Route
+            path="/bookmarks"
+            element={
+              <div>
+                <h1>Bookmark</h1>
+                <BookmarkForm onSubmit={addBookmark} />
+                <BookmarkList bookmarks={bookmarks} onDelete={deleteBookmark} />
+              </div>
+            }
+          />
+        </Routes>
+      </div>
+    </Router>
   );
 }
 
