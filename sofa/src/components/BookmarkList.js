@@ -1,3 +1,5 @@
+// BookmarkList.js
+
 import React from "react";
 import BookmarkItem from "./BookmarkItem";
 
@@ -6,7 +8,7 @@ import BookmarkItem from "./BookmarkItem";
 //북마크 목록 길이가 0보다 길면 렌더링
 const BookmarkList = ({ bookmarks, onDelete }) => {
   return (
-    <div>
+    <div className="bookmark-grid">
       {bookmarks.length > 0 ? (
         bookmarks.map((bookmark) => (
           <BookmarkItem

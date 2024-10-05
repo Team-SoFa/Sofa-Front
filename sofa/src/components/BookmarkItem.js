@@ -1,3 +1,5 @@
+// BookmarkItem.js
+
 import React from "react";
 
 //boomark : 북마크 데이터(id, title, url) 저장하는 객체
@@ -8,11 +10,18 @@ import React from "react";
 //bookmark.title : 북마크 제목을 화면에 표시(클릭하면 해당 URL로 이동)
 const BookmarkItem = ({ bookmark, onDelete }) => {
   return (
-    <div className="bookmark-item">
-      <a href={bookmark.url} target="_blank" rel="noopener noreferrer">
+    <div className="bookmark-card">
+      <a
+        href={bookmark.url}
+        target="_blank"
+        rel="noopener noreferrer"
+        className="bookmark-link"
+      >
         {bookmark.title}
       </a>
-      <button onClick={() => onDelete(bookmark.id)}>Delete</button>
+      <button onClick={() => onDelete(bookmark.id)} className="bookmark-del">
+        Delete
+      </button>
     </div>
   );
 };
