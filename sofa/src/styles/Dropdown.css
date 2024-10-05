@@ -1,0 +1,18 @@
+.dropdown-container{
+    display: flex;
+    flex-direction: column;
+    align-items:center;
+    margin:20px;
+}
+
+.dropdown{
+    width:200px;
+    padding: 10px;
+    font-size: 16px;
+}
+
+.selected-value{
+    margin-top:10px;
+    font-size:18px;
+    color:#333;
+}
