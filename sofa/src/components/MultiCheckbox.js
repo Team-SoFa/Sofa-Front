@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/Checkbox.css";
 
 const MultiCheckbox = () => {
   const [checkboxes, setCheckboxes] = useState({
@@ -22,7 +23,7 @@ const MultiCheckbox = () => {
   ];
 
   return (
-    <div>
+    <div className="checkbox-container">
       {options.map((option) => (
         <label key={option.name}>
           <input

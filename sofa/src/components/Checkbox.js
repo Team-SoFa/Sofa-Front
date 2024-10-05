@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/Checkbox.css";
 
 const Checkbox = () => {
   const [checked, setChecked] = useState(false); // 체크박스 상태
@@ -8,7 +9,7 @@ const Checkbox = () => {
   };
 
   return (
-    <div>
+    <div className="checkbox-container">
       <label>
         <input type="checkbox" checked={checked} onChange={handleChange} />
         content
