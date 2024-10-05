@@ -10,8 +10,12 @@ const Dropdown = () => {
   };
 
   return (
-    <div>
-      <select value={selectedValue} onChange={handleChange}>
+    <div className="dropdown-container">
+      <select
+        className="dropdown"
+        value={selectedValue}
+        onChange={handleChange}
+      >
         <option value="" disabled>
           옵션을 선택하세용
         </option>
@@ -21,7 +25,9 @@ const Dropdown = () => {
           </option>
         ))}
       </select>
-      {selectedValue && <p>당신이 고른 것 : {selectedValue}</p>}
+      {selectedValue && (
+        <p className="selected-value">당신이 고른 것 : {selectedValue}</p>
+      )}
     </div>
   );
 };
