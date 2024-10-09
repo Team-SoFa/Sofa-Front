@@ -98,7 +98,22 @@ const HomePage = () => {
           </div>
         </section>
       </main>
-      <footer></footer>
+      <footer
+        className="footer"
+        style={{ backgroundColor: "black", color: "white" }}
+      >
+        <h2>서비스 메인 슬로건 코멘트</h2>
+        <button className="start-btn">시작하기</button>
+        <div className="footer-contents">
+          <p>copyrights blahblah</p>
+          <p>기타 내용1</p>
+          <p>기타 내용2</p>
+        </div>
+        <div className="footer-contents">
+          <p>이용약관</p>
+          <p>개인정보처리방침</p>
+        </div>
+      </footer>
     </div>
   );
 };
