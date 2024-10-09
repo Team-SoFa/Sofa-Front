@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import "../styles/header.css";
 
 const HomePage = () => {
   const features = [
@@ -11,7 +12,7 @@ const HomePage = () => {
   ];
   return (
     <div className="homepage">
-      <header className="header" style={{ backgroundColor: "lightblue" }}>
+      <header className="header">
         <img
           width={"50px"}
           src="example.png"
@@ -19,8 +20,10 @@ const HomePage = () => {
           onClick={() => window.location.reload()}
           className="logo"
         />
-        <button className="extension-btn">확장 프로그램 추가하기</button>
-        <button className="start-btn">시작하기</button>
+        <div className="buttons">
+          <button className="header-btn">확장 프로그램 추가하기</button>
+          <button className="header-btn">시작하기</button>
+        </div>
       </header>
 
       <main className="main-content">
