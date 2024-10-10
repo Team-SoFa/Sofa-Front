@@ -19,6 +19,7 @@
 .slogan{
     font-size: 1.8rem;
     margin-bottom: 0.3rem;
+    white-space: nowrap;
 }
 .button{
     display: inline-block;
@@ -77,3 +78,14 @@
     font-size: 0.8rem;
 }
 /* ========== Other Services Section ========== */
+
+@media(max-width:700px){
+    .grid{
+        grid-template-columns: repeat(2,1fr);
+    }
+}
+@media(max-width:500px){
+    .grid{
+        grid-template-columns: repeat(1,1fr);
+    }
+}
