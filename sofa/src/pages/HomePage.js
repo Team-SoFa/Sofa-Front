@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import "../styles/header-layout.css";
 import "../styles/main-layout.css";
 import "../styles/footer-layout.css";
+import Accordion from "../components/Accordion";
 
 const HomePage = () => {
   return (
@@ -101,9 +102,18 @@ const HomePage = () => {
           />
           <h2 className="title">자주 묻는 질문 / FAQ</h2>
           <div className="contents">
-            <p>question 1</p>
-            <p>question 2</p>
-            <p>question 3</p>
+            <Accordion
+              title="Q1. 어떻게 사용하나요?"
+              content="A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다."
+            />
+            <Accordion
+              title="Q2. 오늘 저녁은 뭔가요?"
+              content="A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?"
+            />
+            <Accordion
+              title="Q3. 자주 묻는 질문이 뭔가요?"
+              content="blah blah"
+            />
           </div>
         </section>
       </main>
