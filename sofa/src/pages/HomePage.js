@@ -1,8 +1,8 @@
 import React, { useState } from "react";
-import "../styles/header-layout.css";
-import "../styles/main-layout.css";
-import "../styles/footer-layout.css";
-import Accordion from "../components/Accordion";
+import "./header-layout.css";
+import "./main-layout.css";
+import "./footer-layout.css";
+import Accordion from "../components/Accordion/Accordion.js";
 
 const HomePage = () => {
   return (

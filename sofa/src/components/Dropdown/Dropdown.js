@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Dropdown.css";
+import "./Dropdown.css";
 
 const Dropdown = () => {
   const [selectedValue, setSelectedValue] = useState(""); //선택된 값 상태 관리

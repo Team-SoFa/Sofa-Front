@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../styles/Checkbox.css";
+import "./Checkbox.css";
 
 const MultiCheckbox = () => {
   const [checkboxes, setCheckboxes] = useState({

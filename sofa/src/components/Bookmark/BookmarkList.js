@@ -1,8 +1,8 @@
 // BookmarkList.js
 
 import React from "react";
-import BookmarkItem from "./BookmarkItem";
-import "../styles/BookmarkList.css";
+import BookmarkItem from "./BookmarkItem.js";
+import "./BookmarkList.css";
 
 //bookmarks : 북마크 데이터 배열(id, title, url 포함)
 //onDelete : 북마크 삭제 함수
