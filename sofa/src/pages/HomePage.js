@@ -1,15 +1,9 @@
 import React, { useState } from "react";
-import "../styles/header.css";
+import "../styles/header-layout.css";
+import "../styles/main-layout.css";
+import "../styles/footer-layout.css";
 
 const HomePage = () => {
-  const features = [
-    { title: "feature1", description: "description blah blah" },
-    { title: "feature2", description: "description blah blah" },
-    { title: "feature3", description: "description blah blah" },
-    { title: "feature4", description: "description blah blah" },
-    { title: "feature5", description: "description blah blah" },
-    { title: "feature6", description: "description blah blah" },
-  ];
   return (
     <div className="homepage">
       <header className="header">
@@ -26,11 +20,12 @@ const HomePage = () => {
         </div>
       </header>
 
-      <main className="main-content">
-        <section className="slogan-section">
+      <main className="main-style">
+        <section className="slogan-section  main-style">
           <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
           <p>확장 프로그램을 추가하고 더 많은 기능을 경험하세요</p>
           <a
+            className="button"
             href="https://chrome.google.com/webstore"
             target="_blank"
             rel="noreferrer"
@@ -38,55 +33,66 @@ const HomePage = () => {
             Chrome Web Store 바로가기
           </a>
         </section>
-        <section className="feature-section">
-          <img
-            src="example.png"
-            width={"100px"}
-            alt="service icon"
-            className="service-icon"
-          />
+        <section className="main-feature-section  main-style">
+          <img className="service-icon" src="example.png" alt="service icon" />
           <h2 className="title">주요 서비스 기능, 장점 소개</h2>
-          <div className="contents">
-            <img
-              src="example.png"
-              width={"200px"}
-              alt="service icon"
-              className="service-icon"
-            />
-            <img
-              src="example.png"
-              width={"200px"}
-              alt="service icon"
-              className="service-icon"
-            />
-            <img
-              src="example.png"
-              width={"200px"}
-              alt="service icon"
-              className="service-icon"
-            />
+          <div className="main-contents  main-style">
+            <img src="example.png" width={"200px"} alt="service icon" />
+            <img src="example.png" width={"200px"} alt="service icon" />
+            <img src="example.png" width={"200px"} alt="service icon" />
           </div>
         </section>
 
-        <section className="side-feature-section">
-          <img
-            src="example.png"
-            width={"100px"}
-            alt="service icon"
-            className="service-icon"
-          />
+        <section className="side-feature-section  main-style">
+          <img className="service-icon" src="example.png" alt="service icon" />
           <h2 className="title">기타 추가 서비스 소개</h2>
           <div className="grid">
-            {features.map((feature, index) => (
-              <div key={index} className="card">
-                <h3>{feature.title}</h3>
-                <p>{feature.description}</p>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>당신만의 북마크 폴더를 공유하고 팀원들과 협업하세요</p>
               </div>
-            ))}
+            </div>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>폴더와 태그별로 북마크를 관리하세요</p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>
+                  헝헝힛더클락션우우아우우우아우우우아우우아우힛더클랔션좀미친소리같지만난네게반했어어우워
+                  어어우워
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>
+                  슈가콭따위 벗어던진 날 너가 뭐라던지 저슽 뭅 내 맘대로 날 위한
+                  춤을 추지 돈 슈갈콭미베이베
+                </p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>description for feature5</p>
+              </div>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="feature" />
+              <div className="card-contents">
+                <p>description for feature6</p>
+              </div>
+            </div>
           </div>
         </section>
 
-        <section className="faq-section">
+        <section className="faq-section  main-style">
           <img
             src="example.png"
             width={"100px"}
@@ -101,20 +107,19 @@ const HomePage = () => {
           </div>
         </section>
       </main>
-      <footer
-        className="footer"
-        style={{ backgroundColor: "black", color: "white" }}
-      >
+      <footer className="footer">
         <h2>서비스 메인 슬로건 코멘트</h2>
-        <button className="start-btn">시작하기</button>
+        <button className="button">시작하기</button>
         <div className="footer-contents">
-          <p>copyrights blahblah</p>
-          <p>기타 내용1</p>
-          <p>기타 내용2</p>
-        </div>
-        <div className="footer-contents">
-          <p>이용약관</p>
-          <p>개인정보처리방침</p>
+          <div className="left-contents">
+            <p>copyrights blahblah</p>
+            <p>기타 내용1</p>
+            <p>기타 내용2</p>
+          </div>
+          <div className="right-contents">
+            <p>이용약관</p>
+            <p>개인정보처리방침</p>
+          </div>
         </div>
       </footer>
     </div>

@@ -1,0 +1,79 @@
+.main-style{
+    user-select: none;
+    display:flex;
+    flex-direction: column;
+    align-items: center;
+    margin-bottom: 5rem;
+}
+
+.service-icon {
+    width:4rem;
+}
+/* ========== 전체 적용 ========== */
+
+
+.slogan-section{
+    flex-direction: column;
+    align-items: center;
+}
+.slogan{
+    font-size: 1.8rem;
+    margin-bottom: 0.3rem;
+}
+.button{
+    display: inline-block;
+    padding:10px 20px;
+    background-color: #D1D1D1;
+    color:black;
+    font-weight: bold;
+    text-decoration: none;
+    border-radius: 20px;
+    margin-top: 2rem;
+    cursor: pointer;
+}
+.button:hover{
+    background-color: #C1C1C1;
+}
+/* ========== Slogan section ========== */
+
+
+.main-feature-section{
+    flex-direction: column;
+    align-items: center;
+}
+.main-contents img{
+    margin:0.3rem;
+    width: 30rem;
+    height: 8rem;
+}
+/* ========== Main Feature Section ========== */
+
+.grid{
+    display: grid;
+    grid-template-columns: repeat(3,1fr);
+    gap: 1rem;
+}
+.card{
+    display: flex;
+    align-items: center;
+    width:15rem;
+    height: 5.3rem;
+    background-color: cornsilk;
+    border-radius: 20px;
+    padding:1rem;
+    overflow: hidden;
+}
+.card img{
+    width:4.5rem;
+    height: 4.5rem;
+    border-radius: 10px;
+    margin: 0.6rem;
+}
+.card-contents{
+    word-wrap: break-word;
+    padding: 0.3rem;
+}
+.card-contents p{
+    font-size: 0.8rem;
+}
+/* ========== Other Services Section ========== */
