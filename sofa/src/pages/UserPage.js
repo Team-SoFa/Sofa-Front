@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import Header from "../components/Layout/Header";
+import TextField from "../components/textfield/textfield";
 import BookmarkList from "../components/Bookmark/BookmarkList";
 import BookmarkForm from "../components/Bookmark/BookmarkForm";
 
@@ -12,6 +13,7 @@ const UserPage = () => {
   return (
     <div className="userpage">
       <Header />
+      <TextField />
       <h1>UserPage입니다</h1>
       <BookmarkForm onSubmit={handleAddBookmark} />
       <BookmarkList bookmarks={bookmarks} />
