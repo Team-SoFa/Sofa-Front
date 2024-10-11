@@ -1,8 +1,15 @@
 // src/components/TextField.js
-import React from 'react';
-import './TextField.css'; // 스타일 파일 (선택)
+import React from "react";
+import "./textfield.css"; // 스타일 파일 (선택)
 
-const TextField = ({ label, value, onChange, placeholder, type = 'text', required = false }) => {
+const TextField = ({
+  label,
+  value,
+  onChange,
+  placeholder,
+  type = "text",
+  required = false,
+}) => {
   return (
     <div className="text-field">
       {label && <label className="text-field-label">{label}</label>}
