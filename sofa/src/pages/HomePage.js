@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import Header from "../components/Layout/Header.js";
 import Footer from "../components/Layout/Footer.js";
-import "./main-layout.css";
 import Accordion from "../components/Accordion/Accordion.js";
+
+import LoginPage from "./LoginPage.js";
+
+import "./main-layout.css";
 
 const HomePage = () => {
   return (
     <div className="homepage">
       <Header />
       <main className="main-style">
-        <section className="main-style">
+        <section className="SLOGAN_SEC main-style">
           <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
           <p>확장 프로그램을 추가하고 더 많은 기능을 경험하세요</p>
           <a
@@ -21,87 +25,65 @@ const HomePage = () => {
             Chrome Web Store 바로가기
           </a>
         </section>
-        <section className="main-style">
-          <img className="service-icon" src="example.png" alt="service icon" />
+        <section className="MAIN_FEAT_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
           <h2 className="title">주요 서비스 기능, 장점 소개</h2>
-          <div className="main-contents  main-style">
-            <img src="example.png" width={"200px"} alt="service icon" />
-            <img src="example.png" width={"200px"} alt="service icon" />
-            <img src="example.png" width={"200px"} alt="service icon" />
+          <div className="content-img  main-style">
+            <img src="example.png" width={"200px"} alt="main content1" />
+            <img src="example.png" width={"200px"} alt="main content2" />
+            <img src="example.png" width={"200px"} alt="main content3" />
           </div>
         </section>
 
-        <section className="side-feature-section  main-style">
-          <img className="service-icon" src="example.png" alt="service icon" />
+        <section className="OTHER_FEAT_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
           <h2 className="title">기타 추가 서비스 소개</h2>
           <div className="grid">
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>당신만의 북마크 폴더를 공유하고 팀원들과 협업하세요</p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>당신만의 북마크 폴더를 공유하고 팀원들과 협업하세요</p>
             </div>
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>폴더와 태그별로 북마크를 관리하세요</p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>폴더와 태그별로 북마크를 관리하세요</p>
             </div>
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>
-                  헝헝힛더클락션우우아우우우아우우우아우우아우힛더클랔션좀미친소리같지만난네게반했어어우워
-                  어어우워
-                </p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>
+                이것은 다섯줄짜리 텍스트를 보기 위함입니다. 이것은 다섯줄짜리
+                텍스트를 보기 위함입니다. 이것은 다섯줄짜리
+              </p>
             </div>
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>
-                  슈가콭따위 벗어던진 날 너가 뭐라던지 저슽 뭅 내 맘대로 날 위한
-                  춤을 추지 돈 슈갈콭미베이베
-                </p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>
+                이것은 네줄짜리 텍스트를 보기 위함입니다. 이것은 네줄짜리
+                텍스트를 보기 위함입니다.
+              </p>
             </div>
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>description for feature5</p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>description for feature5</p>
             </div>
             <div className="card">
-              <img src="example.png" alt="feature" />
-              <div className="card-contents">
-                <p>description for feature6</p>
-              </div>
+              <img src="example.png" alt="icon" />
+              <p>description for feature6</p>
             </div>
           </div>
         </section>
 
-        <section className="main-style">
-          <img
-            src="example.png"
-            width={"100px"}
-            alt="service icon"
-            className="service-icon"
-          />
+        <section className="FAQ_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
           <h2 className="title">자주 묻는 질문 / FAQ</h2>
-          <div className="contents">
-            <Accordion
-              title="Q1. 어떻게 사용하나요?"
-              content="A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다."
-            />
-            <Accordion
-              title="Q2. 오늘 저녁은 뭔가요?"
-              content="A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?"
-            />
-            <Accordion
-              title="Q3. 자주 묻는 질문이 뭔가요?"
-              content="blah blah"
-            />
-          </div>
+          <Accordion
+            title="Q1. 어떻게 사용하나요?"
+            content="A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다."
+          />
+          <Accordion
+            title="Q2. 오늘 저녁은 뭔가요?"
+            content="A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?"
+          />
+          <Accordion title="Q3. 자주 묻는 질문이 뭔가요?" content="blah blah" />
         </section>
       </main>
       <Footer />

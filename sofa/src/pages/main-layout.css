@@ -1,49 +1,52 @@
+*{
+    margin:0;
+    white-space: nowrap;    /* 화면 크기에 따른 자동 줄바꿈 방지 */
+}
+
 .main-style{    /* 컴포넌트 가운데 정렬 */
     user-select: none;
     display:flex;
     flex-direction: column;
     align-items: center;
-    margin-bottom: 5rem;
+    margin-bottom: 5rem;    /* footer와 간격 조정 */
 }
 
 .service-icon {
     width:4rem;
 }
-/* ========== 전체 적용 ========== */
-
+/* 단순 각 섹션에 맞는 아이콘 */
+/* 추후 크기 맞는 아이콘을 제작하면 필요 없을듯*/
 
 .slogan{
     font-size: 1.8rem;
-    margin-bottom: 0.3rem;
-    white-space: nowrap;
+    margin: 1.3rem;
 }
+/* 서비스에서 가장 큰 글씨 */
+.title{
+    margin: 1.3rem;
+ }
+
 .button{
-    display: inline-block;
+    cursor: pointer;
     padding:10px 20px;
+    border-radius: 20px;
+    margin-top: 2rem;
     background-color: #D1D1D1;
     color:black;
     font-weight: bold;
     text-decoration: none;
-    border-radius: 20px;
-    margin-top: 2rem;
-    cursor: pointer;
 }
 .button:hover{
     background-color: #C1C1C1;
 }
-/* ========== Slogan section ========== */
+/* button 컴포넌트 사용하면 필요 없음 */
 
 
-/* .main-feature-section{
-    flex-direction: column;
-    align-items: center;
-} */
-.main-contents img{
+.content-img img{
     margin:0.3rem;
     width: 30rem;
     height: 8rem;
 }
-/* ========== Main Feature Section ========== */
 
 .grid{
     display: grid;
@@ -66,14 +69,12 @@
     border-radius: 10px;
     margin: 0.6rem;
 }
-.card-contents{
-    word-wrap: break-word;
+.card p{
     padding: 0.3rem;
-}
-.card-contents p{
     font-size: 0.8rem;
+    white-space: normal;
 }
-/* ========== Other Services Section ========== */
+
 
 @media(max-width:700px){
     .grid{

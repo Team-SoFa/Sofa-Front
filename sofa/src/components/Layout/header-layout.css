@@ -3,34 +3,30 @@
     display:flex;
     align-items: center;
     justify-content: space-between;
-    padding:0.8rem 0.5rem;
+    padding:0.8rem 3rem;
+    margin-bottom: 3rem;
     background-color: #EEEEEE;
 }
 
 .logo{
     cursor:pointer;
     border-radius: 10px;
-    margin-left: 2rem;
-}
-
-.buttons{
-    display: flex;
-    margin-right: 2rem;
+    width: 50px;
 }
 
 .header-btn{
+    cursor:pointer;
+    border:none;
+    padding:0.3rem 0.4rem;
+    margin-left: 0.8rem;
+    border-radius: 10px;
     background-color: #D1D1D1;
     color:black;
     font-size: 0.7rem;
-    border:none;
-    padding:0.3rem 0.4rem;
-    border-radius: 10px;
-    cursor:pointer;
-    margin-left: 0.8rem;
 }
 
-.start-btn:hover{
-    background-color:#45a049;
+.header-btn:hover{
+    background-color:#C1C1C1;
 }
 
 
