@@ -1,5 +1,5 @@
 .bookmark-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    gap:0px;
+    grid-template-columns: repeat(6,1fr);
+    padding:20px;
 }
