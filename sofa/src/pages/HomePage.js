@@ -1,49 +1,94 @@
 import React from "react";
-//import "./HomePage.css";
+import { Routes, Route } from "react-router-dom";
+import Header from "../components/Layout/Header.js";
+import Footer from "../components/Layout/Footer.js";
+import Accordion from "../components/Accordion/Accordion.js";
 
-function HomePage() {
+import LoginPage from "./LoginPage.js";
+
+import "./main-layout.css";
+
+const HomePage = () => {
   return (
     <div className="homepage">
-      <header className="header">
-        <h1 className="logo">북마크 아카이빙 웹서비스</h1>
-        <nav>
-          <a href="#features">Features</a>
-          <a href="#about">About</a>
-          <a href="#contact">Contact</a>
-        </nav>
-      </header>
-
-      <section className="hero">
-        <h2>당신의 북마크를 손쉽게 수집하라!</h2>
-        <p>저장하고 관리하세요</p>
-        <a href="/bookmarks" className="cta-btn">
-          수집하다
-        </a>
-      </section>
-
-      <section className="features" id="features">
-        <h3>왜 우리를 만나러 왔나요?</h3>
-        <div className="feature-list">
-          <div className="feature">
-            <h4>저장하라 당신의 북마크들</h4>
-            <p>쉽게 모으고 정리하라</p>
+      <Header />
+      <main className="main-style">
+        <section className="SLOGAN_SEC main-style">
+          <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
+          <p>확장 프로그램을 추가하고 더 많은 기능을 경험하세요</p>
+          <a
+            className="button"
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noreferrer"
+          >
+            Chrome Web Store 바로가기
+          </a>
+        </section>
+        <section className="MAIN_FEAT_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
+          <h2 className="title">주요 서비스 기능, 장점 소개</h2>
+          <div className="content-img  main-style">
+            <img src="example.png" width={"200px"} alt="main content1" />
+            <img src="example.png" width={"200px"} alt="main content2" />
+            <img src="example.png" width={"200px"} alt="main content3" />
           </div>
-          <div className="feature">
-            <h4>검색하고 필터링하라</h4>
-            <p>당신의 픽을 태그와 함께 빠르게 검색하세요</p>
-          </div>
-          <div className="feature">
-            <h4>접근하라</h4>
-            <p>구글 익스텐션을 통해 편하고 빠르게 접속하시오</p>
-          </div>
-        </div>
-      </section>
+        </section>
 
-      <footer className="footer">
-        <p>@2024 북마크짱. 만나서 반가운</p>
-      </footer>
+        <section className="OTHER_FEAT_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
+          <h2 className="title">기타 추가 서비스 소개</h2>
+          <div className="grid">
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>당신만의 북마크 폴더를 공유하고 팀원들과 협업하세요</p>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>폴더와 태그별로 북마크를 관리하세요</p>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>
+                이것은 다섯줄짜리 텍스트를 보기 위함입니다. 이것은 다섯줄짜리
+                텍스트를 보기 위함입니다. 이것은 다섯줄짜리
+              </p>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>
+                이것은 네줄짜리 텍스트를 보기 위함입니다. 이것은 네줄짜리
+                텍스트를 보기 위함입니다.
+              </p>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>description for feature5</p>
+            </div>
+            <div className="card">
+              <img src="example.png" alt="icon" />
+              <p>description for feature6</p>
+            </div>
+          </div>
+        </section>
+
+        <section className="FAQ_SEC  main-style">
+          <img className="service-icon" src="example.png" alt="icon" />
+          <h2 className="title">자주 묻는 질문 / FAQ</h2>
+          <Accordion
+            title="Q1. 어떻게 사용하나요?"
+            content="A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다."
+          />
+          <Accordion
+            title="Q2. 오늘 저녁은 뭔가요?"
+            content="A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?"
+          />
+          <Accordion title="Q3. 자주 묻는 질문이 뭔가요?" content="blah blah" />
+        </section>
+      </main>
+      <Footer />
     </div>
   );
-}
+};
 
 export default HomePage;

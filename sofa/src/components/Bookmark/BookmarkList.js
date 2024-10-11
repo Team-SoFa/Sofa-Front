@@ -1,12 +1,15 @@
+// BookmarkList.js
+
 import React from "react";
-import BookmarkItem from "./BookmarkItem";
+import BookmarkItem from "./BookmarkItem.js";
+import "./BookmarkList.css";
 
 //bookmarks : 북마크 데이터 배열(id, title, url 포함)
 //onDelete : 북마크 삭제 함수
 //북마크 목록 길이가 0보다 길면 렌더링
 const BookmarkList = ({ bookmarks, onDelete }) => {
   return (
-    <div>
+    <div className="bookmark-grid">
       {bookmarks.length > 0 ? (
         bookmarks.map((bookmark) => (
           <BookmarkItem
