@@ -1,26 +1,13 @@
 import React, { useState } from "react";
-import "./header-layout.css";
+import Header from "../components/Layout/Header.js";
+import Footer from "../components/Layout/Footer.js";
 import "./main-layout.css";
-import "./footer-layout.css";
 import Accordion from "../components/Accordion/Accordion.js";
 
 const HomePage = () => {
   return (
     <div className="homepage">
-      <header className="header">
-        <img
-          width={"50px"}
-          src="example.png"
-          alt="logo"
-          onClick={() => window.location.reload()}
-          className="logo"
-        />
-        <div className="buttons">
-          <button className="header-btn">확장 프로그램 추가하기</button>
-          <button className="header-btn">시작하기</button>
-        </div>
-      </header>
-
+      <Header />
       <main className="main-style">
         <section className="main-style">
           <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
@@ -117,21 +104,7 @@ const HomePage = () => {
           </div>
         </section>
       </main>
-      <footer className="footer">
-        <h2>서비스 메인 슬로건 코멘트</h2>
-        <button className="button">시작하기</button>
-        <div className="footer-contents">
-          <div className="left-contents">
-            <p>copyrights blahblah</p>
-            <p>기타 내용1</p>
-            <p>기타 내용2</p>
-          </div>
-          <div className="right-contents">
-            <p>이용약관</p>
-            <p>개인정보처리방침</p>
-          </div>
-        </div>
-      </footer>
+      <Footer />
     </div>
   );
 };
