@@ -34,6 +34,7 @@
 .accordion-content p{
     margin:0;
     font-size: 1rem;
+    white-space: normal;
 }
 
 @media (max-width:500px){
