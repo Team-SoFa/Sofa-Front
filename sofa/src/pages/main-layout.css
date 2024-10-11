@@ -1,4 +1,4 @@
-.main-style{
+.main-style{    /* 컴포넌트 가운데 정렬 */
     user-select: none;
     display:flex;
     flex-direction: column;
@@ -12,10 +12,6 @@
 /* ========== 전체 적용 ========== */
 
 
-.slogan-section{
-    flex-direction: column;
-    align-items: center;
-}
 .slogan{
     font-size: 1.8rem;
     margin-bottom: 0.3rem;
@@ -38,10 +34,10 @@
 /* ========== Slogan section ========== */
 
 
-.main-feature-section{
+/* .main-feature-section{
     flex-direction: column;
     align-items: center;
-}
+} */
 .main-contents img{
     margin:0.3rem;
     width: 30rem;

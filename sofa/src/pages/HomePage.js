@@ -22,7 +22,7 @@ const HomePage = () => {
       </header>
 
       <main className="main-style">
-        <section className="slogan-section  main-style">
+        <section className="main-style">
           <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
           <p>확장 프로그램을 추가하고 더 많은 기능을 경험하세요</p>
           <a
@@ -34,7 +34,7 @@ const HomePage = () => {
             Chrome Web Store 바로가기
           </a>
         </section>
-        <section className="main-feature-section  main-style">
+        <section className="main-style">
           <img className="service-icon" src="example.png" alt="service icon" />
           <h2 className="title">주요 서비스 기능, 장점 소개</h2>
           <div className="main-contents  main-style">
@@ -93,7 +93,7 @@ const HomePage = () => {
           </div>
         </section>
 
-        <section className="faq-section  main-style">
+        <section className="main-style">
           <img
             src="example.png"
             width={"100px"}
