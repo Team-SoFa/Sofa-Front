@@ -19,7 +19,7 @@ const BookmarkList = ({ bookmarks, onDelete }) => {
           />
         ))
       ) : (
-        <p>텅~</p>
+        <p>...</p>
       )}
     </div>
   );
