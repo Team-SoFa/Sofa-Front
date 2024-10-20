@@ -86,3 +86,104 @@
         grid-template-columns: repeat(1,1fr);
     }
 }
+
+/* onBoardingPage */
+.onBoarding-main-style {
+    display: flex;
+    justify-content: center;  /* 가로 중앙 */
+    align-items: center;      /* 세로 중앙 */
+    height: 100vh;            /* 뷰포트 전체 높이 사용 */
+    padding: 200px;            /* 페이지 여백 */
+}
+
+/* 이미지 섹션 */
+.image-section {
+    grid-column: 2 / span 4; /* 2번째에서 5번째 컬럼까지 차지 */
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+/* 이미지 자리 표시자 */
+.image-placeholder {
+    background-color: #ccc;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #666;
+    border: 1px solid #999;
+}
+
+.text-section {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    margin-left: 2rem;
+}
+
+.text-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; /* 버튼이 오른쪽에 붙도록 설정 */
+}
+
+/* 버튼이 오른쪽으로 붙도록 설정 */
+.text-button-wrapper button {
+    margin-left: auto; /* 자동으로 버튼을 오른쪽 끝으로 이동 */
+    padding: 10px 20px;
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
+
+/* 텍스트 섹션 */
+.OnBoardingPage .text-section p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+    white-space: normal; /* 자동 줄바꿈 허용 */
+}
+
+/* signUpPage */
+.signUp-main-style {
+    display: flex;
+    justify-content: center;  /* 가로 중앙 */
+    align-items: center;      /* 세로 중앙 */
+    height: 100vh;            /* 뷰포트 전체 높이 사용 */
+    padding: 200px;            /* 페이지 여백 */
+}
+
+.signUp-text-button-wrapper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%; 
+    margin-top: 1.5rem; /* 텍스트와 버튼 사이 간격 */
+}
+
+/* 텍스트 섹션 */
+.SignUpPage .text-section p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+    white-space: normal; /* 자동 줄바꿈 허용 */
+    margin-top: 1rem;
+}
+
+.SignInPage .text-section p {
+    font-size: 1rem;
+    line-height: 1.5rem;
+    margin-bottom: 1rem;
+    white-space: normal; /* 자동 줄바꿈 허용 */
+    margin-top: 1rem;
+}
+
+.signUp-slogan {
+    font-size: 1.8rem;
+}
