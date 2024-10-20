@@ -46,14 +46,15 @@ const UserPage = () => {
   const handleAddBookmark = (newBookmark) => {
     setBookmarks([...bookmarks, { ...newBookmark, id: Date.now() }]);
   };
-
+  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
+  const tagsOptions = ["Documents", "Pictures", "Music", "Videos"];
   return (
     <div className="userpage">
       <Header />
       <TextField />
       <h2>(폴더명)</h2>
-      <Dropdown />
-      <Dropdown />
+      <Dropdown options={folderOptions} type={"folder"} />
+      <Dropdown options={tagsOptions} type={"tag"} />
       <img
         className="vergical-bar"
         width={"1.5rem"}
