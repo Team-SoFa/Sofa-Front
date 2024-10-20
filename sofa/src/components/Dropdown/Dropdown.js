@@ -1,13 +1,22 @@
 import React, { useState } from "react";
 import "./Dropdown.css";
 
-const Dropdown = () => {
+const Dropdown = ({ options, type, onSelect }) => {
   const [selectedValue, setSelectedValue] = useState(""); //선택된 값 상태 관리
-  const options = ["쿵야", "호놀룰루", "이손을봐.대박임."]; //드롭박스 옵션 리스트
 
   const handleChange = (e) => {
-    setSelectedValue(e.target.value);
+    const value = e.target.value;
+    setSelectedValue(value);
+
+    if (value) {
+      if (type === "tag" && onSelect) {
+        onSelect(value);
+        setSelectedValue(""); //드롭다운 초기화
+      }
+    }
   };
+
+  const placeholder = type === "folder" ? "폴더 선택" : "태그 선택";
 
   return (
     <div className="dropdown-container">
@@ -17,7 +26,7 @@ const Dropdown = () => {
         onChange={handleChange}
       >
         <option value="" disabled>
-          폴더선택
+          {placeholder}
         </option>
         {options.map((option, index) => (
           <option key={index} value={option}>
