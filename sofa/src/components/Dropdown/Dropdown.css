@@ -1,26 +1,20 @@
 .dropdown-container{
     display: inline-block;
-    margin:10px;
+    margin:5px;
 }
 
 .dropdown{
     width: fit-content;
     min-width: 120px;
-    padding: 10px;
-    font-size: 16px;
-    border: 1px solid #b1b1b1;
-    outline: none;
-    border-radius: 10px;
+    padding: 5px;
+    border:none;
+    border-radius: 8px;
+    background-color: #ededed;
     appearance: none;   /*드롭다운 기본 화살표 숨김*/
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'><polygon points='0,0 5,5 10,0' fill='%23007bff'/></svg>"); /* 화살표 이미지 */
     background-repeat: no-repeat; /*배경 이미지 반복 방지*/
-    background-position: right 10px center;
-    padding-right:10px; /*화살표 이미지 크기 고려*/
+    background-position: right 10px center; /*화살표 위치*/
+    padding-right:1rem; /*화살표 이미지 크기 고려*/
     cursor: pointer;
+    font-size: 1rem;
 }
-
-  
-  /* 드롭다운에서 선택된 옵션의 색상 변경 */
-  .dropdown option {
-    padding: 10px; /* 옵션 패딩 */
-  }

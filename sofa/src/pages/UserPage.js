@@ -48,7 +48,13 @@ const UserPage = () => {
     setBookmarks([...bookmarks, { ...newBookmark, id: Date.now() }]);
   };
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
-  const tagsOptions = ["Documents", "Pictures", "Music", "Videos"];
+  const tagsOptions = [
+    "Documents",
+    "Pictures",
+    "Music",
+    "Videos",
+    "태그어쩌구1",
+  ];
 
   const [selectedTags, setSelectedTags] = useState([]); //선택된 태그 관리
   const handleTagSelect = (tag) => {

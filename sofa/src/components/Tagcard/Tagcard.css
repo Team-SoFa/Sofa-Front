@@ -1,9 +1,9 @@
 .tag-card{
     user-select: none;
-    padding: 3px;
-    background-color: #dbdbdb;
+    padding:3px;
+    background-color: #ededed;
     border: none;
-    border-radius: 5px;
+    border-radius: 8px;
 }
 .tag-card span{
     padding-left: 3px;
