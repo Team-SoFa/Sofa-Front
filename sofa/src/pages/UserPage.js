@@ -4,6 +4,7 @@ import TextField from "../components/textfield/textfield";
 import BookmarkList from "../components/Bookmark/BookmarkList";
 import BookmarkForm from "../components/Bookmark/BookmarkForm";
 import Dropdown from "../components/Dropdown/Dropdown";
+import Tagcard from "../components/Tagcard/Tagcard";
 
 const UserPage = () => {
   const TestBookmarks = [
@@ -48,20 +49,48 @@ const UserPage = () => {
   };
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
   const tagsOptions = ["Documents", "Pictures", "Music", "Videos"];
+
+  const [selectedTags, setSelectedTags] = useState([]); //선택된 태그 관리
+  const handleTagSelect = (tag) => {
+    if (!selectedTags.includes(tag)) {
+      setSelectedTags([...selectedTags, tag]); //태그 추가
+    }
+  };
+
+  const handleTagRemove = (tag) => {
+    setSelectedTags(selectedTags.filter((t) => t !== tag)); //태그 제거
+  };
+
   return (
     <div className="userpage">
       <Header />
       <TextField />
       <h2>(폴더명)</h2>
-      <Dropdown options={folderOptions} type={"folder"} />
-      <Dropdown options={tagsOptions} type={"tag"} />
-      <img
-        className="vergical-bar"
-        width={"1.5rem"}
-        height={"40rem"}
-        src="example.png"
-        alt="vertical-bar"
-      />
+      <div style={{ display: "flex", placeItems: "center" }}>
+        <Dropdown options={folderOptions} type={"folder"} />
+        <Dropdown
+          options={tagsOptions}
+          type={"tag"}
+          onSelect={handleTagSelect}
+        />
+        <img
+          style={{ marginRight: "6px" }}
+          className="vergical-bar"
+          width={"1.5rem"}
+          height={"30rem"}
+          src="example.png"
+          alt="vertical-bar"
+        />
+        <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
+          {selectedTags.map((tag, index) => (
+            <Tagcard
+              key={index}
+              tag={tag}
+              onRemove={() => handleTagRemove(tag)}
+            />
+          ))}
+        </div>
+      </div>
       <BookmarkForm onSubmit={handleAddBookmark} />
       <BookmarkList bookmarks={bookmarks} />
     </div>
