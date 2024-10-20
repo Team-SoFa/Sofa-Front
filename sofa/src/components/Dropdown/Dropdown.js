@@ -7,9 +7,12 @@ const Dropdown = ({ options, type, onSelect }) => {
   const handleChange = (e) => {
     const value = e.target.value;
     setSelectedValue(value);
+
     if (value) {
-      onSelect(value); //부모 컴포넌트에 선택된 태그 전달
-      setSelectedValue(""); //드롭다운 초기화
+      if (type === "tag" && onSelect) {
+        onSelect(value);
+        setSelectedValue(""); //드롭다운 초기화
+      }
     }
   };
 
