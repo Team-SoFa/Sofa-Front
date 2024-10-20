@@ -3,7 +3,7 @@ import "./Dropdown.css";
 
 const Dropdown = () => {
   const [selectedValue, setSelectedValue] = useState(""); //선택된 값 상태 관리
-  const options = ["쿵야", "호놀룰루", "이손을봐.대박임."]; //드롭박스 옵션 리스트
+  const options = ["깃허브공부", "취미", "프론트엔드"]; //드롭박스 옵션 리스트
 
   const handleChange = (e) => {
     setSelectedValue(e.target.value);
