@@ -35,6 +35,9 @@ const Header = () => {
             <Link to="/userpage">
               <button className="header-btn">[임시]유저페이지</button>
             </Link>
+            <Link to="/signinpage">
+              <button className="header-btn">[임시]SignInPage</button>
+            </Link>
           </div>
         </>
       )}
