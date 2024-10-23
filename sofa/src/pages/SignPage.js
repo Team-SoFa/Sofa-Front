@@ -18,7 +18,7 @@ const ImagePlaceholder = ({ width, height }) => {
 
 const SignPage = () => {
     return (
-        <div className="SignPage">
+        <div className="signpage">
             <header className="header">
                 <img
                     className="logo"
