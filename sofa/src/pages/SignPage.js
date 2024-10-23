@@ -16,9 +16,9 @@ const ImagePlaceholder = ({ width, height }) => {
     )
 }
 
-const SignUpPage = () => {
+const SignPage = () => {
     return (
-        <div className="SignUpPage">
+        <div className="SignPage">
             <header className="header">
                 <img
                     className="logo"
@@ -27,15 +27,15 @@ const SignUpPage = () => {
                     onClick={() => window.location.reload()}
                 />
             </header>
-            <main className="signUp-main-style">
+            <main className="sign-main-style">
                 <div className="image-section">
                     <ImagePlaceholder width={362} height={320} /> {/* 여기서 크기 설정 */}
                 </div>
                 <div className="text-section">
-                    <h1 className="signUp-slogan">서비스 메인 슬로건 코멘트</h1>
+                    <h1 className="sign-slogan">서비스 메인 슬로건 코멘트</h1>
                     <p>서비스 서브 슬로건 및 기타 설명</p>
-                    <div className="signUp-text-button-wrapper">
-                        <Button label="Google 계정으로 가입" />
+                    <div className="sign-text-button-wrapper">
+                        <Button label="Google 계정으로 로그인" />
                     </div>
                 </div>
             </main>
@@ -43,4 +43,4 @@ const SignUpPage = () => {
     );
 };
 
-export default SignUpPage;
+export default SignPage;

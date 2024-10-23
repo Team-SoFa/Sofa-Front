@@ -150,8 +150,8 @@
     white-space: normal; /* 자동 줄바꿈 허용 */
 }
 
-/* signUpPage */
-.signUp-main-style {
+/* signPage */
+.sign-main-style {
     display: flex;
     justify-content: center;  /* 가로 중앙 */
     align-items: center;      /* 세로 중앙 */
@@ -159,7 +159,7 @@
     padding: 200px;            /* 페이지 여백 */
 }
 
-.signUp-text-button-wrapper {
+.sign-text-button-wrapper {
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -168,7 +168,7 @@
 }
 
 /* 텍스트 섹션 */
-.SignUpPage .text-section p {
+.SignPage .text-section p {
     font-size: 1rem;
     line-height: 1.5rem;
     margin-bottom: 1rem;
@@ -176,14 +176,6 @@
     margin-top: 1rem;
 }
 
-.SignInPage .text-section p {
-    font-size: 1rem;
-    line-height: 1.5rem;
-    margin-bottom: 1rem;
-    white-space: normal; /* 자동 줄바꿈 허용 */
-    margin-top: 1rem;
-}
-
-.signUp-slogan {
+.sign-slogan {
     font-size: 1.8rem;
 }
