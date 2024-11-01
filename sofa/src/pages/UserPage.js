@@ -5,6 +5,7 @@ import BookmarkList from "../components/Bookmark/BookmarkList";
 import BookmarkForm from "../components/Bookmark/BookmarkForm";
 import Dropdown from "../components/Dropdown/Dropdown";
 import Tagcard from "../components/Tagcard/Tagcard";
+import Toggle from "../components/Toggle/Toggle";
 
 const UserPage = () => {
   const TestBookmarks = [
@@ -87,6 +88,7 @@ const UserPage = () => {
           src="example.png"
           alt="vertical-bar"
         />
+
         <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
           {selectedTags.map((tag, index) => (
             <Tagcard
