@@ -3,9 +3,12 @@
     "name": "SoFa Extension",
     "version": "1.0",
     "description": "A simple Chrome extension for testing.",
-    "permissions": ["activeTab", "scripting"],
+    "permissions": ["activeTab", "scripting", "sidePanel"],
     "background": {
       "service_worker": "background.js"
+    },
+    "side_panel": {
+      "default_path": "sidepanel.html"
     },
     "action": {
       "default_popup": "popup.html",
