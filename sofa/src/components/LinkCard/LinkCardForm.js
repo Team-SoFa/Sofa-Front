@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 
-const BookmarkForm = ({ onSubmit }) => {
+const LinkCardForm = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
   const placeholderImage = "example.png"; // public/assets 경로로 수정
@@ -43,4 +43,4 @@ const BookmarkForm = ({ onSubmit }) => {
   );
 };
 
-export default BookmarkForm;
+export default LinkCardForm;

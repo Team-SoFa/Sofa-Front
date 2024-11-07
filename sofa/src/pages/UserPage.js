@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import Header from "../components/Layout/Header";
 import TextField from "../components/Textfield/Textfield";
-import BookmarkList from "../components/Bookmark/BookmarkList";
-import BookmarkForm from "../components/Bookmark/BookmarkForm";
+import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
+import LinkCardForm from "../components/LinkCard/LinkCardForm";
 import Dropdown from "../components/Dropdown/Dropdown";
 import Tagcard from "../components/Tagcard/Tagcard";
 import Toggle from "../components/Toggle/Toggle";
-import { bookmarks as datas } from "../components/Bookmark/bookmarks";
+import { bookmarks as datas } from "../components/LinkCard/bookmarks";
 
 const UserPage = () => {
   const [bookmarks, setBookmarks] = useState(datas);
@@ -70,8 +70,8 @@ const UserPage = () => {
           ))}
         </div>
       </div>
-      <BookmarkForm onSubmit={handleAddBookmark} />
-      <BookmarkList
+      <LinkCardForm onSubmit={handleAddBookmark} />
+      <ShowLinkCard
         bookmarks={bookmarks}
         onDelete={handleDelete}
         onEdit={handleEdit}

@@ -20,8 +20,9 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
               className="hover-btn delete"
               onClick={() => onDelete(bookmark.id)}
             >
-              Delete
+              D
             </button>
+            <button className="hover-btn alarm">@</button>
             <a
               className="hover-btn link"
               href={bookmark.url}
@@ -34,14 +35,6 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
         )}
       </div>
       <div className="details">
-        {/* <a
-          className="link"
-          href={bookmark.url}
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          {bookmark.url}
-        </a> */}
         <p className="name">{bookmark.title}</p>
       </div>
     </div>
