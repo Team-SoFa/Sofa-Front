@@ -1,0 +1,42 @@
+.side-menu {
+    position: fixed;
+    top: 75px;
+    left: -250px;
+    width: 210px; /* 사이드 메뉴의 너비 230px */
+    height: 85%;
+    background-color: rgb(190, 190, 190);
+    color: black;
+    transition: transform 0.3s ease; /* 애니메이션 */
+    z-index: 1000; /* 메뉴가 다른 요소 위로 올라가도록 */
+    border-radius: 20px;  /* 모든 모서리 둥글게 */
+  }
+
+/* 사이드 메뉴가 열릴 때 */
+.side-menu.open {
+    transform: translateX(260px); /* 사이드 메뉴가 250px 만큼 튀어나오게 */
+}
+
+.home{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin:20px;
+}
+.folder{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin:20px;
+}
+.bin{
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    margin:20px;
+}
+
+.icon {
+    width: 30px;
+    height: 30px;
+    border-radius: 10px;
+}
