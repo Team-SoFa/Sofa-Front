@@ -18,7 +18,6 @@ function createFloatingButton() {
     button.style.border = "none";
     button.style.borderRadius = "5px";
     button.style.cursor = "pointer";
-
     
     // 버튼 클릭 시 팝업 창을 엽니다.
     button.addEventListener("click", () => {
