@@ -1,17 +1,21 @@
 // BookmarkForm.js
-
 import React, { useState } from "react";
 
-const BookmarkForm = ({ onSubmit }) => {
+const LinkCardForm = ({ onSubmit }) => {
   const [title, setTitle] = useState("");
   const [url, setUrl] = useState("");
+  const [imgUrl, setImgUrl] = useState("");
   const placeholderImage = "example.png"; // public/assets 경로로 수정
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    onSubmit({ title, url, img: placeholderImage }); // 이미지 URL을 항상 대체 이미지로 설정
-    setTitle("");
-    setUrl("");
+    if (title && url) {
+      const newBookmark = { title, url, img: imgUrl || placeholderImage };
+      onSubmit(newBookmark);
+      setTitle("");
+      setUrl("");
+      setImgUrl("");
+    }
   };
 
   return (
@@ -43,4 +47,4 @@ const BookmarkForm = ({ onSubmit }) => {
   );
 };
 
-export default BookmarkForm;
+export default LinkCardForm;
