@@ -6,19 +6,18 @@ import LinkCardForm from "../components/LinkCard/LinkCardForm";
 import Dropdown from "../components/Dropdown/Dropdown";
 import Tagcard from "../components/Tagcard/Tagcard";
 import Toggle from "../components/Toggle/Toggle";
-import { bookmarks as datas } from "../components/LinkCard/bookmarks";
 
-const UserPage = () => {
-  const [bookmarks, setBookmarks] = useState(datas);
-  const handleDelete = (id) =>
-    setBookmarks(bookmarks.filter((b) => b.id !== id));
+const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
+  const [selectedTags, setSelectedTags] = useState([]);
+
+  const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
     //추후 ㅅ수정 기능 코드 추가
   };
-
   const handleAddBookmark = (newBookmark) => {
-    setBookmarks([...bookmarks, { ...newBookmark, id: Date.now() }]);
+    onAddBookmark(newBookmark);
   };
+
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
   const tagsOptions = [
     "Documents",
@@ -28,7 +27,6 @@ const UserPage = () => {
     "태그어쩌구1",
   ];
 
-  const [selectedTags, setSelectedTags] = useState([]); //선택된 태그 관리
   const handleTagSelect = (tag) => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]); //태그 추가
