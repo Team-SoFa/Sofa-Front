@@ -9,32 +9,33 @@ import Toggle from "../components/Toggle/Toggle";
 
 const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [selectedTags, setSelectedTags] = useState([]);
+  const [sortingOption, setSortingOption] = useState("");
+
+  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
+  const tagsOptions = ["Documents", "Pictures", "Music", "태그어쩌구1"];
+  const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
 
   const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
-    //추후 ㅅ수정 기능 코드 추가
+    //추후 수정 기능 코드 추가
   };
   const handleAddBookmark = (newBookmark) => {
     onAddBookmark(newBookmark);
   };
 
-  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
-  const tagsOptions = [
-    "Documents",
-    "Pictures",
-    "Music",
-    "Videos",
-    "태그어쩌구1",
-  ];
-
+  // TAG
   const handleTagSelect = (tag) => {
     if (!selectedTags.includes(tag)) {
       setSelectedTags([...selectedTags, tag]); //태그 추가
     }
   };
-
   const handleTagRemove = (tag) => {
     setSelectedTags(selectedTags.filter((t) => t !== tag)); //태그 제거
+  };
+
+  // SORTING
+  const handleSortingSelect = (option) => {
+    setSortingOption(option);
   };
 
   return (
@@ -50,8 +51,8 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
           onSelect={handleTagSelect}
         />
         <img
-          style={{ marginRight: "6px" }}
           className="vergical-bar"
+          style={{ marginRight: "6px" }}
           width={"1.5rem"}
           height={"30rem"}
           src="example.png"
@@ -67,12 +68,22 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
             />
           ))}
         </div>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          <Dropdown
+            options={sortingOptions}
+            type={"sorting"}
+            onSelect={handleSortingSelect}
+          />
+        </div>
       </div>
       <LinkCardForm onSubmit={handleAddBookmark} />
       <ShowLinkCard
         bookmarks={bookmarks}
         onDelete={handleDelete}
         onEdit={handleEdit}
+        sortingOption={sortingOption}
       />
     </div>
   );

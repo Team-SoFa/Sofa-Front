@@ -8,7 +8,7 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
     <div
       className="linkCard"
       onMouseEnter={() => setHover(true)}
-      onmouseLeave={() => setHover(false)}
+      onMouseLeave={() => setHover(false)}
     >
       <div className="link-card-top">
         <img className="image" src={bookmark.img} alt={bookmark.title} />

@@ -2,7 +2,9 @@ import React, { useState } from "react";
 import "./Dropdown.css";
 
 const Dropdown = ({ options, type, onSelect }) => {
-  const [selectedValue, setSelectedValue] = useState(""); //선택된 값 상태 관리
+  const [selectedValue, setSelectedValue] = useState(
+    type === "sorting" ? options[0] : ""
+  ); //선택된 값 상태 관리
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -11,7 +13,9 @@ const Dropdown = ({ options, type, onSelect }) => {
     if (value) {
       if (type === "tag" && onSelect) {
         onSelect(value);
-        setSelectedValue(""); //드롭다운 초기화
+        setSelectedValue(""); //tag 선택 후, 드롭다운 초기화
+      } else if (type === "sorting" && onSelect) {
+        onSelect(value); // sorting type일 시, onSelect 호출만 하고 초기화는 하지 않음
       }
     }
   };
