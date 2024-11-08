@@ -4,25 +4,37 @@
     width: 30rem;
     overflow: hidden;
 }
+.accordion.SIDE_MENU{width:15rem;}
 
 .accordion-header{
-    background-color: #DDDDDD;
     display: flex;
     justify-content: space-between;
-    padding:0.6rem;
+    background-color: #DDDDDD;
+    padding:0.5rem;
     cursor: pointer;
 }
-.accordion-header h3{
+.accordion.SIDE_MENU .accordion-header{
+    background-color: rgb(190,190,190);
+    justify-content: left;
+}
+
+
+.accordion-header p{
+    font-weight: 800;
     justify-content: start;
     margin-left: 0.6rem;
     font-size: 1rem;
 }
+.accordion.SIDE_MENU .accordion-header p{font-weight: 500; order:2;}
+
+
 .accordion-icon{
-    justify-content: end;
     width:1.7rem;
     height:1.7rem;
     border-radius: 5px;
 }
+.accordion.SIDE_MENU .accordion-icon{justify-content: start; order:1;}
+
 
 .accordion-content{
     padding:1rem;
@@ -31,6 +43,7 @@
     font-size: 1rem;
     white-space: normal;
 }
+.accordion.SIDE_MENU .accordion-content{background-color: rgb(190,190,190);}
 
 @media (max-width:500px){
     .accordion{
