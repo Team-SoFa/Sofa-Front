@@ -9,6 +9,12 @@ import LoginPage from "./LoginPage.js";
 import "./onBoarding-layout.css";
 
 const HomePage = () => {
+  const answer1 =
+    "A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다.";
+  const answer2 =
+    "A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?";
+  const answer3 = "blah blah";
+
   return (
     <div className="homepage">
       <Header />
@@ -77,13 +83,19 @@ const HomePage = () => {
           <h2 className="title">자주 묻는 질문 / FAQ</h2>
           <Accordion
             title="Q1. 어떻게 사용하나요?"
-            content="A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다."
+            content={answer1}
+            type="FAQ"
           />
           <Accordion
             title="Q2. 오늘 저녁은 뭔가요?"
-            content="A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?"
+            content={answer2}
+            type="FAQ"
           />
-          <Accordion title="Q3. 자주 묻는 질문이 뭔가요?" content="blah blah" />
+          <Accordion
+            title="Q3. 자주 묻는 질문이 뭔가요?"
+            content={answer3}
+            type="FAQ"
+          />
         </section>
       </main>
       <Footer />

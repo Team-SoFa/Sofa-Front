@@ -12,8 +12,23 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
           <p>홈</p>
         </Link>
         <div className="folder">
-          <img className="icon" src="example.png" alt="icon" />
-          <p>폴더</p>
+          <Accordion
+            type="SIDE_MENU"
+            title="폴더"
+            content={
+              <>
+                <Link to="/folder1" className="folder-item">
+                  폴더 1
+                </Link>
+                <Link to="/folder2" className="folder-item">
+                  폴더 2
+                </Link>
+                <Link to="/folder3" className="folder-item">
+                  폴더 3
+                </Link>
+              </>
+            }
+          />
         </div>
         <Link to="/removeditemspage" className="removeditems">
           <img className="icon" src="example.png" alt="icon" />
