@@ -1,11 +1,13 @@
 .side-menu {
     position: fixed;
-    top: 75px;
-    left: -250px;
-    width: 210px; /* 사이드 메뉴의 너비 230px */
+    top: 3.5rem;
+    left: 0;
+    width: 230px; /* 사이드 메뉴의 너비 230px */
+    margin:0.5rem;
     height: 85%;
     background-color: rgb(190, 190, 190);
     color: black;
+    transform:translateX(-250px);
     transition: transform 0.3s ease; /* 애니메이션 */
     z-index: 1000; /* 메뉴가 다른 요소 위로 올라가도록 */
     border-radius: 20px;  /* 모든 모서리 둥글게 */
@@ -13,7 +15,7 @@
 
 /* 사이드 메뉴가 열릴 때 */
 .side-menu.open {
-    transform: translateX(260px); /* 사이드 메뉴가 250px 만큼 튀어나오게 */
+    transform: translateX(0); /* 사이드 메뉴가 250px 만큼 튀어나오게 */
 }
 
 .home{
