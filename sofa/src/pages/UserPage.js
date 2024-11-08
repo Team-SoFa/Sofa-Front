@@ -6,10 +6,14 @@ import LinkCardForm from "../components/LinkCard/LinkCardForm";
 import Dropdown from "../components/Dropdown/Dropdown";
 import Tagcard from "../components/Tagcard/Tagcard";
 import Toggle from "../components/Toggle/Toggle";
+import SideMenu from "../components/SideMenu/SideMenu";
+
+import "../components/Layout/main-layout.css";
 
 const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [selectedTags, setSelectedTags] = useState([]);
   const [sortingOption, setSortingOption] = useState("");
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
   const tagsOptions = ["Documents", "Pictures", "Music", "태그어쩌구1"];
@@ -38,11 +42,19 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     setSortingOption(option);
   };
 
+  //SideMenu Toggle
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
+
   return (
-    <div className="userpage">
-      <Header />
+    <div className={`userpage ${isMenuOpen ? "menu-open" : ""}`}>
+      <Header toggleMenu={toggleMenu} />
+      <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+
       <TextField />
       <h2>(폴더명)</h2>
+
       <div style={{ display: "flex", placeItems: "center" }}>
         <Dropdown options={folderOptions} type={"folder"} />
         <Dropdown

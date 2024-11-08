@@ -5,6 +5,7 @@ import SignPage from "./pages/SignPage";
 //import OnBoardingPage from "./pages/OnBoardingPage";
 import LoginPage from "./pages/LoginPage";
 import UserPage from "./pages/UserPage";
+import RemovedItemsPage from "./pages/RemovedItemsPage";
 import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 
 function App() {
@@ -35,6 +36,7 @@ function App() {
         }
       />
       <Route path="/signpage" element={<SignPage />} />
+      <Route path="/removeditemspage" element={<RemovedItemsPage />} />
     </Routes>
   );
 }

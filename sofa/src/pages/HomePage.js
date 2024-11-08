@@ -6,7 +6,7 @@ import Accordion from "../components/Accordion/Accordion.js";
 
 import LoginPage from "./LoginPage.js";
 
-import "./main-layout.css";
+import "./onBoarding-layout.css";
 
 const HomePage = () => {
   return (

@@ -2,21 +2,19 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./header-layout.css";
 
-const Header = () => {
+const Header = ({ toggleMenu }) => {
   const location = useLocation();
   return (
     <header className="header">
       {location.pathname === "/userpage" && (
         <>
-          <Link to="/userpage">
-            <img
-              className="menu"
-              src="menu-icon.png"
-              width={"25px"}
-              alt="menu"
-              onClick={() => window.location.reload()}
-            />
-          </Link>
+          <img
+            className="menu"
+            src="menu-icon.png"
+            width={"25px"}
+            alt="menu"
+            onClick={toggleMenu}
+          />
         </>
       )}
       {location.pathname !== "/userpage" && (
