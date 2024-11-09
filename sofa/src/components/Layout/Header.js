@@ -6,13 +6,16 @@ import Dropdown from "../Dropdown/Dropdown";
 
 import "./header-layout.css";
 
-const Header = ({ toggleMenu }) => {
+const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
   const tagsOptions = ["Documents", "Pictures", "Music", "태그어쩌구1"];
 
+  const headerStyle =
+    type === "ONBOARDING" ? { backgroundColor: "#F1F1F1", marginTop: "0" } : {};
+
   return (
-    <header className="header">
+    <header className="header" style={headerStyle}>
       {location.pathname === "/userpage" && (
         <>
           <img

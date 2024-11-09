@@ -1,21 +1,49 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Header from "../components/Layout/Header";
-import TextField from "../components/Textfield/Textfield";
 import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
-import LinkCardForm from "../components/LinkCard/LinkCardForm";
-import Dropdown from "../components/Dropdown/Dropdown";
-import Tagcard from "../components/Tagcard/Tagcard";
-import Toggle from "../components/Toggle/Toggle";
 import SideMenu from "../components/SideMenu/SideMenu";
+import Button from "../components/Button/Button";
+import { Link } from "react-router-dom";
+// import Dropdown from "../components/Dropdown/Dropdown";
+// import TextField from "../components/Textfield/Textfield";
+// import LinkCardForm from "../components/LinkCard/LinkCardForm";
+// import Tagcard from "../components/Tagcard/Tagcard";
+// import Toggle from "../components/Toggle/Toggle";
 
 import "../components/Layout/main-layout.css";
 
 const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
-  const [selectedTags, setSelectedTags] = useState([]);
-  const [sortingOption, setSortingOption] = useState("");
-  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [username, setUsername] = useState(""); //사용자 이름
+  const [mostPopularTags, setMostPopularTags] = useState("");
+  const [loading, setLoading] = useState(true); //로딩 상태
+  const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
+  // const [sortingOption, setSortingOption] = useState("");
+  // const [selectedTags, setSelectedTags] = useState([]);
+  // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
 
-  const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        // USER INFO
+        //const userResponse = await fetch("/api/user");
+        //const userData = await userResponse.json();
+        const userData = { nickname: "000" };
+        setUsername(userData.nickname);
+
+        // MOST_POPULAR_TAGS
+        // const topTagsResponse = await fetch("/api/tags/top");
+        // const topTagsData = await topTagsResponse.json();
+        const topTagsData = { label: "탑태그" };
+        setMostPopularTags(topTagsData.label);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Fail to get user information", error);
+        setLoading(false);
+      }
+    };
+    fetchUserInfo();
+  }, []);
 
   const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
@@ -36,9 +64,9 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   // };
 
   // SORTING
-  const handleSortingSelect = (option) => {
-    setSortingOption(option);
-  };
+  // const handleSortingSelect = (option) => {
+  //   setSortingOption(option);
+  // };
 
   //SideMenu Toggle
   const toggleMenu = () => {
@@ -50,43 +78,64 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
 
-      <h2>(폴더명)</h2>
+      <h3>안녕하세요, {username}님!</h3>
 
       <div style={{ display: "flex", placeItems: "center" }}>
-        {/* 태그 관련 코드 */}
-
-        {/* <Dropdown
-          options={tagsOptions}
-          type={"tag"}
-          onSelect={handleTagSelect}
-        /> */}
-
-        {/* <div style={{ display: "flex", flexWrap: "wrap", gap: "10px" }}>
-          {selectedTags.map((tag, index) => (
-            <Tagcard
-              key={index}
-              tag={tag}
-              onRemove={() => handleTagRemove(tag)}
-            />
-          ))}
-        </div> */}
         <div
           style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
         >
-          <Dropdown
+          {/* <Dropdown
             options={sortingOptions}
             type={"sorting"}
             onSelect={handleSortingSelect}
-          />
+          /> */}
         </div>
       </div>
-      <LinkCardForm onSubmit={handleAddBookmark} />
-      <ShowLinkCard
-        bookmarks={bookmarks}
-        onDelete={handleDelete}
-        onEdit={handleEdit}
-        sortingOption={sortingOption}
-      />
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">{username}님께 추천하는 링크</p>
+          <Link to="/userpage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">최근에 방문한 링크</p>
+          <Link to="/userpage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">
+            {username}님의 최다 태그
+            <Button label={mostPopularTags} className="tag" />를 포함한 링크
+          </p>
+          <Link to="/userpage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
     </div>
   );
 };

@@ -1,11 +1,13 @@
 .header{
     position: fixed;
+    display:flex;
+    align-items: center;
     top:0;
     width: 100%;
     height: 2rem;
-    display:flex;
-    align-items: center;
+    z-index: 1000;
     padding:1rem;
+    padding-top:2rem;
     background-color: white;
 }
 
@@ -36,6 +38,7 @@
     cursor: pointer;
     width:25px;
     background-color: #EEEEEE;  /*추후 삭제*/
+    border-radius: 15px;
 }
 
 .searchers{

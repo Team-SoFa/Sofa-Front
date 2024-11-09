@@ -17,7 +17,7 @@ const HomePage = () => {
 
   return (
     <div className="homepage">
-      <Header />
+      <Header type="ONBOARDING" />
       <main className="main-style">
         <section className="SLOGAN_SEC main-style">
           <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
