@@ -1,7 +1,7 @@
 /* src/components/Textfield.css */
 .text-field {
-    margin-bottom: 1rem;
     display: flex;
+    margin:auto;
     flex-direction: column;
   }
   
@@ -19,7 +19,6 @@
   }
   
   .text-field-input:focus {
-    border-color: #007bff;
     outline: none;
   }
   

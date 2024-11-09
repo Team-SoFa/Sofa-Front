@@ -52,7 +52,6 @@ const UserPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
 
-      <TextField />
       <h2>(폴더명)</h2>
 
       <div style={{ display: "flex", placeItems: "center" }}>

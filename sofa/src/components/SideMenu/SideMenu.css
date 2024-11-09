@@ -1,15 +1,15 @@
 .side-menu {
     position: fixed;
-    top: 3.5rem;
+    top: 4rem;
     left: 0;
     width: 230px; /* 사이드 메뉴의 너비 230px */
-    margin:0.5rem;
-    height: 85%;
+    height: calc(100% - 6rem);
+    margin-top: 1rem;
+    margin-left: 1rem;
     background-color: rgb(190, 190, 190);
     color: black;
     transform:translateX(-250px);
     transition: transform 0.3s ease; /* 애니메이션 */
-    z-index: 1000; /* 메뉴가 다른 요소 위로 올라가도록 */
     border-radius: 20px;  /* 모든 모서리 둥글게 */
   }
 

@@ -1,6 +1,7 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./header-layout.css";
+import TextField from "../Textfield/Textfield";
 
 const Header = ({ toggleMenu }) => {
   const location = useLocation();
@@ -15,6 +16,7 @@ const Header = ({ toggleMenu }) => {
             alt="menu"
             onClick={toggleMenu}
           />
+          <TextField className="text_field" />
         </>
       )}
       {location.pathname !== "/userpage" && (
@@ -27,14 +29,11 @@ const Header = ({ toggleMenu }) => {
           />
           <div className="buttons">
             <button className="header-btn">확장 프로그램 추가하기</button>
-            <Link to="/login">
-              <button className="header-btn">시작하기</button>
-            </Link>
             <Link to="/userpage">
-              <button className="header-btn">[임시]유저페이지</button>
+              <button className="header-btn">[임시]유저P</button>
             </Link>
             <Link to="/signpage">
-              <button className="header-btn">[임시]SignPage</button>
+              <button className="header-btn">[임시]SignP</button>
             </Link>
           </div>
         </>
