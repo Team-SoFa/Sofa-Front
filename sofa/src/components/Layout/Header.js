@@ -1,10 +1,16 @@
 import React from "react";
 import { Link, useLocation } from "react-router-dom";
-import "./header-layout.css";
 import TextField from "../Textfield/Textfield";
+import Button from "../Button/Button";
+import Dropdown from "../Dropdown/Dropdown";
+
+import "./header-layout.css";
 
 const Header = ({ toggleMenu }) => {
   const location = useLocation();
+  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
+  const tagsOptions = ["Documents", "Pictures", "Music", "태그어쩌구1"];
+
   return (
     <header className="header">
       {location.pathname === "/userpage" && (
@@ -16,7 +22,20 @@ const Header = ({ toggleMenu }) => {
             alt="menu"
             onClick={toggleMenu}
           />
-          <TextField className="text_field" />
+          <div className="searchers">
+            <Dropdown options={folderOptions} type={"folder"} />
+            <Dropdown options={tagsOptions} type={"folder"} />
+
+            <TextField
+              className="text_field"
+              placeholder="검색어를 입력하세요."
+            />
+            <Button className={"btn"} label="검색" />
+          </div>
+          <div className="user_info">
+            <Dropdown options={folderOptions} type={"folder"} />
+            <Button label="계정정보" />
+          </div>
         </>
       )}
       {location.pathname !== "/userpage" && (
