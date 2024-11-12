@@ -1,0 +1,37 @@
+/* src/pages/UserPage.css */
+
+.userpage {
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+}
+
+.content-container {
+  display: flex;
+  margin-top: 20px;
+  width: 100%;
+}
+
+.bookmark-list-container {
+  flex: 1;
+  padding: 20px;
+  transition: flex 0.3s ease; /* 너비 변경 시 부드러운 전환 효과 */
+}
+
+.bookmark-detail-container {
+  flex: 0; /* 기본적으로 숨김 처리 */
+  padding: 20px;
+  border-left: 1px solid #ccc;
+  min-width: 250px;
+  max-width: 400px;
+  transition: flex 0.3s ease; /* 너비 변경 시 부드러운 전환 효과 */
+}
+  
+/* detail-container가 보일 때의 스타일 */
+.userpage.show-detail .bookmark-list-container {
+  flex: 3; /* 북마크 목록을 왼쪽으로 축소 */
+}
+
+.userpage.show-detail .bookmark-detail-container {
+  flex: 1; /* 상세 정보가 오른쪽에 나타남 */
+}

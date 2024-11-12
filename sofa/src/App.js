@@ -15,7 +15,6 @@ function App() {
       <Route path="/login" element={<LoginPage />} />
       <Route path="/userpage" element={<UserPage />} />
       <Route path="/signpage" element={<SignPage />} />
-
     </Routes>
   );
 }
