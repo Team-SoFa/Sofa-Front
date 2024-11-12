@@ -1,7 +1,7 @@
-.bookmark-grid {
+.bookmark-grid{
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(150px, 1fr)); /* 최소 너비 150px, 자동으로 채우기 */
-    padding: 20px;
+    grid-template-columns: repeat(6,1fr);
+    padding:20px;
 }
 
 

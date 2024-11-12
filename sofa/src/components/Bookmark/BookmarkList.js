@@ -16,7 +16,7 @@ const BookmarkList = ({ bookmarks, onDelete, onBookmarkClick }) => {
             key={bookmark.id} //리스트에서 고유 식별자 사용
             bookmark={bookmark} //각 북마크 데이터를 BookmarkItem에 전달
             onDelete={onDelete} //삭제 기능을 BookmarkItem에 전달
-            onClick={onBookmarkClick} // 클릭 핸들러 전달
+            onBookmarkClick={() => onBookmarkClick(bookmark)} // 클릭 시 부모 함수 호출
           />
         ))
       ) : (

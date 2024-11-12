@@ -6,11 +6,11 @@ import "./BookmarkItem.css";
 // bookmark: 북마크 데이터(id, title, url) 저장하는 객체
 // onDelete: 북마크의 id를 인자로 받아 삭제 처리하는 콜백 함수
 
-const BookmarkItem = ({ bookmark, onDelete, onClick }) => {
+const BookmarkItem = ({ bookmark, onDelete, onBookmarkClick  }) => {
   const placeholderImage = "example.png";
 
   return (
-    <div className="bookmark-card" onClick={() => onClick(bookmark)}>
+    <div className="bookmark-card" onClick={() => onBookmarkClick(bookmark)}>
       <img
         className="bookmark-img"
         src={placeholderImage} // 항상 대체 이미지 사용

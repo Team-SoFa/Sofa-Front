@@ -82,7 +82,7 @@ const UserPage = () => {
   console.log("Selected bookmark:", selectedBookmark); // 선택된 북마크 상태 출력
 
   return (
-    <div className="userpage">
+    <div className={`userpage ${selectedBookmark ? "show-detail" : ""}`}>
     <Header />
     <TextField />
 
@@ -107,9 +107,7 @@ const UserPage = () => {
       {/* 선택된 북마크가 있을 때만 상세 정보 표시 */}
       {selectedBookmark && (
         <div className="bookmark-detail-container">
-          <h2>상세 정보</h2>
-          <p>제목: {selectedBookmark.title}</p>
-          <p>URL: {selectedBookmark.url}</p>        
+          <BookmarkDetail bookmark={selectedBookmark} />
         </div>
       )}
     </div>
