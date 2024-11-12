@@ -12,7 +12,9 @@ const Header = ({ type, toggleMenu }) => {
   const tagsOptions = ["Documents", "Pictures", "Music", "태그어쩌구1"];
 
   const headerStyle =
-    type === "ONBOARDING" ? { backgroundColor: "#F1F1F1", marginTop: "0" } : {};
+    type === "ONBOARDING"
+      ? { backgroundColor: "#F1F1F1", paddingTop: "1rem" }
+      : {};
 
   return (
     <header className="header" style={headerStyle}>

@@ -11,10 +11,7 @@
     background-color: white;
 }
 
-.logo{
-    cursor:pointer;
-    width: 50px;
-}
+.logo{ cursor:pointer; width: 50px; }
 
 .buttons{padding:2rem; margin-left: auto;}
 .header-btn{
@@ -28,9 +25,7 @@
     font-size: 0.7rem;
 }
 
-.header-btn:hover{
-    background-color:#C1C1C1;
-}
+.header-btn:hover{  background-color:#C1C1C1; }
 
 
 /*link card pages*/
@@ -49,9 +44,7 @@
 }
 .shearchers.btn{ width:auto;}
 
-.user_info {
-    margin-right:2rem;
-}
+.user_info { margin-right:2rem; }
 
 
 

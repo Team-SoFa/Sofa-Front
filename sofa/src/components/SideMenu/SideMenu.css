@@ -2,13 +2,13 @@
     position: fixed;
     top: 4rem;
     left: 0;
-    width: 230px; /* 사이드 메뉴의 너비 230px */
-    height: calc(100% - 6rem);
-    margin-top: 1rem;
+    width: 13.5rem; /* 사이드 메뉴의 너비 230px */
+    height: calc(100% - 7rem);
+    margin-top: 2rem;
     margin-left: 1rem;
     background-color: rgb(190, 190, 190);
     color: black;
-    transform:translateX(-250px);
+    transform:translateX(-15rem);
     transition: transform 0.3s ease; /* 애니메이션 */
     border-radius: 20px;  /* 모든 모서리 둥글게 */
   }

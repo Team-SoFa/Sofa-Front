@@ -26,8 +26,8 @@
 
 /* 사이드 메뉴가 열릴 때 */
 .userpage.menu-open {
-  width: calc(100% - 250px); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
-  margin-left: 250px;  /* 사이드 메뉴의 너비만큼 왼쪽 여백을 추가 */
+  width: calc(100% - 16.5rem); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+  margin-left: 15.5rem;  /* 사이드 메뉴의 너비만큼 왼쪽 여백을 추가 */
 }
 
 .link-set { margin-top: 2rem; }
