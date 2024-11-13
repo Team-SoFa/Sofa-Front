@@ -1,23 +1,55 @@
-.dropdown-container{
-    display: inline-block;
-    margin:5px;
-}
 
 .dropdown{
     appearance: none;   /*드롭다운 기본 화살표 숨김*/
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'><polygon points='0,0 5,5 10,0' fill='%23007bff'/></svg>"); /* 화살표 이미지 */
-    background-repeat: no-repeat; /*배경 이미지 반복 방지*/
-    width: fit-content;
-    min-width: 5rem;
-    height: 2rem;
-    padding: 0.5rem;
-    border:none;
-    border-radius: 15px;
-    background-color: #ededed;
+    background-repeat: no-repeat; /*화살표 아이콘 반복 방지*/
     background-position: right 10px center; /*화살표 위치*/
+    width: 5rem;
+    padding: 0.5rem;
     padding-right:1.2rem; /*화살표 이미지 크기 고려*/
+    margin-left: 0.5rem;
+    border:none;
+    border-radius: 1rem;
+
+    background-color: #ededed;
     cursor: pointer;
     font-size: 1rem;
 }
-.dropdown.folder-name {
+/* .dropdown-menu {
+    position: absolute;
+    display: none; // 기본적으로 숨김
+    padding-inline: 0.5rem;
+    top: 100%; /* 드롭다운을 아래로 펼침
+    width: 100%;
+    left: auto;
+    max-width: 8rem;  /* 최대 가로 길이를 200px로 제한
+    background-color: #ededed;
+    border-radius: 4px;
+    z-index: 1000;
+  } .dropdown-menu.show {display: block; /* 드롭다운 활성화되면 보이게}
+  
+  /* 메뉴 옵션에 넘칠 때 ... 표시
+  .dropdown-menu .option {
+    white-space: nowrap;  /* 텍스트가 한 줄로 표시되도록
+    overflow: hidden;  /* 넘치는 텍스트 숨기기
+    text-overflow: ellipsis;  /* 넘치는 텍스트는 '...'으로 표시
+  } */
+
+
+
+.dropdown.alarm { background-image: none; width:3rem; padding-right:0px;}
+
+
+
+.dropdown.linkcard.folder-name {
+    position:absolute;
+    background-image: none;
+    top:8px; left:8px;
+    width: 1.2rem; min-width:2rem; height: 1.5rem;
+    padding:5px;
+    margin-left: 0px;
+    font-size: 0.7rem;
+    color: black; background-color: white;
+    transition: opacity 0.3s ease;
 }
+.dropdown.linkcard:hover{background-color: #b8b8b8;}

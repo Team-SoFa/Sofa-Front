@@ -1,14 +1,10 @@
 /* LinkCard.css */
 .linkCard{
-    display: flex;
-    flex-direction: column;
     cursor: pointer;
     height: 9rem;
     margin: 0.2rem;
-    min-width: 0;
     overflow: hidden;
     border-radius: 1rem;
-    border:none;
 }
 
 .link-card-top {
@@ -17,13 +13,14 @@
     height: 70%;
 }
 .image{
-    width:100%;
-    height: 100%;
+    width:100%; height: 100%;
     border-radius: 1rem;
     object-fit: cover;  /* 이미지 비율 유지 */
     transition:filter 0.3s ease;
 }
 .linkCard:hover .image {filter: brightness(0.6) blur(1px);}
+
+
 
 
 .details {

@@ -20,6 +20,7 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
             <Dropdown
               className="linkcard folder-name"
               options={folderOptions}
+              label="폴더"
             />
             <Button
               className="linkcard delete"
