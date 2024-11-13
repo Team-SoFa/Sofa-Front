@@ -28,8 +28,8 @@ const Header = ({ type, toggleMenu }) => {
             onClick={toggleMenu}
           />
           <div className="searchers">
-            <Dropdown options={folderOptions} type={"folder"} />
-            <Dropdown options={tagsOptions} type={"folder"} />
+            <Dropdown options={folderOptions} type={"FOLDER"} />
+            <Dropdown options={tagsOptions} type={"FOLDER"} />
 
             <TextField
               className="text_field"
@@ -38,7 +38,7 @@ const Header = ({ type, toggleMenu }) => {
             <Button className={"btn"} label="검색" />
           </div>
           <div className="user_info">
-            <Dropdown options={folderOptions} type={"folder"} />
+            <Dropdown options={folderOptions} type={"FOLDER"} />
             <Button label="계정정보" />
           </div>
         </>
