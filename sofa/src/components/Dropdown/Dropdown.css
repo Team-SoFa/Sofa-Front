@@ -4,17 +4,20 @@
 }
 
 .dropdown{
-    width: fit-content;
-    min-width: 120px;
-    padding: 5px;
-    border:none;
-    border-radius: 8px;
-    background-color: #ededed;
     appearance: none;   /*드롭다운 기본 화살표 숨김*/
     background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'><polygon points='0,0 5,5 10,0' fill='%23007bff'/></svg>"); /* 화살표 이미지 */
     background-repeat: no-repeat; /*배경 이미지 반복 방지*/
+    width: fit-content;
+    min-width: 5rem;
+    height: 2rem;
+    padding: 0.5rem;
+    border:none;
+    border-radius: 15px;
+    background-color: #ededed;
     background-position: right 10px center; /*화살표 위치*/
-    padding-right:1rem; /*화살표 이미지 크기 고려*/
+    padding-right:1.2rem; /*화살표 이미지 크기 고려*/
     cursor: pointer;
     font-size: 1rem;
+}
+.dropdown.folder-name {
 }

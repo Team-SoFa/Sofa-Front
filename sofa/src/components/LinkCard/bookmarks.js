@@ -1,25 +1,6 @@
 export const bookmarks = [
   { id: 1, title: "Google", url: "https://www.google.com", img: "example.png" },
   {
-    id: 2,
-    title: "(NAVER)URL은 짧은데 제목이 길어질 경우",
-    url: "https://www.naver.com",
-    img: "example.png",
-  },
-  {
-    id: 3,
-    title:
-      "GitHub 이정도로 길어지지 않게 제한 두는 게 좋을 것 같지만 naver보다 더 길어진다면",
-    url: "https://www.github.com",
-    img: "example.png",
-  },
-  {
-    id: 4,
-    title: "Stack Overflow",
-    url: "https://stackoverflow.com",
-    img: "example.png",
-  },
-  {
     id: 5,
     title: "MDN Web Docs",
     url: "https://developer.mozilla.org",
@@ -42,18 +23,6 @@ export const bookmarks = [
     id: 9,
     title: "URL이 두줄인데 제목도 두줄까지 길어진다면",
     url: "https://www.kw.ac.kr/ko/life/notice.jsp?BoardMode=view&DUID=47837&tpage=1&searchKey=1&searchVal=&srCategoryId=",
-    img: "example.png",
-  },
-  {
-    id: 10,
-    title: "제목이랍니다",
-    url: "https://www.youtube.com",
-    img: "example.png",
-  },
-  {
-    id: 11,
-    title: "키스오브라이프",
-    url: "https://m.cafe.daum.net/KISSOFLIFE/_rec",
     img: "example.png",
   },
   {

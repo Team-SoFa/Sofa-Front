@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import "./LinkCard.css";
+import Dropdown from "../Dropdown/Dropdown";
+import Button from "../Button/Button";
 
 const LinkCard = ({ bookmark, onDelete, onEdit }) => {
   const [hover, setHover] = useState(false);
+  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
 
   return (
     <div
@@ -12,31 +15,29 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
     >
       <div className="link-card-top">
         <img className="image" src={bookmark.img} alt={bookmark.title} />
-        {/* hover일 때만 버튼 표시 */}
         {hover && (
           <div className="hover-menus">
-            <button className="hover-btn forder-name">FolderName</button>
-            <button
-              className="hover-btn delete"
+            <Dropdown
+              className="linkcard folder-name"
+              options={folderOptions}
+            />
+            <Button
+              className="linkcard delete"
+              label="D"
               onClick={() => onDelete(bookmark.id)}
-            >
-              D
-            </button>
-            <button className="hover-btn alarm">@</button>
-            <a
-              className="hover-btn link"
-              href={bookmark.url}
-              target="_blank"
-              rel="noopener noreferrer"
-            >
-              바로가기
-            </a>
+            />
+            <Button className="linkcard alarm" label="@" />
+            <Button
+              className="linkcard link"
+              label="바로가기"
+              onClick={() =>
+                window.open(bookmark.url, "_blank", "noopener noreferrer")
+              }
+            />
           </div>
         )}
       </div>
-      <div className="details">
-        <p className="name">{bookmark.title}</p>
-      </div>
+      <p className="details">{bookmark.title}</p>
     </div>
   );
 };
