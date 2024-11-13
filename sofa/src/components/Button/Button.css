@@ -25,3 +25,19 @@
     background-color: #C9C9C9;
   }
   .tag:hover{background-color: #C9C9C9;}
+
+
+  /*LinkCard Hover Menus*/
+  .btn.linkcard{
+    position:absolute;
+    padding:5px;
+    transition: opacity 0.3s ease;
+    font-size: 0.7rem;
+    background-color: white;
+    color: black;
+  }
+  .btn.linkcard:hover{background-color: #b8b8b8;}
+
+  .btn.linkcard.delete{top:8px;right: 35px;}
+  .btn.linkcard.alarm{top:8px;right:8px;}
+  .btn.linkcard.link{bottom:8px;left:8px;}

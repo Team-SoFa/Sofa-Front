@@ -29,7 +29,7 @@ const Dropdown = ({ options, type, onSelect }) => {
         value={selectedValue}
         onChange={handleChange}
       >
-        <option value="" disabled>
+        <option value="" disabled hidden>
           {placeholder}
         </option>
         {options.map((option, index) => (
