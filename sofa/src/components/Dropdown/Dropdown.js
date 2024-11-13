@@ -1,10 +1,11 @@
 import React, { useState } from "react";
 import "./Dropdown.css";
 
-const Dropdown = ({ options, type, onSelect }) => {
+const Dropdown = ({ className, options, type, onSelect, label }) => {
   const [selectedValue, setSelectedValue] = useState(
     type === "sorting" ? options[0] : ""
   ); //선택된 값 상태 관리
+  const [isOpen, setIsOpen] = useState(false);
 
   const handleChange = (e) => {
     const value = e.target.value;
@@ -19,18 +20,20 @@ const Dropdown = ({ options, type, onSelect }) => {
       }
     }
   };
-
-  const placeholder = type === "folder" ? "폴더 선택" : "태그 선택";
+  const toggleDropdown = () => {
+    setIsOpen(!isOpen);
+  };
 
   return (
-    <div className="dropdown-container">
+    <div>
       <select
-        className="dropdown"
+        className={`dropdown ${className}`}
         value={selectedValue}
         onChange={handleChange}
+        onClick={toggleDropdown}
       >
         <option value="" disabled hidden>
-          {placeholder}
+          {label}
         </option>
         {options.map((option, index) => (
           <option key={index} value={option}>
@@ -38,6 +41,13 @@ const Dropdown = ({ options, type, onSelect }) => {
           </option>
         ))}
       </select>
+      {/* <div className={`dropdown-menu ${isOpen ? "show" : ""}`}>
+        {options.map((option, index) => (
+          <div key={index} className="option">
+            {option}
+          </div>
+        ))}
+      </div> */}
     </div>
   );
 };

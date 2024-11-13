@@ -10,41 +10,16 @@
     padding-top:2rem;
     background-color: white;
 }
-
 .logo{ cursor:pointer; width: 50px; }
-
-.buttons{padding:2rem; margin-left: auto;}
-.header-btn{
-    cursor:pointer;
-    border:none;
-    padding:0.3rem 0.4rem;
-    margin-left: 0.8rem;
-    border-radius: 10px;
-    background-color: #D1D1D1;
-    color:black;
-    font-size: 0.7rem;
-}
-
-.header-btn:hover{  background-color:#C1C1C1; }
-
-
-/*link card pages*/
-.menu {
-    cursor: pointer;
-    width:25px;
-    background-color: #EEEEEE;  /*추후 삭제*/
-    border-radius: 15px;
-}
 
 .searchers{
     display: flex;
+    align-items: center;
     justify-content: space-between;
     margin:auto;
-    align-items: center;
 }
-.shearchers.btn{ width:auto;}
 
-.user_info { margin-right:2rem; }
+.user_info { display: flex; margin-right:2rem; align-items: center;}
 
 
 
