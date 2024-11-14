@@ -3,7 +3,7 @@ import Header from "../components/Layout/Header.js";
 import Footer from "../components/Layout/Footer.js";
 import Accordion from "../components/Accordion/Accordion.js";
 
-import "./onBoarding-layout.css";
+import "./LandingPage.css";
 
 const LandingPage = () => {
   const answer1 =
