@@ -1,104 +1,141 @@
-import React from "react";
-import { Routes, Route } from "react-router-dom";
-import Header from "../components/Layout/Header.js";
-import Footer from "../components/Layout/Footer.js";
-import Accordion from "../components/Accordion/Accordion.js";
+import React, { useState, useEffect } from "react";
+import Header from "../components/Layout/Header";
+import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
+import SideMenu from "../components/SideMenu/SideMenu";
+import Button from "../components/Button/Button";
+import { Link } from "react-router-dom";
+// import Dropdown from "../components/Dropdown/Dropdown";
+// import TextField from "../components/Textfield/Textfield";
+// import LinkCardForm from "../components/LinkCard/LinkCardForm";
+// import Tagcard from "../components/Tagcard/Tagcard";
+// import Toggle from "../components/Toggle/Toggle";
 
-import LoginPage from "./LoginPage.js";
+import "../components/Layout/main-layout.css";
 
-import "./onBoarding-layout.css";
+const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
+  const [username, setUsername] = useState(""); //사용자 이름
+  const [mostPopularTags, setMostPopularTags] = useState("");
+  const [loading, setLoading] = useState(true); //로딩 상태
+  const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
+  // const [sortingOption, setSortingOption] = useState("");
+  // const [selectedTags, setSelectedTags] = useState([]);
+  // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
 
-const HomePage = () => {
-  const answer1 =
-    "A. Chrome Extension에서 확장 프로그램을 다운받아 사용합니다.";
-  const answer2 =
-    "A. 오늘 저녁은 아직 알 수가 없는데요, 집에 참치와 무 무침이 있어서 그걸 먹을 수도 있고 그냥 라면을 먹을 수도 있지만 불닭은 안먹을 겁니다. 어제 먹었기 때문입니다.?";
-  const answer3 = "blah blah";
+  useEffect(() => {
+    const fetchUserInfo = async () => {
+      try {
+        // USER INFO
+        //const userResponse = await fetch("/api/user");
+        //const userData = await userResponse.json();
+        const userData = { nickname: "000" };
+        setUsername(userData.nickname);
+
+        // MOST_POPULAR_TAGS
+        // const topTagsResponse = await fetch("/api/tags/top");
+        // const topTagsData = await topTagsResponse.json();
+        const topTagsData = { label: "탑태그" };
+        setMostPopularTags(topTagsData.label);
+
+        setLoading(false);
+      } catch (error) {
+        console.error("Fail to get user information", error);
+        setLoading(false);
+      }
+    };
+    fetchUserInfo();
+  }, []);
+
+  const handleDelete = (id) => onDeleteBookmark(id);
+  const handleEdit = (id) => {
+    //추후 수정 기능 코드 추가
+  };
+  const handleAddBookmark = (newBookmark) => {
+    onAddBookmark(newBookmark);
+  };
+
+  // TAG
+  // const handleTagSelect = (tag) => {
+  //   if (!selectedTags.includes(tag)) {
+  //     setSelectedTags([...selectedTags, tag]); //태그 추가
+  //   }
+  // };
+  // const handleTagRemove = (tag) => {
+  //   setSelectedTags(selectedTags.filter((t) => t !== tag)); //태그 제거
+  // };
+
+  // SORTING
+  // const handleSortingSelect = (option) => {
+  //   setSortingOption(option);
+  // };
+
+  //SideMenu Toggle
+  const toggleMenu = () => {
+    setIsMenuOpen(!isMenuOpen);
+  };
 
   return (
-    <div className="homepage">
-      <Header type="ONBOARDING" />
-      <main className="main-style">
-        <section className="SLOGAN_SEC main-style">
-          <h1 className="slogan">당신의 시간을 절약하는 최고의 서비스</h1>
-          <p>확장 프로그램을 추가하고 더 많은 기능을 경험하세요</p>
-          <a
-            className="button"
-            href="https://chrome.google.com/webstore"
-            target="_blank"
-            rel="noreferrer"
-          >
-            Chrome Web Store 바로가기
-          </a>
-        </section>
-        <section className="MAIN_FEAT_SEC  main-style">
-          <img className="service-icon" src="example.png" alt="icon" />
-          <h2 className="title">주요 서비스 기능, 장점 소개</h2>
-          <div className="content-img  main-style">
-            <img src="example.png" width={"200px"} alt="main content1" />
-            <img src="example.png" width={"200px"} alt="main content2" />
-            <img src="example.png" width={"200px"} alt="main content3" />
-          </div>
-        </section>
+    <div className={`homepage ${isMenuOpen ? "menu-open" : ""}`}>
+      <Header toggleMenu={toggleMenu} />
+      <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
 
-        <section className="OTHER_FEAT_SEC  main-style">
-          <img className="service-icon" src="example.png" alt="icon" />
-          <h2 className="title">기타 추가 서비스 소개</h2>
-          <div className="grid">
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>당신만의 북마크 폴더를 공유하고 팀원들과 협업하세요</p>
-            </div>
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>폴더와 태그별로 북마크를 관리하세요</p>
-            </div>
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>
-                이것은 다섯줄짜리 텍스트를 보기 위함입니다. 이것은 다섯줄짜리
-                텍스트를 보기 위함입니다. 이것은 다섯줄짜리
-              </p>
-            </div>
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>
-                이것은 네줄짜리 텍스트를 보기 위함입니다. 이것은 네줄짜리
-                텍스트를 보기 위함입니다.
-              </p>
-            </div>
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>description for feature5</p>
-            </div>
-            <div className="card">
-              <img src="example.png" alt="icon" />
-              <p>description for feature6</p>
-            </div>
-          </div>
-        </section>
+      <h3>안녕하세요, {username}님!</h3>
 
-        <section className="FAQ_SEC  main-style">
-          <img className="service-icon" src="example.png" alt="icon" />
-          <h2 className="title">자주 묻는 질문 / FAQ</h2>
-          <Accordion
-            title="Q1. 어떻게 사용하나요?"
-            content={answer1}
-            type="FAQ"
-          />
-          <Accordion
-            title="Q2. 오늘 저녁은 뭔가요?"
-            content={answer2}
-            type="FAQ"
-          />
-          <Accordion
-            title="Q3. 자주 묻는 질문이 뭔가요?"
-            content={answer3}
-            type="FAQ"
-          />
-        </section>
-      </main>
-      <Footer />
+      <div style={{ display: "flex", placeItems: "center" }}>
+        <div
+          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
+        >
+          {/* <Dropdown
+            options={sortingOptions}
+            type={"sorting"}
+            onSelect={handleSortingSelect}
+          /> */}
+        </div>
+      </div>
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">{username}님께 추천하는 링크</p>
+          <Link to="/homepage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">최근에 방문한 링크</p>
+          <Link to="/homepage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
+      <div className="link-set">
+        <div className="_text">
+          <p className="_title">
+            {username}님의 최다 태그
+            <Button label={mostPopularTags} className="tag" />를 포함한 링크
+          </p>
+          <Link to="/homepage" className="more">
+            더보기&gt;
+          </Link>
+        </div>
+        <ShowLinkCard
+          bookmarks={bookmarks}
+          onDelete={handleDelete}
+          onEdit={handleEdit}
+          // sortingOption={sortingOption}
+        />
+      </div>
     </div>
   );
 };

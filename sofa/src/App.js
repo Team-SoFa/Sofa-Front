@@ -1,10 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Routes, Route } from "react-router-dom"; // 라우터 import
-import HomePage from "./pages/HomePage";
+import LandingPage from "./pages/LandingPage";
 import SignPage from "./pages/SignPage";
 //import OnBoardingPage from "./pages/OnBoardingPage";
-import LoginPage from "./pages/LoginPage";
-import UserPage from "./pages/UserPage";
+import HomePage from "./pages/HomePage";
 import RemovedItemsPage from "./pages/RemovedItemsPage";
 import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
@@ -25,14 +24,13 @@ function App() {
 
   return (
     <Routes>
-      <Route path="/" element={<HomePage />} />
+      <Route path="/" element={<LandingPage />} />
       <Route path="/termspage" element={<TermsPage />} />
       <Route path="/privacypolicy" element={<PrivacyPolicy />} />
-      <Route path="/login" element={<LoginPage />} />
       <Route
-        path="/userpage"
+        path="/homepage"
         element={
-          <UserPage
+          <HomePage
             bookmarks={bookmarks}
             onAddBookmark={handleAddBookmark}
             onDeleteBookmark={handleDeleteBookmark}

@@ -4,7 +4,7 @@ import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 
-import "./header-layout.css";
+import "./HeaderStyle.css";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -24,7 +24,7 @@ const Header = ({ type, toggleMenu }) => {
   return (
     <header className="header" style={headerStyle}>
       {/* ========== LINK CARD PAGES ========== */}
-      {location.pathname === "/userpage" && (
+      {location.pathname === "/homepage" && (
         <>
           <Button className="menu" onClick={toggleMenu} label="🔲" />
           <div className="searchers">
@@ -43,8 +43,9 @@ const Header = ({ type, toggleMenu }) => {
           </div>
         </>
       )}
-      {/* ========== ONBOARDING PAGE ========== */}
-      {location.pathname !== "/userpage" && (
+
+      {/* ========== Landing PAGE ========== */}
+      {location.pathname !== "/homepage" && (
         <>
           <img
             className="logo"
@@ -54,8 +55,8 @@ const Header = ({ type, toggleMenu }) => {
           />
           <div className="buttons">
             <Button label="확장 프로그램 추가하기" />
-            <Link to="/userpage">
-              <Button label="[임시]유저P" />
+            <Link to="/homepage">
+              <Button label="[임시]홈P" />
             </Link>
             <Link to="/signpage">
               <Button label="[임시]SignP" />

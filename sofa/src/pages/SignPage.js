@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import "../components/Layout/header-layout.css";
+import "../components/Layout/HeaderStyle.css";
 import "./onBoarding-layout.css";
 import Button from "../components/Button/Button";
 
