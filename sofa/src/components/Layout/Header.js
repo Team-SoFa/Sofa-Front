@@ -24,7 +24,7 @@ const Header = ({ type, toggleMenu }) => {
   return (
     <header className="header" style={headerStyle}>
       {/* ========== LINK CARD PAGES ========== */}
-      {location.pathname === "/homepage" && (
+      {location.pathname !== "/" && (
         <>
           <Button className="menu" onClick={toggleMenu} label="🔲" />
           <div className="searchers">
@@ -45,7 +45,7 @@ const Header = ({ type, toggleMenu }) => {
       )}
 
       {/* ========== Landing PAGE ========== */}
-      {location.pathname !== "/homepage" && (
+      {location.pathname === "/" && (
         <>
           <img
             className="logo"

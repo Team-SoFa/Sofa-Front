@@ -3,7 +3,7 @@ import "./Dropdown.css";
 
 const Dropdown = ({ className, options, type, onSelect, label }) => {
   const [selectedValue, setSelectedValue] = useState(
-    type === "SORTING" ? options[0] : ""
+    className === "sorting" ? options[0] : ""
   ); //선택된 값 상태 관리
   const [isOpen, setIsOpen] = useState(false);
 
@@ -15,8 +15,8 @@ const Dropdown = ({ className, options, type, onSelect, label }) => {
       if (type === "TAG" && onSelect) {
         onSelect(value);
         setSelectedValue(""); //tag 선택 후, 드롭다운 초기화
-      } else if (type === "SORTING" && onSelect) {
-        onSelect(value); // sorting type일 시, onSelect 호출만 하고 초기화는 하지 않음
+      } else if (className === "sorting" && onSelect) {
+        onSelect(value); // onSelect 호출만 하고 초기화는 하지 않음
       }
     }
   };

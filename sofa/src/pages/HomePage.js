@@ -1,18 +1,18 @@
 import React, { useState, useEffect } from "react";
+import { useLocation, Route, Switch } from "react-router-dom";
 import Header from "../components/Layout/Header";
-import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
 import SideMenu from "../components/SideMenu/SideMenu";
+import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
 import Button from "../components/Button/Button";
 import { Link } from "react-router-dom";
-// import Dropdown from "../components/Dropdown/Dropdown";
-// import TextField from "../components/Textfield/Textfield";
-// import LinkCardForm from "../components/LinkCard/LinkCardForm";
 // import Tagcard from "../components/Tagcard/Tagcard";
-// import Toggle from "../components/Toggle/Toggle";
 
 import "../components/Layout/main-layout.css";
+import RemovedItemsPage from "./RemovedItemsPage";
+import FolderPage from "./FolderPage";
 
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
+  const location = useLocation();
   const [username, setUsername] = useState(""); //사용자 이름
   const [mostPopularTags, setMostPopularTags] = useState("");
   const [loading, setLoading] = useState(true); //로딩 상태
@@ -20,6 +20,85 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   // const [sortingOption, setSortingOption] = useState("");
   // const [selectedTags, setSelectedTags] = useState([]);
   // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
+
+  const renderSection = () => {
+    switch (location.pathname) {
+      case "/removeditemspage":
+        return <RemovedItemsPage />;
+      case "/folderpage":
+        return (
+          <FolderPage bookmarks={bookmarks} onAddBookmark={handleAddBookmark} />
+        );
+      default:
+        return (
+          <div>
+            <h3>안녕하세요, {username}님!</h3>
+
+            <div style={{ display: "flex", placeItems: "center" }}>
+              <div
+                style={{
+                  display: "flex",
+                  justifyContent: "flex-end",
+                  width: "100%",
+                }}
+              >
+                {/* <Dropdown
+            options={sortingOptions}
+            type={"sorting"}
+            onSelect={handleSortingSelect}
+          /> */}
+              </div>
+            </div>
+            <div className="link-set">
+              <div className="_text">
+                <p className="_title">{username}님께 추천하는 링크</p>
+                <Link to="/homepage" className="more">
+                  더보기&gt;
+                </Link>
+              </div>
+              <ShowLinkCard
+                bookmarks={bookmarks}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                // sortingOption={sortingOption}
+              />
+            </div>
+            <div className="link-set">
+              <div className="_text">
+                <p className="_title">최근에 방문한 링크</p>
+                <Link to="/homepage" className="more">
+                  더보기&gt;
+                </Link>
+              </div>
+              <ShowLinkCard
+                bookmarks={bookmarks}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                // sortingOption={sortingOption}
+              />
+            </div>
+            <div className="link-set">
+              <div className="_text">
+                <p className="_title">
+                  {username}님의 최다 태그
+                  <Button label={mostPopularTags} className="tag" />를 포함한
+                  링크
+                </p>
+                <Link to="/homepage" className="more">
+                  더보기&gt;
+                </Link>
+              </div>
+              <ShowLinkCard
+                bookmarks={bookmarks}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
+                // sortingOption={sortingOption}
+              />
+            </div>
+          </div>
+        );
+    }
+  };
 
   useEffect(() => {
     const fetchUserInfo = async () => {
@@ -74,68 +153,10 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   };
 
   return (
-    <div className={`homepage ${isMenuOpen ? "menu-open" : ""}`}>
+    <div className={`main-page ${isMenuOpen ? "menu-open" : ""}`}>
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-
-      <h3>안녕하세요, {username}님!</h3>
-
-      <div style={{ display: "flex", placeItems: "center" }}>
-        <div
-          style={{ display: "flex", justifyContent: "flex-end", width: "100%" }}
-        >
-          {/* <Dropdown
-            options={sortingOptions}
-            type={"sorting"}
-            onSelect={handleSortingSelect}
-          /> */}
-        </div>
-      </div>
-      <div className="link-set">
-        <div className="_text">
-          <p className="_title">{username}님께 추천하는 링크</p>
-          <Link to="/homepage" className="more">
-            더보기&gt;
-          </Link>
-        </div>
-        <ShowLinkCard
-          bookmarks={bookmarks}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          // sortingOption={sortingOption}
-        />
-      </div>
-      <div className="link-set">
-        <div className="_text">
-          <p className="_title">최근에 방문한 링크</p>
-          <Link to="/homepage" className="more">
-            더보기&gt;
-          </Link>
-        </div>
-        <ShowLinkCard
-          bookmarks={bookmarks}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          // sortingOption={sortingOption}
-        />
-      </div>
-      <div className="link-set">
-        <div className="_text">
-          <p className="_title">
-            {username}님의 최다 태그
-            <Button label={mostPopularTags} className="tag" />를 포함한 링크
-          </p>
-          <Link to="/homepage" className="more">
-            더보기&gt;
-          </Link>
-        </div>
-        <ShowLinkCard
-          bookmarks={bookmarks}
-          onDelete={handleDelete}
-          onEdit={handleEdit}
-          // sortingOption={sortingOption}
-        />
-      </div>
+      <section>{renderSection()}</section>
     </div>
   );
 };
