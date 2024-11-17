@@ -4,6 +4,7 @@ import LandingPage from "./pages/LandingPage";
 import SignPage from "./pages/SignPage";
 //import OnBoardingPage from "./pages/OnBoardingPage";
 import HomePage from "./pages/HomePage";
+import FolderPage from "./pages/FolderPage";
 import RemovedItemsPage from "./pages/RemovedItemsPage";
 import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
@@ -25,8 +26,10 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<LandingPage />} />
+      <Route path="/signpage" element={<SignPage />} />
       <Route path="/termspage" element={<TermsPage />} />
       <Route path="/privacypolicy" element={<PrivacyPolicy />} />
+
       <Route
         path="/homepage"
         element={
@@ -37,8 +40,27 @@ function App() {
           />
         }
       />
-      <Route path="/signpage" element={<SignPage />} />
-      <Route path="/removeditemspage" element={<RemovedItemsPage />} />
+
+      <Route
+        path="/folderpage"
+        element={
+          <FolderPage
+            bookmarks={bookmarks}
+            onAddBookmark={handleAddBookmark}
+            onDeleteBookmark={handleDeleteBookmark}
+          />
+        }
+      />
+      <Route
+        path="/removeditemspage"
+        element={
+          <RemovedItemsPage
+            bookmarks={bookmarks}
+            onAddBookmark={handleAddBookmark}
+            onDeleteBookmark={handleDeleteBookmark}
+          />
+        }
+      />
     </Routes>
   );
 }

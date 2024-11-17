@@ -7,7 +7,7 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
   return (
     <div>
       <div className={`side-menu ${isOpen ? "open" : ""}`}>
-        <Link to="/userpage" className="home">
+        <Link to="/homepage" className="home">
           <img className="icon" src="example.png" alt="icon" />
           <p>홈</p>
         </Link>
@@ -17,7 +17,7 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
             title="폴더"
             content={
               <>
-                <Link to="/folder1" className="folder-item">
+                <Link to="/folderpage" className="folder-item">
                   폴더 1
                 </Link>
                 <Link to="/folder2" className="folder-item">
