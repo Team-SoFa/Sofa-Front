@@ -1,8 +1,10 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
+import "./header-layout.css";
+import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
 
 import "./HeaderStyle.css";
 
@@ -20,6 +22,13 @@ const Header = ({ type, toggleMenu }) => {
     type === "ONBOARDING"
       ? { backgroundColor: "#F1F1F1", paddingTop: "1rem" }
       : {};
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
+
+  // 모달 열기 함수
+  const openModal = () => setIsModalOpen(true);
+
+  // 모달 닫기 함수
+  const closeModal = () => setIsModalOpen(false);
 
   return (
     <header className="header" style={headerStyle}>
@@ -61,9 +70,21 @@ const Header = ({ type, toggleMenu }) => {
             <Link to="/signpage">
               <Button label="[임시]SignP" />
             </Link>
+            {/* 모달 열기 버튼 */}
+            <button className="header-btn" onClick={openModal}>
+              [임시]Modal
+            </button>
           </div>
         </>
       )}
+
+      {/* Modal 컴포넌트 */}
+      <Modal isOpen={isModalOpen} onClose={closeModal}>
+        <h2 style={{ marginBottom: '1rem '}}>Example for Modal</h2>
+        <p>모달 내용입니다.</p>
+        <p>모</p>
+        <p>달</p>
+      </Modal>
     </header>
   );
 };

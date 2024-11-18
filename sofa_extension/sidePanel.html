@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>SoFa Side Panel</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      padding: 10px;
+    }
+    h1 {
+      font-size: 18px;
+    }
+    .input-group {
+      margin-top: 10px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 8px 12px;
+      font-size: 14px;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+  <h1>내 링크에 바로가기</h1>
+  <div class="input-group">
+    <label for="titleInput">제목</label>
+    <input type="text" placeholder="제목" id="titleInput">
+  </div>
+  <div class="input-group">
+    <label for="folderSelect">폴더</label>
+    <select id="folderSelect">
+      <option>예제 폴더</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label for="tagInput">태그</label>
+    <input type="text" placeholder="태그 입력" id="tagInput">
+  </div>
+  <div class="input-group">
+    <textarea placeholder="자동 요약" id="autoSummary"></textarea>
+    <textarea placeholder="메모" id="memoInput"></textarea>
+  </div>
+  <button id="closeSidebarButton">닫기</button>
+
+  <script>
+    document.getElementById("closeSidebarButton").addEventListener("click", () => {
+      chrome.sidePanel.setOptions({ enabled: false });
+    });
+  </script>
+</body>
+</html>
