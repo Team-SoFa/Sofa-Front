@@ -10,6 +10,7 @@ import { Link } from "react-router-dom";
 import "../components/Layout/main-layout.css";
 import RemovedItemsPage from "./RemovedItemsPage";
 import FolderPage from "./FolderPage";
+import BookmarkDetail from "../components/LinkCard/BookmarkDetail"; // 상세 정보 컴포넌트 import
 
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const location = useLocation();
@@ -20,6 +21,11 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   // const [sortingOption, setSortingOption] = useState("");
   // const [selectedTags, setSelectedTags] = useState([]);
   // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
+
+
+  // 북마크 선택 상태 추가
+  const [selectedBookmark, setSelectedBookmark] = useState(null);
+
 
   const renderSection = () => {
     switch (location.pathname) {
@@ -60,6 +66,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 bookmarks={bookmarks}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
                 // sortingOption={sortingOption}
               />
             </div>
@@ -74,6 +81,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 bookmarks={bookmarks}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                onLinkCardClick={handleBookmarkClick}
                 // sortingOption={sortingOption}
               />
             </div>
@@ -92,6 +100,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 bookmarks={bookmarks}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                onLinkCardClick={handleBookmarkClick}
                 // sortingOption={sortingOption}
               />
             </div>
@@ -132,6 +141,15 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     onAddBookmark(newBookmark);
   };
 
+  const handleBookmarkClick = (bookmark) => {
+    console.log("Clicked bookmark:", bookmark);
+    setSelectedBookmark(bookmark); // 클릭된 북마크 상태 저장
+  };
+
+  const handleBookmarkClose = () => {
+    setSelectedBookmark(null); // 상세 정보를 닫기
+  };
+  
   // TAG
   // const handleTagSelect = (tag) => {
   //   if (!selectedTags.includes(tag)) {
@@ -153,10 +171,25 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   };
 
   return (
-    <div className={`main-page ${isMenuOpen ? "menu-open" : ""}`}>
+      <div className={`main-page 
+        ${isMenuOpen ? "menu-open" : ""} 
+        ${selectedBookmark ? "show-detail" : ""}`
+      }>
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <section>{renderSection()}</section>
+
+        {/* 상세 정보 */}
+        {selectedBookmark && (
+        <div className="bookmark-detail-container">
+          <BookmarkDetail
+            bookmark={selectedBookmark}
+            onEdit={() => console.log("Edit clicked")}
+            onDelete={() => console.log("Delete clicked")}
+            onClose={handleBookmarkClose}
+          />
+        </div>
+      )}
     </div>
   );
 };

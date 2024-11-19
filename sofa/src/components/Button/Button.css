@@ -37,3 +37,6 @@
 .btn.linkcard.delete{top:8px;right: 35px;}
 .btn.linkcard.alarm{top:8px;right:8px;}
 .btn.linkcard.link{bottom:8px;left:8px;margin-left:0px;}
+
+/*BookmarkDetail edit button*/
+.btn.detail-edit{bottom: 10px; right: 10px; position: absolute;}

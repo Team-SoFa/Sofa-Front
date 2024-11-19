@@ -3,7 +3,7 @@ import "./LinkCard.css";
 import Dropdown from "../Dropdown/Dropdown";
 import Button from "../Button/Button";
 
-const LinkCard = ({ bookmark, onDelete, onEdit }) => {
+const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
   const [hover, setHover] = useState(false);
   const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
 
@@ -12,6 +12,7 @@ const LinkCard = ({ bookmark, onDelete, onEdit }) => {
       className="linkCard"
       onMouseEnter={() => setHover(true)}
       onMouseLeave={() => setHover(false)}
+      onClick={onClick}
     >
       <div className="link-card-top">
         <img className="image" src={bookmark.img} alt={bookmark.title} />

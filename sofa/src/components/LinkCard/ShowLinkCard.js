@@ -7,7 +7,7 @@ import "./ShowLinkCard.css";
 //bookmarks : 북마크 데이터 배열(id, title, url 포함)
 //onDelete : 북마크 삭제 함수
 //북마크 목록 길이가 0보다 길면 렌더링
-const ShowLinkCard = ({ bookmarks, onDelete, onEdit, sortingOption }) => {
+const ShowLinkCard = ({ bookmarks, onDelete, onEdit, sortingOption, onLinkCardClick }) => {
   //Sorting
   const sortBookmarks = (bookmarks, sortingOption) => {
     if (sortingOption === "최근 저장") {
@@ -35,6 +35,10 @@ const ShowLinkCard = ({ bookmarks, onDelete, onEdit, sortingOption }) => {
             bookmark={bookmark} //각 북마크 데이터를 BookmarkItem에 전달
             onDelete={onDelete} //삭제 기능을 BookmarkItem에 전달
             onEdit={onEdit}
+            onClick={() => {
+              console.log("Card clicked:", bookmark)
+              onLinkCardClick(bookmark) // 안전하게 호출
+            }}
           />
         ))
       ) : (

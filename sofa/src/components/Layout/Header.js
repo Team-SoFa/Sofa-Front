@@ -3,7 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
-import "./header-layout.css";
+import "./HeaderStyle.css";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
 
 import "./HeaderStyle.css";
