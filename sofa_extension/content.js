@@ -31,6 +31,9 @@ console.log("Content script is running");
 //   createFloatingButton();
 
 // 화면에 버튼 추가
+// content.js
+
+// 버튼을 생성하는 함수
 function createFloatingButton() {
   const button = document.createElement("button");
   button.innerText = "패널 열기";
@@ -50,8 +53,8 @@ function createFloatingButton() {
   button.addEventListener("click", () => {
     chrome.runtime.sendMessage({ action: "openSidePanel" });
   });
-
   document.body.appendChild(button);
 }
 
+// 페이지 로드 시 버튼 생성
 createFloatingButton();

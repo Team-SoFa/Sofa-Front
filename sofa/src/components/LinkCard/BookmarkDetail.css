@@ -20,17 +20,19 @@
 
 .bookmark-detail-header {
   display: flex;
+  flex-wrap: wrap; /* 화면이 좁아지면 줄바꿈 */
   align-items: center;
   margin-top: 0.9375rem; /* 15px */
   margin-bottom: 1.25rem; /* 20px */
+  gap: 0.5rem; /* 요소 간 간격 */
 }
 
 .detail-image {
-  width: 12.25rem; /* 196px */
-  height: 9rem; /* 144px */
+  width: 100%; /* 디스플레이 크기에 따라 크기 유연화 */
+  max-width: 12.25rem; /* 196px */
+  height: auto; /* 비율 유지 */
   border-radius: 0.5rem; /* 8px */
-  margin-right: 0.9375rem; /* 15px */
-  object-fit: cover;
+  margin-right: 0; /* 여백 제거 */
   flex-shrink: 0;
 }
 
@@ -148,4 +150,32 @@
 
 .close-button:hover {
   background: rgb(204, 204, 204);
+}
+
+@media (max-width: 768px) { /* 태블릿 화면 이하 */
+  .bookmark-detail-header {
+    flex-direction: column; /* 세로 방향으로 배치 */
+    align-items: flex-start;
+  }
+
+  .detail-image {
+    width: 100%; /* 이미지가 줄어들지 않도록 */
+    max-width: none; /* 최대 너비 제한 해제 */
+    height: auto; /* 비율 유지 */
+    margin: 0 0 0.5rem 0; /* 위아래 간격 조정 */
+  }
+
+  .detail-info {
+    width: 100%; /* 가로 공간 전체 사용 */
+  }
+}
+
+@media (max-width: 480px) { /* 모바일 화면 이하 */
+  .detail-title {
+    font-size: 1rem; /* 텍스트 크기 줄이기 */
+  }
+
+  .bookmark-btn {
+    font-size: 0.8rem; /* 버튼 크기 줄이기 */
+  }
 }
