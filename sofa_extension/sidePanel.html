@@ -2,25 +2,9 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>SoFa Side Panel</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      padding: 10px;
-    }
-    h1 {
-      font-size: 18px;
-    }
-    .input-group {
-      margin-top: 10px;
-    }
-    button {
-      margin-top: 20px;
-      padding: 8px 12px;
-      font-size: 14px;
-      cursor: pointer;
-    }
-  </style>
+  <link rel="stylesheet" href="sidePanel.css">
 </head>
 <body>
   <h1>내 링크에 바로가기</h1>
@@ -32,6 +16,8 @@
     <label for="folderSelect">폴더</label>
     <select id="folderSelect">
       <option>예제 폴더</option>
+      <option>폴더 1</option>
+      <option>폴더 2</option>
     </select>
   </div>
   <div class="input-group">
@@ -40,14 +26,9 @@
   </div>
   <div class="input-group">
     <textarea placeholder="자동 요약" id="autoSummary"></textarea>
-    <textarea placeholder="메모" id="memoInput"></textarea>
+    <textarea placeholder="메모 입력" id="memoInput"></textarea>
   </div>
-  <button id="closeSidebarButton">닫기</button>
 
-  <script>
-    document.getElementById("closeSidebarButton").addEventListener("click", () => {
-      chrome.sidePanel.setOptions({ enabled: false });
-    });
-  </script>
+  <script src="sidePanel.js"></script>
 </body>
 </html>
