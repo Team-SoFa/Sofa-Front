@@ -22,10 +22,8 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   // const [selectedTags, setSelectedTags] = useState([]);
   // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
 
-
   // 북마크 선택 상태 추가
   const [selectedBookmark, setSelectedBookmark] = useState(null);
-
 
   const renderSection = () => {
     switch (location.pathname) {
@@ -149,7 +147,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const handleBookmarkClose = () => {
     setSelectedBookmark(null); // 상세 정보를 닫기
   };
-  
+
   // TAG
   // const handleTagSelect = (tag) => {
   //   if (!selectedTags.includes(tag)) {
@@ -171,16 +169,17 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   };
 
   return (
-      <div className={`main-page 
+    <div
+      className={`main-page 
         ${isMenuOpen ? "menu-open" : ""} 
-        ${selectedBookmark ? "show-detail" : ""}`
-      }>
+        ${selectedBookmark ? "show-detail" : ""}`}
+    >
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <section>{renderSection()}</section>
 
-        {/* 상세 정보 */}
-        {selectedBookmark && (
+      {/* 상세 정보 */}
+      {selectedBookmark && (
         <div className="bookmark-detail-container">
           <BookmarkDetail
             bookmark={selectedBookmark}

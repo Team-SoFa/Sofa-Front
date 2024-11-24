@@ -1,53 +1,41 @@
 import React, { useState } from "react";
 import "./Dropdown.css";
 
-const Dropdown = ({ className, options, type, onSelect, label }) => {
-  const [selectedValue, setSelectedValue] = useState(
-    className === "sorting" ? options[0] : ""
-  ); //선택된 값 상태 관리
+const Dropdown = ({ className, options, label }) => {
+  const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
   const [isOpen, setIsOpen] = useState(false);
 
-  const handleChange = (e) => {
-    const value = e.target.value;
+  const handleSelect = (value) => {
     setSelectedValue(value);
-
-    if (value) {
-      if (type === "TAG" && onSelect) {
-        onSelect(value);
-        setSelectedValue(""); //tag 선택 후, 드롭다운 초기화
-      } else if (className === "sorting" && onSelect) {
-        onSelect(value); // onSelect 호출만 하고 초기화는 하지 않음
-      }
-    }
+    setIsOpen(false);
   };
   const toggleDropdown = () => {
     setIsOpen(!isOpen);
   };
 
   return (
-    <div>
-      <select
-        className={`dropdown ${className}`}
-        value={selectedValue}
-        onChange={handleChange}
-        onClick={toggleDropdown}
-      >
-        <option value="" disabled hidden>
-          {label}
-        </option>
-        {options.map((option, index) => (
-          <option key={index} value={option}>
-            {option}
-          </option>
-        ))}
-      </select>
-      {/* <div className={`dropdown-menu ${isOpen ? "show" : ""}`}>
-        {options.map((option, index) => (
-          <div key={index} className="option">
-            {option}
-          </div>
-        ))}
-      </div> */}
+    <div className={`dropdown ${className}`}>
+      <div className="dropdown-header" onClick={toggleDropdown}>
+        {selectedValue ? (
+          selectedValue.label
+        ) : (
+          <span className="dropdown-placeholder">{label}</span>
+        )}
+      </div>
+
+      {isOpen && (
+        <div className="dropdown-menu">
+          {options.map((option, index) => (
+            <div
+              key={index}
+              className="dropdown-option"
+              onClick={() => handleSelect(option)}
+            >
+              {option.content}
+            </div>
+          ))}
+        </div>
+      )}
     </div>
   );
 };

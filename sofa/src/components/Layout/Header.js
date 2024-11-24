@@ -15,8 +15,16 @@ const Header = ({ type, toggleMenu }) => {
     "또 어떤 알람이 있을까요",
     "새로운 업데이트가 있습니다.",
   ];
-  const folderOpt = ["폴더1", "폴더2", "폴더3"];
-  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"];
+  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
+    label: item,
+    content: item,
+  }));
+  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"].map(
+    (item) => ({
+      label: item,
+      content: item,
+    })
+  );
 
   const headerStyle =
     type === "ONBOARDING"
@@ -80,7 +88,7 @@ const Header = ({ type, toggleMenu }) => {
 
       {/* Modal 컴포넌트 */}
       <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 style={{ marginBottom: '1rem '}}>Example for Modal</h2>
+        <h2 style={{ marginBottom: "1rem " }}>Example for Modal</h2>
         <p>모달 내용입니다.</p>
         <p>모</p>
         <p>달</p>

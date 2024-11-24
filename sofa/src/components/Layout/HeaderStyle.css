@@ -13,6 +13,7 @@
 .logo{ cursor:pointer; width: 50px; }
 
 .searchers{
+    /* position:absolute; */
     display: flex;
     align-items: center;
     justify-content: space-between;
