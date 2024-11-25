@@ -35,7 +35,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
         );
       default:
         return (
-          <div>
+          <div className="main-box">
             <h3>안녕하세요, {username}님!</h3>
 
             <div style={{ display: "flex", placeItems: "center" }}>
