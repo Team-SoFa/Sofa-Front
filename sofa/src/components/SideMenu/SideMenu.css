@@ -1,10 +1,10 @@
 .side-menu {
     position: fixed;
-    top: 4rem;
+    top: 6rem;
     left: 0;
     width: 13.5rem; /* 사이드 메뉴의 너비 230px */
-    height: calc(100% - 7rem);
-    margin-top: 2rem;
+    height: calc(100vh - 7rem);
+    overflow-y: scroll;
     margin-left: 1rem;
     background-color: rgb(190, 190, 190);
     color: black;

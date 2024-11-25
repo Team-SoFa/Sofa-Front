@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { useLocation, Route, Switch } from "react-router-dom";
+import { useLocation } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import SideMenu from "../components/SideMenu/SideMenu";
 import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
@@ -65,6 +65,8 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
+                sideMenuOpen={isMenuOpen}
+                bookmarkDetailOpen={selectedBookmark}
                 // sortingOption={sortingOption}
               />
             </div>
@@ -80,6 +82,8 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLinkCardClick={handleBookmarkClick}
+                sideMenuOpen={isMenuOpen}
+                bookmarkDetailOpen={selectedBookmark}
                 // sortingOption={sortingOption}
               />
             </div>
@@ -99,6 +103,8 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLinkCardClick={handleBookmarkClick}
+                sideMenuOpen={isMenuOpen}
+                bookmarkDetailOpen={selectedBookmark}
                 // sortingOption={sortingOption}
               />
             </div>

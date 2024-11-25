@@ -9,10 +9,7 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
 
   // 예시 데이터 추가
   const exampleTags = ["React", "JavaScript", "Frontend", "CSS"];
-  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
-    label: item,
-    content: item,
-  }));
+  const folderOpt = ["폴더1", "폴더2", "폴더3"];
 
   return (
     <div className={`bookmark-detail ${isOpen ? "open" : ""}`}>
