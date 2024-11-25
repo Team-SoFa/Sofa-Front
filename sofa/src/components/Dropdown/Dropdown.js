@@ -27,6 +27,9 @@ const Dropdown = ({ className, options, label }) => {
         ) : (
           <span className="dropdown-placeholder">{label}</span>
         )}
+        {className === "alarm" && options?.length > 0 && (
+          <span className="dropdown-badge"></span>
+        )}
       </div>
 
       {isOpen && (

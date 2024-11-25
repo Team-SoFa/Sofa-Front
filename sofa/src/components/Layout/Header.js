@@ -14,6 +14,9 @@ const Header = ({ type, toggleMenu }) => {
     { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
     { content: "또 어떤 알람이 있을까요" },
     { content: "새로운 업데이트가 있습니다." },
+    { content: "새로운 업데이트가 있습니다." },
+    { content: "새로운 업데이트가 있습니다." },
+    { content: "새로운 업데이트가 있습니다." },
   ].map((item) => ({
     ...item,
     img: "example.png",
