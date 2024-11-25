@@ -68,4 +68,5 @@
   background-color: white;
   transition: opacity 0.3s ease;
 }
+.dropdown.linkcard.folder-name .dropdown-menu{max-height: 4rem;}
 .dropdown.linkcard:hover{background-color: #b8b8b8;}

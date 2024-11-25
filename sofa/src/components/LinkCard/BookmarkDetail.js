@@ -1,7 +1,7 @@
 // src/components/Bookmark/BookmarkDetail.js
 import React from "react";
 import "./BookmarkDetail.css";
-import Button from "../Button/Button"
+import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 
 const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
@@ -9,8 +9,10 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
 
   // 예시 데이터 추가
   const exampleTags = ["React", "JavaScript", "Frontend", "CSS"];
-  const folderOpt = ["폴더1", "폴더2", "폴더3"];
-
+  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
+    label: item,
+    content: item,
+  }));
 
   return (
     <div className={`bookmark-detail ${isOpen ? "open" : ""}`}>
@@ -33,7 +35,10 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
       <h4>자동 요약</h4>
       <div className="detail-summary">
         <h3>자동 요약</h3>
-        <p className="summary-text">AI가 생성한 요약 텍스트가 여기에 표시됩니다. 요약 내용을 넣을 수 있습니다.</p>
+        <p className="summary-text">
+          AI가 생성한 요약 텍스트가 여기에 표시됩니다. 요약 내용을 넣을 수
+          있습니다.
+        </p>
         <Button className="detail-edit" label="수정" />
       </div>
 
@@ -41,7 +46,10 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
       <h4>추가 설명</h4>
       <div className="detail-description">
         <h3>추가 설명</h3>
-        <p className="description-text">추가 설명이 여기에 들어갑니다. 필요에 따라 더 많은 설명을 표시할 수 있습니다.</p>
+        <p className="description-text">
+          추가 설명이 여기에 들어갑니다. 필요에 따라 더 많은 설명을 표시할 수
+          있습니다.
+        </p>
         <Button className="detail-edit" label="수정" />
       </div>
 
@@ -49,8 +57,10 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
       <div className="detail-tags">
         <h3>태그</h3>
         <div className="tags-container">
-          {(exampleTags).map((tag, index) => (
-            <span key={index} className="tag-item">{tag}</span>
+          {exampleTags.map((tag, index) => (
+            <span key={index} className="tag-item">
+              {tag}
+            </span>
           ))}
           <button className="add-tag-btn">+</button>
         </div>
@@ -58,7 +68,7 @@ const BookmarkDetail = ({ isOpen, bookmark, onEdit, onDelete, onClose }) => {
 
       {/* 닫기 버튼 */}
       <button className="close-button" onClick={onClose}>
-          닫기
+        닫기
       </button>
     </div>
   );

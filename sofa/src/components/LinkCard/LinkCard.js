@@ -5,7 +5,11 @@ import Button from "../Button/Button";
 
 const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
   const [hover, setHover] = useState(false);
-  const folderOptions = ["Documents", "Pictures", "Music", "Videos"];
+  const folderOpt = ["Document", "music", "front-end", "어쩌구폴더"].map(
+    (item) => ({
+      content: item,
+    })
+  );
 
   return (
     <div
@@ -20,7 +24,7 @@ const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
           <div className="hover-menus">
             <Dropdown
               className="linkcard folder-name"
-              options={folderOptions}
+              options={folderOpt}
               label="폴더"
             />
             <Button
