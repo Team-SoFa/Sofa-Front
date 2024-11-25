@@ -26,26 +26,17 @@
 
 .dropdown-menu {
   position:absolute;
-  top:100%;
-  left:0;
-  width: auto;
-  height: 5rem;
-  min-width: 5rem;
-  color:black;
+  top:100%; left:0;
+  width: auto; min-width: 5rem;
+  height: auto; min-height: 5rem;
   background: #ededed;
   box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
-  border:none;
   border-radius: 10px;
-  max-height: 10rem;
   overflow-y: auto;
   z-index: 1000;
 }
 
 .dropdown-option{
-  padding:1rem;
+  padding:0.3rem;
   cursor:pointer;
-}
-
-.dropdown-option:hover{
-  background-color: #c9c9c9;
-}
+}.dropdown-option:hover{ background-color: #c9c9c9;}
