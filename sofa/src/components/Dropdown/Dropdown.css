@@ -1,7 +1,7 @@
 .dropdown{
   position:relative;
   cursor:pointer;
-  width: 5rem;
+  width: auto; max-width: 5rem;
   padding:0.5rem;
   margin-left: 0.5rem;
   padding:0.5rem;
@@ -9,6 +9,10 @@
   background:#ededed;
   border: none;
   border-radius: 1rem;
+}.dropdown:hover{ background-color: #c9c9c9;}
+.dropdown-header{
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .dropdown-menu {
@@ -31,6 +35,7 @@
 }.dropdown-option:hover{ background-color: #c9c9c9;}
 
 
+
 .dropdown.alarm {position: relative; width:2rem;}
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
@@ -49,6 +54,7 @@
   border-radius: 50%;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
+
 
 
 .dropdown.linkcard.folder-name {

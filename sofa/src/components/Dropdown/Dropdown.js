@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useRef } from "react";
 import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
 
@@ -8,11 +8,11 @@ const Dropdown = ({ className, options, label }) => {
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
 
   const handleSelect = (value) => {
-    //alarm은 옵션으로 변경 안함
+    // className이 "alarm"일 때 label을 변경하지 않음
     if (className !== "alarm") {
       setSelectedValue(value);
     }
-    setIsOpen(false);
+    setIsOpen(false); // 드롭다운 닫기
   };
   const toggleDropdown = () => {
     //드롭다운 토글 함수

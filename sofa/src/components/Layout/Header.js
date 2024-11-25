@@ -3,7 +3,6 @@ import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
-import "./HeaderStyle.css";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
 
 import "./HeaderStyle.css";
@@ -51,9 +50,9 @@ const Header = ({ type, toggleMenu }) => {
         <>
           <Button className="menu" onClick={toggleMenu} label="🔲" />
           <div className="searchers">
-            <Dropdown className="folder" options={folderOpt} label="폴더선택" />
+            {/*className으로 tag말고 다른 게 들어가면 동작이 이상해서 일단 이거 넣음..*/}
+            <Dropdown className="tag" options={folderOpt} label="폴더" />{" "}
             <Dropdown className="tag" options={tagsOpt} label="태그선택" />
-
             <TextField
               className="text_field"
               placeholder="검색어를 입력하세요."
