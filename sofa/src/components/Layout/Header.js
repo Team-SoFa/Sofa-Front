@@ -11,10 +11,13 @@ import "./HeaderStyle.css";
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
   const alarmOptions = [
-    "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다.",
-    "또 어떤 알람이 있을까요",
-    "새로운 업데이트가 있습니다.",
-  ];
+    { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
+    { content: "또 어떤 알람이 있을까요" },
+    { content: "새로운 업데이트가 있습니다." },
+  ].map((item) => ({
+    ...item,
+    img: "example.png",
+  }));
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
     label: item,
     content: item,

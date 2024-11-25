@@ -8,8 +8,10 @@ const Dropdown = ({ className, options, label }) => {
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
 
   const handleSelect = (value) => {
-    //옵션 선택 시, 선택된 값 저장
-    setSelectedValue(value);
+    //alarm은 옵션으로 변경 안함
+    if (className !== "alarm") {
+      setSelectedValue(value);
+    }
     setIsOpen(false);
   };
   const toggleDropdown = () => {
@@ -35,6 +37,9 @@ const Dropdown = ({ className, options, label }) => {
               className="dropdown-option"
               onClick={() => handleSelect(option)}
             >
+              {option.img && (
+                <img src={option.img} alt="" className="dropdown-option-img" />
+              )}
               {option.content}
             </div>
           ))}
