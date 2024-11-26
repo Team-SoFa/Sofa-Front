@@ -74,13 +74,13 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
     >
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-      <section>
+      <section className="main-box">
         <h3>{folderName}</h3>
 
         <div className="sorting-options">
           <Dropdown
             className="sorting"
-            label="최근 저장"
+            label="최근저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />

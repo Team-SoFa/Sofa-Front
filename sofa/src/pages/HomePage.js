@@ -38,21 +38,6 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
           <div className="main-box">
             <h3>안녕하세요, {username}님!</h3>
 
-            <div style={{ display: "flex", placeItems: "center" }}>
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "flex-end",
-                  width: "100%",
-                }}
-              >
-                {/* <Dropdown
-            options={sortingOptions}
-            type={"sorting"}
-            onSelect={handleSortingSelect}
-          /> */}
-              </div>
-            </div>
             <div className="link-set">
               <div className="_text">
                 <p className="_title">{username}님께 추천하는 링크</p>

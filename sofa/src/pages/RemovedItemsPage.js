@@ -9,27 +9,34 @@ import "../components/Layout/main-layout.css";
 
 const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [loading, setLoading] = useState(true); //로딩 상태
-  const [sortingOption, setSortingOption] = useState("");
-  // const [selectedTags, setSelectedTags] = useState([]);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedBookmark, setSelectedBookmark] = useState(false);
+  const [sortingOption, setSortingOption] = useState("최근저장");
+  const [sortingDirOption, setSortingDirOption] = useState("오름차순");
 
-  const sortingOpt = ["최근 저장", "오래된 저장", "이름순"];
-  const sortingDirOpt = ["오름차순", "내림차순"];
+  const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
+    label: item,
+    content: item,
+  }));
+  const sortingDirOpt = ["오름차순", "내림차순"].map((item) => ({
+    label: item,
+    content: item,
+  }));
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
   const handleDelete = (id) => onDeleteBookmark(id);
-  const handleEdit = (id) => {
-    //추후 수정 기능 코드 추가
-  };
 
   // SORTING
   const handleSortingSelect = (option) => {
-    setSortingOption(option);
+    setSortingOption(option.content);
   };
+  const handleSortingDirSelect = (option) => {
+    setSortingDirOption(option.content);
+  };
+
   const handleBookmarkClick = (bookmark) => {
     console.log("Clicked bookmark:", bookmark);
     setSelectedBookmark(bookmark); // 클릭된 북마크 상태 저장
@@ -47,31 +54,33 @@ const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     >
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
-      <section>
+      <section className="main-box">
         <h3>휴지통</h3>
         <div className="selected-tags"></div>
 
         <div className="sorting-options">
           <Dropdown
             className="sorting"
+            label="최근저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />
           <Dropdown
             className="sorting"
+            label="오름차순"
             options={sortingDirOpt}
-            onSelect={handleSortingSelect}
+            onSelect={handleSortingDirSelect}
           />
         </div>
 
         <ShowLinkCard
           bookmarks={bookmarks}
           onDelete={handleDelete}
-          onEdit={handleEdit}
-          sortingOption={sortingOption}
           onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
           sideMenuOpen={isMenuOpen}
           bookmarkDetailOpen={selectedBookmark}
+          sortingOption={sortingOption}
+          sortingDirOption={sortingDirOption}
         />
       </section>
       {selectedBookmark && (
