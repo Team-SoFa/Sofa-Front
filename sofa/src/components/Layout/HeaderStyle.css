@@ -1,5 +1,6 @@
 .header{
-    position: fixed;
+    position: fixed; /* 이 설정이 문제의 원인이 아님을 확인 */
+    overflow: visible; /* 드롭다운이 잘리지 않도록 설정 */    
     display:flex;
     align-items: center;
     top:0;
@@ -12,16 +13,48 @@
 }
 .logo{ cursor:pointer; width: 50px; }
 
-.searchers{
+.user_info { display: flex; margin-right:2rem; align-items: center;}
+
+.searchers {
     display: flex;
     align-items: center;
     justify-content: space-between;
-    margin:auto;
+    margin: auto;
 }
 
-.user_info { display: flex; margin-right:2rem; align-items: center;}
+.search-input-container {
+    position: relative;
+}
+  
+.recent-search-dropdown {
+    position: absolute; /* 부모 또는 .text_field를 기준으로 */
+    top: calc(100%); /* text_field 바로 아래 배치 (0.5rem 간격 추가) */
+    left: 0; /* 왼쪽 정렬 */
+    width: 100%; /* text_field의 너비와 동일 */
+    max-height: 150px; /* 드롭다운 최대 높이 */
+    overflow-y: auto; /* 스크롤 가능 */
+    background: #ededed; /* 배경색 */
+    border: 1px solid #ccc; /* 경계선 */
+    border-radius: 4px; /* 둥근 모서리 */
+    z-index: 10; /* z-index 설정으로 다른 요소 위에 배치 */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
+    padding: 0;
+    margin: 0;
+    box-shadow: none;
+    list-style: none; /* 기본 목록 스타일 제거 */
+}
+  
+.recent-search-item {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 14px;
+}
 
-
+.recent-search-item:hover {
+    background-color: #f5f5f5;
+}
+  
+  
 
 /* @media (max-width: 400px){
     .header{
