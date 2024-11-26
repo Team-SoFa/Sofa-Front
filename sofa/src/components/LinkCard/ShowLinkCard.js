@@ -13,8 +13,9 @@ const ShowLinkCard = ({
   bookmarkDetailOpen,
   onDelete,
   onEdit,
-  sortingOption,
   onLinkCardClick,
+  sortingOption,
+  sortingDirOption,
 }) => {
   const [gridColumns, setGridColumns] = useState(6); // 기본적으로 6개 열
   // 화면 크기와 메뉴 상태에 따라 그리드 열 개수를 동적으로 설정하는 함수
@@ -56,22 +57,26 @@ const ShowLinkCard = ({
   }, [sideMenuOpen, bookmarkDetailOpen]); // 메뉴 상태가 변경될 때마다 호출
 
   //Sorting
-  const sortBookmarks = (bookmarks, sortingOption) => {
-    if (sortingOption === "최근 저장") {
-      return bookmarks.sort((a, b) => b.id - a.id);
-    } else if (sortingOption === "오래된 저장") {
-      return bookmarks.sort((a, b) => a.id - b.id);
-    } else if (sortingOption === "오름차순") {
-      return bookmarks.sort((a, b) => a.title.localeCompare(b.title)); // 제목 알파벳 오름차순 정렬
-    } else if (sortingOption === "내림차순") {
-      return bookmarks.sort((a, b) => b.title.localeCompare(a.title)); // 제목 알파벳 내림차순 정렬
-    }
-    return bookmarks;
-  };
+  const sortBookmarks = (bookmarks, sortingOption, sortingDir) => {
+    let sorted = [...bookmarks];
 
-  const sortedBookmarks = sortingOption
-    ? sortBookmarks([...bookmarks], sortingOption)
-    : bookmarks;
+    if (sortingOption === "최근저장") {
+      sorted = sorted.sort((a, b) => b.id - a.id);
+    } else if (sortingOption === "오래된저장") {
+      sorted = sorted.sort((a, b) => a.id - b.id);
+    } else if (sortingOption === "이름순") {
+      sorted = sorted.sort((a, b) => a.title.localeCompare(b.title));
+    }
+    if (sortingDir === "내림차순") {
+      sorted = sorted.reverse();
+    }
+    return sorted;
+  };
+  const sortedBookmarks = sortBookmarks(
+    bookmarks,
+    sortingOption,
+    sortingDirOption
+  );
 
   return (
     <div

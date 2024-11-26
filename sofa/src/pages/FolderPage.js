@@ -3,19 +3,26 @@ import Header from "../components/Layout/Header";
 import SideMenu from "../components/SideMenu/SideMenu";
 import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
 import Dropdown from "../components/Dropdown/Dropdown";
-import Tagcard from "../components/Tagcard/Tagcard";
+import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
 
-const FolderPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
+const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const [folderName, setFolderName] = useState(""); //폴더명
   const [loading, setLoading] = useState(true); //로딩 상태
-  const [sortingOption, setSortingOption] = useState("");
-  // const [selectedTags, setSelectedTags] = useState([]);
+  const [sortingOption, setSortingOption] = useState("최근저장"); //정렬 기준
+  const [sortingDirOption, setSortingDirOption] = useState("오름차순"); //정렬 방향
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [selectedBookmark, setSelectedBookmark] = useState(null);
 
-  const sortingOpt = ["최근 저장", "오래된 저장", "이름순"];
-  const sortingDirOpt = ["오름차순", "내림차순"];
+  const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
+    label: item,
+    content: item,
+  }));
+  const sortingDirOpt = ["오름차순", "내림차순"].map((item) => ({
+    label: item,
+    content: item,
+  }));
 
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
@@ -42,39 +49,46 @@ const FolderPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     //추후 수정 기능 코드 추가
   };
 
-  // TAG
-  // const handleTagSelect = (tag) => {
-  //   if (!selectedTags.includes(tag)) {
-  //     setSelectedTags([...selectedTags, tag]); //태그 추가
-  //   }
-  // };
-  // const handleTagRemove = (tag) => {
-  //   setSelectedTags(selectedTags.filter((t) => t !== tag)); //태그 제거
-  // };
-
   // SORTING
   const handleSortingSelect = (option) => {
-    setSortingOption(option);
+    setSortingOption(option.content);
+  };
+  const handleSortingDirSelect = (option) => {
+    setSortingDirOption(option.content);
+  };
+
+  const handleBookmarkClick = (bookmark) => {
+    console.log("Clicked bookmark:", bookmark);
+    setSelectedBookmark(bookmark); // 클릭된 북마크 상태 저장
+  };
+
+  const handleBookmarkClose = () => {
+    setSelectedBookmark(null); // 상세 정보를 닫기
   };
 
   return (
-    <div className={`main-page ${isMenuOpen ? "menu-open" : ""}`}>
+    <div
+      className={`main-page ${isMenuOpen ? "menu-open" : ""} ${
+        selectedBookmark ? "show-detail" : ""
+      }`}
+    >
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <section>
         <h3>{folderName}</h3>
-        <div className="selected-tags"></div>
 
         <div className="sorting-options">
           <Dropdown
             className="sorting"
+            label="최근 저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />
           <Dropdown
             className="sorting"
+            label="오름차순"
             options={sortingDirOpt}
-            onSelect={handleSortingSelect}
+            onSelect={handleSortingDirSelect}
           />
         </div>
 
@@ -82,9 +96,23 @@ const FolderPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
           bookmarks={bookmarks}
           onDelete={handleDelete}
           onEdit={handleEdit}
+          onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
+          sideMenuOpen={isMenuOpen}
+          bookmarkDetailOpen={selectedBookmark}
           sortingOption={sortingOption}
+          sortingDirOption={sortingDirOption}
         />
       </section>
+      {selectedBookmark && (
+        <div className="bookmark-detail-container">
+          <BookmarkDetail
+            bookmark={selectedBookmark}
+            onEdit={() => console.log("Edit clicked")}
+            onDelete={() => console.log("Delete clicked")}
+            onClose={handleBookmarkClose}
+          />
+        </div>
+      )}
     </div>
   );
 };

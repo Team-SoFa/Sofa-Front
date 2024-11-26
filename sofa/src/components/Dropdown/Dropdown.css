@@ -70,3 +70,6 @@
 }
 .dropdown.linkcard:hover{background-color: #b8b8b8;}
 .dropdown.linkcard .dropdown-menu{max-height: 3.5rem;}
+
+
+.dropdown.sorting{background-color: #717171;}

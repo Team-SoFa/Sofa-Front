@@ -51,7 +51,7 @@ const Header = ({ type, toggleMenu }) => {
           <Button className="menu" onClick={toggleMenu} label="🔲" />
           <div className="searchers">
             {/*className으로 tag말고 다른 게 들어가면 동작이 이상해서 일단 이거 넣음..*/}
-            <Dropdown className="tag" options={folderOpt} label="폴더" />{" "}
+            <Dropdown className="tag" options={folderOpt} label="폴더" />
             <Dropdown className="tag" options={tagsOpt} label="태그선택" />
             <TextField
               className="text_field"

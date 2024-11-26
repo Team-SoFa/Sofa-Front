@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
 
-const Dropdown = ({ className, options, label }) => {
+const Dropdown = ({ className, options, label, onSelect }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
@@ -13,6 +13,7 @@ const Dropdown = ({ className, options, label }) => {
       setSelectedValue(value);
     }
     setIsOpen(false); // 드롭다운 닫기
+    onSelect(value);
   };
   const toggleDropdown = () => {
     //드롭다운 토글 함수
