@@ -8,7 +8,7 @@
     z-index: 1000;
     padding:1rem;
     padding-top:2rem;
-    background-color: white;
+    background: #E8E5FF;
 }
 .logo{ cursor:pointer; width: 50px; }
 

@@ -14,10 +14,12 @@ const Header = ({ type, toggleMenu }) => {
   const [tagOption, setTagOption] = useState("태그선택");
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [recentSearches, setRecentSearches] = useState([
-    { label: "React", content: "React" },
-    { label: "JavaScript", content: "JavaScript" },
-    { label: "Frontend", content: "Frontend" },
-    { label: "CSS", content: "CSS" },
+    { img: "example.png", content: "React" },
+    { img: "example.png", content: "JavaScript" },
+    { img: "example.png", content: "Frontend" },
+    { img: "example.png", content: "CSS" },
+    { img: "example.png", content: "개발자 꿀팁" },
+    { img: "example.png", content: "html은 무엇인가" },
   ]);
 
   const alarmOptions = [
@@ -110,6 +112,7 @@ const Header = ({ type, toggleMenu }) => {
               onSearchDelete={handleSearchDelete}
             />
             <Button label="검색" />
+            <Button label="초기화" />
           </div>
           <div className="user_info">
             <Dropdown

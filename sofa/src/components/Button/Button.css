@@ -7,10 +7,10 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: white;  background-color: black;  
-  border:none; border-radius: 1rem;
+  color: black;  background-color: white;  
+  border:none; border-radius: 5rem;
   font-size: 1rem;
-}.btn:hover {background-color: #4e4e4e;}
+}.btn:hover {background-color: #21066D;}
 
 .btn.dropdown-delete{
   padding:0px;
@@ -30,23 +30,18 @@
   background-color: #C9C9C9;
 } .tag:hover{background-color: #C9C9C9;}
 
-.btn.menu{padding: 0;
-  background-color: transparent;
-  border: none;
-  width: fit-content;
-  height: fit-content;
-  display: inline-block;
+.btn.menu{
+  align-content: center;
+  width: 2rem; height: 2rem;
 }
-.btn-img.menu{width:1.5rem; object-fit: contain;}
+.btn-img.menu{width:1rem;}
 
 /*LinkCard Hover Menus*/
 .btn.linkcard{
   position:absolute;
   padding:5px;
-  transition: opacity 0.3s ease;
   font-size: 0.7rem;
-  background-color: white;
-  color: black;
+  transition: opacity 0.3s ease;
 }
 .btn.linkcard:hover{background-color: #b8b8b8;}
 
