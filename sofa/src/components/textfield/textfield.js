@@ -9,18 +9,22 @@ const TextField = ({
   placeholder,
   type = "text",
   required = false,
+  img,
 }) => {
   return (
     <div className="text-field">
       {label && <label className="text-field-label">{label}</label>}
-      <input
-        className="text-field-input"
-        type={type}
-        value={value}
-        onChange={onChange}
-        placeholder={placeholder}
-        required={required}
-      />
+      <div className="text-filed-wrapper">
+        {img && <img className="text-field-img" src={img} alt="Field Icon" />}
+        <input
+          className="text-field-input"
+          type={type}
+          value={value}
+          onChange={onChange}
+          placeholder={placeholder}
+          required={required}
+        />
+      </div>
     </div>
   );
 };

@@ -5,12 +5,16 @@ import Button from "../Button/Button";
 
 const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
   const [hover, setHover] = useState(false);
+  const [folderOption, setFolderOption] = useState("");
   const folderOpt = ["Documents", "Pictures", "Music", "Videos"].map(
     (item) => ({
       label: item,
       content: item,
     })
   );
+  const handleFolderOption = (option) => {
+    setFolderOption(option.content);
+  };
 
   return (
     <div
@@ -27,6 +31,7 @@ const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
               className="linkcard folder-name"
               options={folderOpt}
               label="폴더"
+              onSelect={handleFolderOption}
             />
             <Button
               className="linkcard delete"

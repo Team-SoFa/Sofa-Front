@@ -3,11 +3,14 @@
   cursor: pointer;
   padding-block: 0.5rem; padding-inline: 1rem;
   margin-left: 0.5rem;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
   color: white;  background-color: black;  
   border:none; border-radius: 1rem;
   font-size: 1rem;
 }.btn:hover {background-color: #4e4e4e;}
-
 
 
 .tag{
@@ -21,6 +24,14 @@
   background-color: #C9C9C9;
 } .tag:hover{background-color: #C9C9C9;}
 
+.btn.menu{padding: 0;
+  background-color: transparent;
+  border: none;
+  width: fit-content;
+  height: fit-content;
+  display: inline-block;
+}
+.btn-img.menu{width:1.5rem; object-fit: contain;}
 
 /*LinkCard Hover Menus*/
 .btn.linkcard{

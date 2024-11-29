@@ -9,6 +9,10 @@ import "./HeaderStyle.css";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
+  const [alarmOption, setAlarmOption] = useState("");
+  const [folderOption, setFolderOption] = useState("폴더선택");
+  const [tagOption, setTagOption] = useState("태그선택");
+
   const alarmOptions = [
     { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
     { content: "또 어떤 알람이 있을까요" },
@@ -30,6 +34,15 @@ const Header = ({ type, toggleMenu }) => {
       content: item,
     })
   );
+  const handleAlarmSelect = (option) => {
+    setAlarmOption(option.content);
+  };
+  const handleFolderSelect = (option) => {
+    setFolderOption(option.content);
+  };
+  const handleTagSelect = (option) => {
+    setTagOption(option.content);
+  };
 
   const headerStyle =
     type === "ONBOARDING"
@@ -48,19 +61,40 @@ const Header = ({ type, toggleMenu }) => {
       {/* ========== LINK CARD PAGES ========== */}
       {location.pathname !== "/" && (
         <>
-          <Button className="menu" onClick={toggleMenu} label="🔲" />
+          <Button
+            className="menu"
+            onClick={toggleMenu}
+            imgSrc="icon/menu-icon.png"
+            imgAlt="menu"
+          />
           <div className="searchers">
             {/*className으로 tag말고 다른 게 들어가면 동작이 이상해서 일단 이거 넣음..*/}
-            <Dropdown className="tag" options={folderOpt} label="폴더" />
-            <Dropdown className="tag" options={tagsOpt} label="태그선택" />
+            <Dropdown
+              className="tag"
+              options={folderOpt}
+              label="폴더"
+              onSelect={handleFolderSelect}
+            />
+            <Dropdown
+              className="tag"
+              options={tagsOpt}
+              label="태그선택"
+              onSelect={handleTagSelect}
+            />
             <TextField
               className="text_field"
               placeholder="검색어를 입력하세요."
+              img="example.png"
             />
             <Button label="검색" />
           </div>
           <div className="user_info">
-            <Dropdown className="alarm" options={alarmOptions} label="알림" />
+            <Dropdown
+              className="alarm"
+              options={alarmOptions}
+              label="알림"
+              onSelect={handleAlarmSelect}
+            />
             <Button label="계정정보" />
           </div>
         </>
