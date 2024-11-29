@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
 
-const Dropdown = ({ className, options, label, onSelect }) => {
+const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
@@ -33,7 +33,7 @@ const Dropdown = ({ className, options, label, onSelect }) => {
         )}
       </div>
 
-      {isOpen && (
+      {(isOpen || className === "search-dropdown") && (
         <div className="dropdown-menu">
           {options.map((option, index) => (
             <div
@@ -44,7 +44,20 @@ const Dropdown = ({ className, options, label, onSelect }) => {
               {option.img && (
                 <img src={option.img} alt="" className="dropdown-option-img" />
               )}
-              {option.content}
+              <span onClick={() => handleSelect(option.content)}>
+                {option.content}
+              </span>
+              {onDelete && (
+                <button
+                  className="dropdown-delete"
+                  onClick={(e) => {
+                    e.stopPropagation();
+                    onDelete(option.content);
+                  }}
+                >
+                  ✕
+                </button>
+              )}
             </div>
           ))}
         </div>

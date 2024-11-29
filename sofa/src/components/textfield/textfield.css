@@ -1,9 +1,12 @@
-/* src/components/Textfield.css */
+.text-field{
+
+}
 .text-filed-wrapper {
   display: flex;
   align-items: center;
   position: relative;
   width: 15rem;
+  margin-left:0.5rem;
   border: none;
   border-radius: 20px;
   padding: 0.5rem;
