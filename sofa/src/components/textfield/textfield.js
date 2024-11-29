@@ -1,6 +1,8 @@
 // src/components/TextField.js
-import React from "react";
+import React, { useRef } from "react";
 import "./Textfield.css"; // 스타일 파일 (선택)
+import Dropdown from "../Dropdown/Dropdown";
+import { OutsideClick } from "../OutsideClick";
 
 const TextField = ({
   label,
@@ -10,9 +12,24 @@ const TextField = ({
   type = "text",
   required = false,
   img,
+  recentSearches = [],
+  onSearchSelect,
+  onSearchDelete,
 }) => {
+  const dropdownRef = useRef(null);
+  const [isDropdownOpen, setIsDropdownOpen] = OutsideClick(dropdownRef, false);
+
+  const handleFocus = () => {
+    setIsDropdownOpen(true);
+  };
+
+  const handleSelectSearch = (selected) => {
+    onSearchSelect(selected.content); // 부모 컴포넌트로 선택된 값을 전달
+    setIsDropdownOpen(false); // 선택 시 드롭다운 닫기
+  };
+
   return (
-    <div className="text-field">
+    <div className="text-field" ref={dropdownRef}>
       {label && <label className="text-field-label">{label}</label>}
       <div className="text-filed-wrapper">
         {img && <img className="text-field-img" src={img} alt="Field Icon" />}
@@ -21,10 +38,20 @@ const TextField = ({
           type={type}
           value={value}
           onChange={onChange}
+          onFocus={handleFocus}
           placeholder={placeholder}
           required={required}
         />
       </div>
+      {isDropdownOpen && recentSearches.length > 0 && (
+        <Dropdown
+          className="search-dropdown"
+          options={recentSearches}
+          label="최근검색"
+          onSelect={handleSelectSearch}
+          onDelete={onSearchDelete}
+        />
+      )}
     </div>
   );
 };

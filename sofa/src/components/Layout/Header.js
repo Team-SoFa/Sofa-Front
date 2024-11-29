@@ -12,6 +12,15 @@ const Header = ({ type, toggleMenu }) => {
   const [alarmOption, setAlarmOption] = useState("");
   const [folderOption, setFolderOption] = useState("폴더선택");
   const [tagOption, setTagOption] = useState("태그선택");
+  const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
+  const [recentSearches, setRecentSearches] = useState([
+    { img: "example.png", content: "React" },
+    { img: "example.png", content: "JavaScript" },
+    { img: "example.png", content: "Frontend" },
+    { img: "example.png", content: "CSS" },
+    { img: "example.png", content: "개발자 꿀팁" },
+    { img: "example.png", content: "html은 무엇인가" },
+  ]);
 
   const alarmOptions = [
     { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
@@ -34,6 +43,7 @@ const Header = ({ type, toggleMenu }) => {
       content: item,
     })
   );
+
   const handleAlarmSelect = (option) => {
     setAlarmOption(option.content);
   };
@@ -42,6 +52,17 @@ const Header = ({ type, toggleMenu }) => {
   };
   const handleTagSelect = (option) => {
     setTagOption(option.content);
+  };
+
+  const handleSearchChange = (event) => {
+    setSearchValue(event.target.value);
+  };
+  // 검색어 삭제 처리 함수
+  const handleSearchDelete = (searchToDelete) => {
+    const updatedSearches = recentSearches.filter(
+      (search) => search.content !== searchToDelete
+    );
+    setRecentSearches(updatedSearches); // 상태 업데이트
   };
 
   const headerStyle =
@@ -68,15 +89,12 @@ const Header = ({ type, toggleMenu }) => {
             imgAlt="menu"
           />
           <div className="searchers">
-            {/*className으로 tag말고 다른 게 들어가면 동작이 이상해서 일단 이거 넣음..*/}
             <Dropdown
-              className="tag"
               options={folderOpt}
               label="폴더"
               onSelect={handleFolderSelect}
             />
             <Dropdown
-              className="tag"
               options={tagsOpt}
               label="태그선택"
               onSelect={handleTagSelect}
@@ -85,8 +103,16 @@ const Header = ({ type, toggleMenu }) => {
               className="text_field"
               placeholder="검색어를 입력하세요."
               img="example.png"
+              value={searchValue}
+              onChange={handleSearchChange}
+              recentSearches={recentSearches} // 최근 검색어 전달
+              onSearchSelect={
+                (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
+              }
+              onSearchDelete={handleSearchDelete}
             />
             <Button label="검색" />
+            <Button label="초기화" />
           </div>
           <div className="user_info">
             <Dropdown
