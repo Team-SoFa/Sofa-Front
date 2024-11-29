@@ -12,6 +12,12 @@
   font-size: 1rem;
 }.btn:hover {background-color: #4e4e4e;}
 
+.btn.dropdown-delete{
+  padding:0px;
+  color:black;
+  background-color: transparent;
+}
+
 
 .tag{
   user-select: none;

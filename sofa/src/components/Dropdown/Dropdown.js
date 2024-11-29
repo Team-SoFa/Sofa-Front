@@ -1,6 +1,7 @@
 import React, { useState, useRef } from "react";
 import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
+import Button from "../Button/Button";
 
 const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
@@ -48,15 +49,14 @@ const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
                 {option.content}
               </span>
               {onDelete && (
-                <button
+                <Button
                   className="dropdown-delete"
+                  label="✕"
                   onClick={(e) => {
                     e.stopPropagation();
                     onDelete(option.content);
                   }}
-                >
-                  ✕
-                </button>
+                />
               )}
             </div>
           ))}

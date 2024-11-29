@@ -13,6 +13,12 @@ const Header = ({ type, toggleMenu }) => {
   const [folderOption, setFolderOption] = useState("폴더선택");
   const [tagOption, setTagOption] = useState("태그선택");
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
+  const [recentSearches, setRecentSearches] = useState([
+    { label: "React", content: "React" },
+    { label: "JavaScript", content: "JavaScript" },
+    { label: "Frontend", content: "Frontend" },
+    { label: "CSS", content: "CSS" },
+  ]);
 
   const alarmOptions = [
     { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
@@ -35,12 +41,6 @@ const Header = ({ type, toggleMenu }) => {
       content: item,
     })
   );
-  const recentSearches = ["React", "JavaScript", "Frontend", "CSS"].map(
-    (item) => ({
-      label: item,
-      content: item,
-    })
-  );
 
   const handleAlarmSelect = (option) => {
     setAlarmOption(option.content);
@@ -54,6 +54,13 @@ const Header = ({ type, toggleMenu }) => {
 
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
+  };
+  // 검색어 삭제 처리 함수
+  const handleSearchDelete = (searchToDelete) => {
+    const updatedSearches = recentSearches.filter(
+      (search) => search.content !== searchToDelete
+    );
+    setRecentSearches(updatedSearches); // 상태 업데이트
   };
 
   const headerStyle =
@@ -100,13 +107,7 @@ const Header = ({ type, toggleMenu }) => {
               onSearchSelect={
                 (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
               }
-              onSearchDelete={(searchToDelete) => {
-                // 삭제된 검색어를 recentSearches에서 제외
-                const updatedSearches = recentSearches.filter(
-                  (search) => search !== searchToDelete
-                );
-                console.log("삭제된 검색어:", searchToDelete);
-              }}
+              onSearchDelete={handleSearchDelete}
             />
             <Button label="검색" />
           </div>

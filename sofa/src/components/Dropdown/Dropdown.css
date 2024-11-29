@@ -38,16 +38,12 @@
 }.dropdown-option:hover{ background-color: #ECEEEF;}
 
 
-.dropdown.search-dropdown .dropdown-header{
-  display: none;
+.dropdown.search-dropdown .dropdown-header{display: none;}
+.dropdown.search-dropdown .dropdown-menu{width:15.7rem;}
+.dropdown.search-dropdown .dropdown-option{
+  display: flex;
+  justify-content: space-between;
 }
-.dropdown-delete {
-  background: none;
-  border: none;
-  font-size: 1rem;
-  margin-left: 1rem;
-}
-
 
 .dropdown.alarm {position: relative;}
 .dropdown.alarm .dropdown-menu{
