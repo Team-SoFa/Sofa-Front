@@ -70,8 +70,9 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
     });
   }
 });
-// // 확장 프로그램 설치 시 Side Panel 기본 동작 설정
-// chrome.runtime.onInstalled.addListener(() => {
-// // 아이콘 클릭 시 Side Panel이 열리도록 설정
-// chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
-// });
+
+// 확장 프로그램 설치 시 Side Panel 기본 동작 설정
+chrome.runtime.onInstalled.addListener(() => {
+// 아이콘 클릭 시 Side Panel이 열리도록 설정
+chrome.sidePanel.setPanelBehavior({ openPanelOnActionClick: true });
+});
