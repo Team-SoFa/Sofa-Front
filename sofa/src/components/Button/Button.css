@@ -10,15 +10,15 @@
   color: black;  background: white;  
   border:none; border-radius: 5rem;
   font-size: 1rem;
-}.btn:hover {color:white; background: #21066D;}
+}.btn:hover {color:white; background: var(--purple-hover);}
 
 .btn.dropdown-select{
   display:none;
-  color:white; background:#4226A7;
+  color:white; background:var(--purple-main);
   margin-left: auto;
   font-size: 0.7rem;
   padding-block: 0.4rem; padding-inline: 0.5rem;
-}.btn.dropdown-select:hover{background: #21066D;}
+}.btn.dropdown-select:hover{background: var(--purple-hover);}
 
 
 .btn.dropdown-delete{
@@ -45,7 +45,8 @@
 }
 .btn-img.menu-img{width:1rem;}
 
-.btn.search{color:white; background: #21066D;}
+.btn.search{color:white; background: var(--purple-main);}
+.btn.search:hover{background: var(--purple-hover);}
 
 .btn.user-info-img{
   align-content: center;
@@ -59,7 +60,7 @@
   font-size: 0.7rem;
   transition: opacity 0.3s ease;
 }
-.btn.linkcard:hover{color:white; background: #21066D;}
+.btn.linkcard:hover{color:white; background: var(--purple-hover);}
 
 .btn.linkcard.delete{top:8px;right: 8px;}
 .btn.linkcard.alarm{top:8px;right:35px;}

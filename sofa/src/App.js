@@ -11,6 +11,7 @@ import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
 import "./app.css";
+import "./styles/color.css";
 
 function App() {
   const [bookmarks, setBookmarks] = useState(initialBookmarks);
