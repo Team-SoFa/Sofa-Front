@@ -4,17 +4,22 @@
     width: 30rem;
     overflow: hidden;
 }
-.accordion.SIDE_MENU{width:15rem;}
+.accordion.SIDE_MENU{
+    margin:1rem;
+    width:15rem;
+    
+}
 
 .accordion-header{
     display: flex;
     justify-content: space-between;
-    background-color: #DDDDDD;
+    background: #d8d0ff;
     padding:0.5rem;
     cursor: pointer;
 }
 .accordion.SIDE_MENU .accordion-header{
-    background-color: rgb(190,190,190);
+    padding:0rem;
+    background: #4226A7;
     justify-content: left;
 }
 
@@ -38,12 +43,10 @@
 
 .accordion-content{
     padding:1rem;
-    background-color: #DDDDDD;
-    margin:0;
-    font-size: 1rem;
+    background-color: #d8d0ff;
     white-space: normal;
 }
-.accordion.SIDE_MENU .accordion-content{background-color: rgb(190,190,190);}
+.accordion.SIDE_MENU .accordion-content{background-color: 4226A7;}
 
 @media (max-width:500px){
     .accordion{

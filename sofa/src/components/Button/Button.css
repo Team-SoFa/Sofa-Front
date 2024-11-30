@@ -7,10 +7,19 @@
   align-items: center;
   justify-content: center;
   gap: 0.5rem;
-  color: black;  background-color: white;  
+  color: black;  background: white;  
   border:none; border-radius: 5rem;
   font-size: 1rem;
-}.btn:hover {background-color: #21066D;}
+}.btn:hover {color:white; background: #21066D;}
+
+.btn.dropdown-select{
+  display:none;
+  color:white; background:#4226A7;
+  margin-left: auto;
+  font-size: 0.7rem;
+  padding-block: 0.4rem; padding-inline: 0.5rem;
+}.btn.dropdown-select:hover{background: #21066D;}
+
 
 .btn.dropdown-delete{
   padding:0px;
@@ -27,14 +36,21 @@
   font-size: 0.7rem;
   border-radius: 5px;
   color:black;
-  background-color: #C9C9C9;
-} .tag:hover{background-color: #C9C9C9;}
+  background-color: #E8E5FF;
+} .tag:hover{color:black; background: #E8E5FF;}
 
-.btn.menu{
+.btn.menu-img{
   align-content: center;
-  width: 2rem; height: 2rem;
+  width: 2.5rem; height: 2.5rem;
 }
-.btn-img.menu{width:1rem;}
+.btn-img.menu-img{width:1rem;}
+
+.btn.search{color:white; background: #21066D;}
+
+.btn.user-info-img{
+  align-content: center;
+  width: 2.5rem; height: 2.5rem;
+}.btn-img.user-info-img{width:1rem;}
 
 /*LinkCard Hover Menus*/
 .btn.linkcard{
@@ -43,10 +59,10 @@
   font-size: 0.7rem;
   transition: opacity 0.3s ease;
 }
-.btn.linkcard:hover{background-color: #b8b8b8;}
+.btn.linkcard:hover{color:white; background: #21066D;}
 
-.btn.linkcard.delete{top:8px;right: 35px;}
-.btn.linkcard.alarm{top:8px;right:8px;}
+.btn.linkcard.delete{top:8px;right: 8px;}
+.btn.linkcard.alarm{top:8px;right:35px;}
 .btn.linkcard.link{bottom:8px;left:8px;margin-left:0px;}
 
 /*BookmarkDetail edit button*/

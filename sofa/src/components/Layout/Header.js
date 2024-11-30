@@ -23,15 +23,38 @@ const Header = ({ type, toggleMenu }) => {
   ]);
 
   const alarmOptions = [
-    { content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다." },
-    { content: "또 어떤 알람이 있을까요" },
-    { content: "새로운 업데이트가 있습니다." },
-    { content: "새로운 업데이트가 있습니다." },
-    { content: "새로운 업데이트가 있습니다." },
-    { content: "새로운 업데이트가 있습니다." },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다.",
+    },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "또 어떤 알람이 있을까요",
+    },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: "example.png",
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
   ].map((item) => ({
     ...item,
-    img: "example.png",
   }));
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
     label: item,
@@ -83,20 +106,24 @@ const Header = ({ type, toggleMenu }) => {
       {location.pathname !== "/" && (
         <>
           <Button
-            className="menu"
+            className="menu-img"
             onClick={toggleMenu}
             imgSrc="icon/menu-icon.png"
             imgAlt="menu"
           />
           <div className="searchers">
             <Dropdown
+              className="dropdown-folder-select"
               options={folderOpt}
-              label="폴더"
+              label="폴더 전체"
+              headerImage="example.png"
               onSelect={handleFolderSelect}
             />
             <Dropdown
+              className="dropdown-tag-select"
               options={tagsOpt}
               label="태그선택"
+              headerImage="example.png"
               onSelect={handleTagSelect}
             />
             <TextField
@@ -111,17 +138,23 @@ const Header = ({ type, toggleMenu }) => {
               }
               onSearchDelete={handleSearchDelete}
             />
-            <Button label="검색" />
+            <Button className="search" label="검색" />
             <Button label="초기화" />
           </div>
           <div className="user_info">
             <Dropdown
               className="alarm"
               options={alarmOptions}
-              label="알림"
+              headerImage="example.png"
               onSelect={handleAlarmSelect}
             />
-            <Button label="계정정보" />
+            <Button
+              className="user-info-img"
+              imgSrc="example.png"
+              imgAlt="user-info"
+              onClick={openModal}
+            />
+            <Modal isOpen={isModalOpen} onClose={closeModal} />
           </div>
         </>
       )}
@@ -143,21 +176,9 @@ const Header = ({ type, toggleMenu }) => {
             <Link to="/signpage">
               <Button label="[임시]SignP" />
             </Link>
-            {/* 모달 열기 버튼 */}
-            <button className="header-btn" onClick={openModal}>
-              [임시]Modal
-            </button>
           </div>
         </>
       )}
-
-      {/* Modal 컴포넌트 */}
-      <Modal isOpen={isModalOpen} onClose={closeModal}>
-        <h2 style={{ marginBottom: "1rem " }}>Example for Modal</h2>
-        <p>모달 내용입니다.</p>
-        <p>모</p>
-        <p>달</p>
-      </Modal>
     </header>
   );
 };

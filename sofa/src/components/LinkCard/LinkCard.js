@@ -33,12 +33,12 @@ const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
               label="폴더"
               onSelect={handleFolderOption}
             />
+            <Button className="linkcard alarm" label="@" />
             <Button
               className="linkcard delete"
               label="D"
               onClick={() => onDelete(bookmark.id)}
             />
-            <Button className="linkcard alarm" label="@" />
             <Button
               className="linkcard link"
               label="바로가기"

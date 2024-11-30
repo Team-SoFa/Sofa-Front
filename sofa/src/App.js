@@ -10,7 +10,7 @@ import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
-import "./App.css";
+import "./app.css";
 
 function App() {
   const [bookmarks, setBookmarks] = useState(initialBookmarks);

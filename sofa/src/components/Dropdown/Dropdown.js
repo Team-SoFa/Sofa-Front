@@ -3,7 +3,14 @@ import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
 import Button from "../Button/Button";
 
-const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
+const Dropdown = ({
+  className,
+  headerImage,
+  options,
+  label,
+  onSelect,
+  onDelete,
+}) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
@@ -11,7 +18,9 @@ const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
   const handleSelect = (value) => {
     // className이 "alarm"일 때 label을 변경하지 않음
     if (className !== "alarm") {
-      setSelectedValue(value);
+      setSelectedValue(
+        value.content === "폴더 전체" ? { label: "폴더 전체" } : value
+      );
     }
     setIsOpen(false); // 드롭다운 닫기
     onSelect(value);
@@ -23,7 +32,17 @@ const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
 
   return (
     <div className={`dropdown ${className}`} ref={dropdownRef}>
-      <div className="dropdown-header" onClick={toggleDropdown}>
+      <div
+        className={`dropdown-header ${isOpen ? "open" : ""}`}
+        onClick={toggleDropdown}
+      >
+        {headerImage && (
+          <img
+            className="dropdown-header-img"
+            src={headerImage}
+            alt="Header Img"
+          />
+        )}
         {selectedValue ? (
           selectedValue.label
         ) : (
@@ -36,7 +55,12 @@ const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
 
       {(isOpen || className === "search-dropdown") && (
         <div className="dropdown-menu">
-          {options.map((option, index) => (
+          {[
+            ...(className === "dropdown-folder-select" // className 조건 추가
+              ? [{ content: label, img: null }]
+              : []),
+            ...options,
+          ].map((option, index) => (
             <div
               key={index}
               className="dropdown-option"
@@ -48,6 +72,8 @@ const Dropdown = ({ className, options, label, onSelect, onDelete }) => {
               <span onClick={() => handleSelect(option.content)}>
                 {option.content}
               </span>
+              <Button className="dropdown-select" label="선택" />
+
               {onDelete && (
                 <Button
                   className="dropdown-delete"

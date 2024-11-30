@@ -2,7 +2,7 @@ import React from "react";
 import "./Button.css";
 
 const Button = ({ label, onClick, className, imgSrc, imgAlt }) => {
-  const isMenuButton = className?.includes("menu");
+  const isMenuButton = className?.includes("img");
 
   return (
     <button className={`btn ${className}`} onClick={onClick}>

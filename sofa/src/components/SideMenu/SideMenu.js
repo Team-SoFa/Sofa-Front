@@ -2,8 +2,23 @@ import React from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./SideMenu.css";
 import Accordion from "../Accordion/Accordion";
+import Dropdown from "../Dropdown/Dropdown";
 
 const SideMenu = ({ isOpen, toggleMenu }) => {
+  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"].map(
+    (item) => ({
+      label: item,
+      content: item,
+    })
+  );
+
+  const folderEdit = [
+    { img: "example.png", content: "폴더 이름 수정" },
+    { img: "example.png", content: "폴더 삭제" },
+  ].map((item) => ({
+    ...item,
+  }));
+
   return (
     <div>
       <div className={`side-menu ${isOpen ? "open" : ""}`}>
@@ -30,6 +45,10 @@ const SideMenu = ({ isOpen, toggleMenu }) => {
             }
           />
         </div>
+        <Link to="/remindpage" className="reminditems">
+          <img className="icon" src="example.png" alt="icon" />
+          <p>리마인드함</p>
+        </Link>
         <Link to="/removeditemspage" className="removeditems">
           <img className="icon" src="example.png" alt="icon" />
           <p>휴지통</p>

@@ -20,7 +20,6 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
   // const [sortingOption, setSortingOption] = useState("");
   // const [selectedTags, setSelectedTags] = useState([]);
-  // const sortingOptions = ["최근 저장", "오래된 저장", "오름차순", "내림차순"];
 
   // 북마크 선택 상태 추가
   const [selectedBookmark, setSelectedBookmark] = useState(null);
