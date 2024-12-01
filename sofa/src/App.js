@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom"; // 라우터 import
 import LandingPage from "./pages/LandingPage";
 import SignPage from "./pages/SignPage";
@@ -10,7 +10,7 @@ import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 
-import "./app.css";
+import "./App.css";
 import "./styles/color.css";
 
 function App() {

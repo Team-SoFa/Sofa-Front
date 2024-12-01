@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
@@ -21,6 +21,8 @@ const Header = ({ type, toggleMenu }) => {
     { img: "example.png", content: "개발자 꿀팁" },
     { img: "example.png", content: "html은 무엇인가" },
   ]);
+
+  const inputRef = useRef(null); // 입력 필드 참조
 
   const alarmOptions = [
     {
@@ -80,6 +82,19 @@ const Header = ({ type, toggleMenu }) => {
   const handleSearchChange = (event) => {
     setSearchValue(event.target.value);
   };
+
+  // 검색어 상태가 변경된 후 커서 위치 이동
+  useEffect(() => {
+    if (inputRef.current) {
+      const inputElement = inputRef.current;
+      const textLength = searchValue.length;
+
+      // 커서를 검색어의 마지막으로 이동
+      inputElement.setSelectionRange(textLength, textLength);
+      inputElement.focus(); // 입력 필드에 포커스 유지
+    }
+  }, [searchValue]); // searchValue가 변경될 때마다 실행
+
   // 검색어 삭제 처리 함수
   const handleSearchDelete = (searchToDelete) => {
     const updatedSearches = recentSearches.filter(
@@ -137,6 +152,7 @@ const Header = ({ type, toggleMenu }) => {
                 (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
               }
               onSearchDelete={handleSearchDelete}
+              ref={inputRef}
             />
             <Button className="search" label="검색" />
             <Button label="초기화" />
