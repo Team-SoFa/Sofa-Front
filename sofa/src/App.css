@@ -1,6 +1,6 @@
 
 body{
-  background-color: #E8E5FF;
+  background-color: var(--main-bg);
 }
 
 /* 전체 페이지 스크롤바 */

@@ -10,9 +10,9 @@
   text-overflow: ellipsis;
   width: auto; max-width: 5rem;
   padding:0.7rem;
-  color:black;
+  color:var(--font-gray);
   background:white;
-  border-radius: 5rem;
+  border:0.031rem solid var(--border-gray); border-radius: 5rem;
 }
 .dropdown-header:hover{color:white; background: var(--purple-hover);}
 .dropdown-header.open{color:white;background: var(--purple-focus);}
@@ -65,7 +65,6 @@
 
 
 /* === 알림 드롭다운 === */
-.dropdown.alarm {position: relative;}
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
   right:-3rem; left:auto;

@@ -9,6 +9,7 @@ import RemovedItemsPage from "./pages/RemovedItemsPage";
 import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
+import Typography from "./styles/Typography/Typography";
 
 import "./app.css";
 import "./styles/color.css";

@@ -6,6 +6,11 @@ import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
 
 import "./HeaderStyle.css";
+import MenuIcon from "../../assets/icon/MenuIcon";
+import DownIcon from "../../assets/icon/DownIcon";
+import SearchIcon from "../../assets/icon/SearchIcon";
+import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
+import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -13,6 +18,9 @@ const Header = ({ type, toggleMenu }) => {
   const [folderOption, setFolderOption] = useState("폴더선택");
   const [tagOption, setTagOption] = useState("태그선택");
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
+  const [isHovered, setIsHovered] = useState(false);
+
+  // ================ 임시 데이터 =====================
   const [recentSearches, setRecentSearches] = useState([
     { img: "example.png", content: "React" },
     { img: "example.png", content: "JavaScript" },
@@ -22,6 +30,16 @@ const Header = ({ type, toggleMenu }) => {
     { img: "example.png", content: "html은 무엇인가" },
   ]);
 
+  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
+    label: item,
+    content: item,
+  }));
+  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"].map(
+    (item) => ({
+      label: item,
+      content: item,
+    })
+  );
   const alarmOptions = [
     {
       img: "example.png",
@@ -30,7 +48,7 @@ const Header = ({ type, toggleMenu }) => {
     },
     {
       img: "example.png",
-      label: "리마인드",
+      label: "어쩌구",
       content: "또 어떤 알람이 있을까요",
     },
     {
@@ -56,16 +74,9 @@ const Header = ({ type, toggleMenu }) => {
   ].map((item) => ({
     ...item,
   }));
-  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
-    label: item,
-    content: item,
-  }));
-  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"].map(
-    (item) => ({
-      label: item,
-      content: item,
-    })
-  );
+  const profileImg = "example.png";
+
+  // ================ 임시 데이터 =====================
 
   const handleAlarmSelect = (option) => {
     setAlarmOption(option.content);
@@ -94,11 +105,13 @@ const Header = ({ type, toggleMenu }) => {
       : {};
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
 
-  // 모달 열기 함수
+  // 모달 open/close 함수
   const openModal = () => setIsModalOpen(true);
-
-  // 모달 닫기 함수
   const closeModal = () => setIsModalOpen(false);
+
+  //마우스 호버 이벤트 함수
+  const handleMouseEnter = () => setIsHovered(true);
+  const handleMouseLeave = () => setIsHovered(false);
 
   return (
     <header className="header" style={headerStyle}>
@@ -108,7 +121,7 @@ const Header = ({ type, toggleMenu }) => {
           <Button
             className="menu-img"
             onClick={toggleMenu}
-            imgSrc="icon/menu-icon.png"
+            Icon={MenuIcon}
             imgAlt="menu"
           />
           <div className="searchers">
@@ -116,20 +129,20 @@ const Header = ({ type, toggleMenu }) => {
               className="dropdown-folder-select"
               options={folderOpt}
               label="폴더 전체"
-              headerImage="example.png"
+              Icon={DownIcon}
               onSelect={handleFolderSelect}
             />
             <Dropdown
               className="dropdown-tag-select"
               options={tagsOpt}
               label="태그선택"
-              headerImage="example.png"
+              Icon={DownIcon}
               onSelect={handleTagSelect}
             />
             <TextField
               className="text_field"
               placeholder="검색어를 입력하세요."
-              img="example.png"
+              Icon={SearchIcon}
               value={searchValue}
               onChange={handleSearchChange}
               recentSearches={recentSearches} // 최근 검색어 전달
@@ -145,11 +158,13 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="alarm"
               options={alarmOptions}
-              headerImage="example.png"
+              Icon={isHovered ? AlarmFilledIcon : AlarmLineIcon}
               onSelect={handleAlarmSelect}
+              onMouseEnter={handleMouseEnter} // 마우스 오버 시 상태 변경
+              onMouseLeave={handleMouseLeave} // 마우스 아웃 시 상태 변경
             />
             <Button
-              className="user-info-img"
+              className="user-info"
               imgSrc="example.png"
               imgAlt="user-info"
               onClick={openModal}

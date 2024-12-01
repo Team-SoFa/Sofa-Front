@@ -11,7 +11,7 @@ const TextField = ({
   placeholder,
   type = "text",
   required = false,
-  img,
+  Icon,
   recentSearches = [],
   onSearchSelect,
   onSearchDelete,
@@ -32,7 +32,12 @@ const TextField = ({
     <div className="text-field" ref={dropdownRef}>
       {label && <label className="text-field-label">{label}</label>}
       <div className="text-filed-wrapper">
-        {img && <img className="text-field-img" src={img} alt="Field Icon" />}
+        {Icon && (
+          <span className="text-field-img" aria-label="Field Icon">
+            {" "}
+            <Icon />{" "}
+          </span>
+        )}
         <input
           className="text-field-input"
           type={type}

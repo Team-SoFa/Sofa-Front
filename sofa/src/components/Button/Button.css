@@ -1,17 +1,24 @@
 /* src/components/Button.css */
 .btn {
   cursor: pointer;
-  padding-block: 0.5rem; padding-inline: 1rem;
+  padding-block: 0.75rem; padding-inline: 1rem;
   margin-left: 0.5rem;
   display: inline-flex;
-  align-items: center;
   justify-content: center;
+  align-content: center;
   gap: 0.5rem;
   color: black;  background: white;  
-  border:none; border-radius: 5rem;
+  border:0.031rem solid var(--border-gray); border-radius: 5rem;
   font-size: 1rem;
 }.btn:hover {color:white; background: var(--purple-hover);}
 
+/* === 메뉴버튼 === */
+.btn.menu-img{
+  width: 2.5rem; height: 2.5rem; padding-block: 0.5rem;
+}.btn.menu-img:hover{border-color: transparent; background: var(--purple-hover);}
+
+
+/* === Dropdown에서의 사용 === */
 .btn.dropdown-select{
   display:none;
   color:white; background:var(--purple-main);
@@ -19,13 +26,12 @@
   font-size: 0.7rem;
   padding-block: 0.4rem; padding-inline: 0.5rem;
 }.btn.dropdown-select:hover{background: var(--purple-hover);}
-
-
 .btn.dropdown-delete{
   padding:0px;
   color:black;
   background-color: transparent;
 }
+
 
 
 .tag{
@@ -39,19 +45,16 @@
   background-color: #E8E5FF;
 } .tag:hover{color:black; background: #E8E5FF;}
 
-.btn.menu-img{
-  align-content: center;
-  width: 2.5rem; height: 2.5rem;
-}
-.btn-img.menu-img{width:1rem;}
 
-.btn.search{color:white; background: var(--purple-main);}
+.btn.search{color:white; background: var(--purple-main); border-color: transparent;}
 .btn.search:hover{background: var(--purple-hover);}
 
-.btn.user-info-img{
+.btn.user-info{
+  padding: 0px;
   align-content: center;
   width: 2.5rem; height: 2.5rem;
-}.btn-img.user-info-img{width:1rem;}
+  overflow: hidden;
+}.btn.user-info .btn-img{width:2.5rem;height: 2.5rem;}
 
 /*LinkCard Hover Menus*/
 .btn.linkcard{

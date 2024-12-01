@@ -5,11 +5,13 @@ import Button from "../Button/Button";
 
 const Dropdown = ({
   className,
-  headerImage,
+  Icon,
   options,
   label,
   onSelect,
   onDelete,
+  onMouseEnter,
+  onMouseLeave,
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
@@ -31,17 +33,20 @@ const Dropdown = ({
   };
 
   return (
-    <div className={`dropdown ${className}`} ref={dropdownRef}>
+    <div
+      className={`dropdown ${className}`}
+      ref={dropdownRef}
+      onMouseEnter={onMouseEnter}
+      onMouseLeave={onMouseLeave}
+    >
       <div
         className={`dropdown-header ${isOpen ? "open" : ""}`}
         onClick={toggleDropdown}
       >
-        {headerImage && (
-          <img
-            className="dropdown-header-img"
-            src={headerImage}
-            alt="Header Img"
-          />
+        {Icon && (
+          <span className="dropdown-header-img" aria-label="Dropdown Img">
+            <Icon />
+          </span>
         )}
         {selectedValue ? (
           selectedValue.label
