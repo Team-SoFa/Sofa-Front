@@ -11,3 +11,14 @@ export const getGoogleLoginUrl = async () => {
     throw error;
   }
 };
+
+export const acessToken = async () => {
+  try {
+    console.log("Base URL:", apiClient.defaults.baseURL);
+    const response = await apiClient.get("/login/oauth2/code/google");
+    return response.data;
+  } catch (error) {
+    console.error("Failed to fetch Google login URL:", error);
+    throw error;
+  }
+};
