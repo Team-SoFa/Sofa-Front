@@ -20,11 +20,15 @@ const ImagePlaceholder = ({ width, height }) => {
 const SignPage = () => {
   const handleGoogleLogin = async () => {
     try {
-      const loginUrl = await getGoogleLoginUrl(); // API에서 URL 가져오기
-      window.location.href = loginUrl; // Google 로그인 페이지로 이동
+      // 백엔드에서 Google 로그인 URL 가져오기
+      const googleLoginUrl = await getGoogleLoginUrl();
+
+      console.log("Google 로그인 URL:", googleLoginUrl);
+      // Google 로그인 페이지로 리디렉션
+      // window.location.href = googleLoginUrl;
     } catch (error) {
       console.error("Google 로그인 URL 가져오기 실패:", error);
-      alert("로그인 중 문제가 발생했습니다. 다시 시도해주세요.");
+      alert("Google 로그인에 실패했습니다. 다시 시도해주세요.");
     }
   };
 
