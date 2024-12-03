@@ -1,13 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link, useLocation } from "react-router-dom";
 import "./SideMenu.css";
 import Accordion from "../Accordion/Accordion";
 import Dropdown from "../Dropdown/Dropdown";
 
+import HomeLineIcon from "../../assets/icon/HomeLineIcon";
+import RemindOnIcon from "../../assets/icon/RemindOnIcon";
+import FolderLineIcon from "../../assets/icon/FolderLineIcon";
+
 const SideMenu = ({ isOpen }) => {
-  const location = useLocation();
-  const currentPath = location.pathname;
-  const isActive = (path) => currentPath === path;
+  const [folderEditOption, setFolderEditOption] = useState("태그선택");
 
   const folderEdit = [
     { img: "example.png", content: "폴더 이름 수정" },
@@ -16,64 +18,85 @@ const SideMenu = ({ isOpen }) => {
     ...item,
   }));
 
+  const location = useLocation();
+  const currentPath = location.pathname;
+  const isActive = (path) => currentPath === path;
+
+  const handleFolderEditOption = (option) => {
+    setFolderEditOption(option.content);
+  };
+
   return (
     <div>
       <div className={`side-menu ${isOpen ? "open" : ""}`}>
         <Link
           to="/homepage"
-          className={`home ${isActive("/homepage") ? "active" : ""}`}
+          className={`item ${isActive("/homepage") ? "active" : ""}`}
         >
-          <img className="icon" src="example.png" alt="icon" />
+          <HomeLineIcon />
           <p>홈</p>
         </Link>
-        <div className="folder">
+        <div className="menu">
           <Accordion
             type="SIDE_MENU"
             title="폴더"
             content={
               <>
-                <Link
-                  to="/folderpage"
-                  className={`folder-item ${
-                    isActive("/folderpage") ? "active" : ""
-                  }`}
-                >
-                  폴더 1
-                </Link>
-                <Link
-                  to="/folder2"
-                  className={`folder-item ${
-                    isActive("/folderpage") ? "active" : ""
-                  }`}
-                >
-                  폴더 2
-                </Link>
-                <Link
-                  to="/folder3"
-                  className={`folder-item ${
-                    isActive("/folderpage") ? "active" : ""
-                  }`}
-                >
-                  폴더 3
-                </Link>
+                <div className="folder-component">
+                  <Link
+                    to="/folderpage"
+                    className={`folder-item ${
+                      isActive("/folderpage") ? "active" : ""
+                    }`}
+                  >
+                    <span className="folder-icon">
+                      <FolderLineIcon />
+                    </span>
+                    폴더 1
+                    <Dropdown
+                      className="dropdown-folder-edit"
+                      Icon={FolderLineIcon}
+                      options={folderEdit}
+                      onSelect={handleFolderEditOption}
+                    />
+                  </Link>
+                </div>
+                <div className="folder-component">
+                  <Link
+                    to="/folder2"
+                    className={`folder-item ${
+                      isActive("/folderpage") ? "active" : ""
+                    }`}
+                  >
+                    ---
+                  </Link>
+                </div>
+                <div className="folder-component">
+                  <Link
+                    to="/folder3"
+                    className={`folder-item ${
+                      isActive("/folderpage") ? "active" : ""
+                    }`}
+                  >
+                    ---
+                  </Link>
+                </div>
               </>
             }
           />
         </div>
         <Link
           to="/remindpage"
-          className={`reminditems ${isActive("/remindpage") ? "active" : ""}`}
+          className={`item ${isActive("/remindpage") ? "active" : ""}`}
         >
-          <img className="icon" src="example.png" alt="icon" />
+          <RemindOnIcon />
           <p>리마인드함</p>
         </Link>
         <Link
           to="/removeditemspage"
-          className={`removeditems ${
-            isActive("/removeditemspage") ? "active" : ""
-          }`}
+          className={`item ${isActive("/removeditemspage") ? "active" : ""}`}
         >
-          <img className="icon" src="example.png" alt="icon" />
+          <HomeLineIcon />
           <p>휴지통</p>
         </Link>
       </div>

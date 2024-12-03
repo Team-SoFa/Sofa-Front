@@ -3,7 +3,7 @@ const DownIcon = () => {
     <svg
       width="1.5rem"
       height="1.5rem"
-      viewBox="0 0 30 30"
+      viewBox="-3 -4 30 30"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

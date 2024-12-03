@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import "./Accordion.css";
+import DownIcon from "../../assets/icon/DownIcon";
 // import openIcon from "example.png";
 // import closeIcon from "example.png";
 
@@ -14,11 +15,9 @@ const Accordion = ({ title, content, type }) => {
     <div className={`accordion ${type}`}>
       <div className="accordion-header" onClick={toggleAccordion}>
         <p>{title}</p>
-        <img
-          src={isOpen ? "example.png" : "example.png"}
-          alt={isOpen ? "Open" : "Close"}
-          className="accordion-icon"
-        />
+        <span className={`accordion-icon ${isOpen ? "rotated" : ""}`}>
+          <DownIcon />
+        </span>
       </div>
       {isOpen && <div className="accordion-content">{content}</div>}
     </div>

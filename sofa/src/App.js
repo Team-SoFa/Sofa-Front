@@ -1,17 +1,21 @@
 import React, { useState } from "react";
 import { Routes, Route } from "react-router-dom"; // 라우터 import
+// Pages
 import LandingPage from "./pages/LandingPage";
 import SignPage from "./pages/SignPage";
-//import OnBoardingPage from "./pages/OnBoardingPage";
 import HomePage from "./pages/HomePage";
 import FolderPage from "./pages/FolderPage";
+import RemindPage from "./pages/RemindPage";
 import RemovedItemsPage from "./pages/RemovedItemsPage";
-import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
-import Typography from "./styles/Typography/Typography";
 
-import "./App.css";
+// Datas
+import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
+
+// Styles
+import Typography from "./styles/Typography/Typography";
+import "./app.css";
 import "./styles/color.css";
 
 function App() {
@@ -49,6 +53,16 @@ function App() {
         path="/folderpage"
         element={
           <FolderPage
+            bookmarks={bookmarks}
+            onAddBookmark={handleAddBookmark}
+            onDeleteBookmark={handleDeleteBookmark}
+          />
+        }
+      />
+      <Route
+        path="/remindpage"
+        element={
+          <RemindPage
             bookmarks={bookmarks}
             onAddBookmark={handleAddBookmark}
             onDeleteBookmark={handleDeleteBookmark}

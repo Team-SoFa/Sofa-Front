@@ -1,4 +1,5 @@
 import React, { useState, useRef } from "react";
+import ReactDom from "react-dom";
 import "./Dropdown.css";
 import { OutsideClick } from "../OutsideClick";
 import Button from "../Button/Button";
@@ -32,6 +33,42 @@ const Dropdown = ({
     setIsOpen(!isOpen);
   };
 
+  //항상 드롭다운 메뉴를 상위에
+  const dropdownMenu = (
+    <div className="dropdown-menu">
+      {[
+        ...(className === "dropdown-folder-select"
+          ? [{ content: label, img: null }]
+          : []),
+        ...options,
+      ].map((option, index) => (
+        <div
+          key={index}
+          className="dropdown-option"
+          onClick={() => handleSelect(option)}
+        >
+          {option.img && (
+            <img src={option.img} alt="" className="dropdown-option-img" />
+          )}
+          <span onClick={() => handleSelect(option.content)}>
+            {option.content}
+          </span>
+          <Button className="dropdown-select" label="선택" />
+          {onDelete && (
+            <Button
+              className="dropdown-delete"
+              label="✕"
+              onClick={(e) => {
+                e.stopPropagation();
+                onDelete(option.content);
+              }}
+            />
+          )}
+        </div>
+      ))}
+    </div>
+  );
+
   return (
     <div
       className={`dropdown ${className}`}
@@ -58,41 +95,54 @@ const Dropdown = ({
         )}
       </div>
 
-      {(isOpen || className === "search-dropdown") && (
-        <div className="dropdown-menu">
-          {[
-            ...(className === "dropdown-folder-select" // className 조건 추가
-              ? [{ content: label, img: null }]
-              : []),
-            ...options,
-          ].map((option, index) => (
-            <div
-              key={index}
-              className="dropdown-option"
-              onClick={() => handleSelect(option)}
-            >
-              {option.img && (
-                <img src={option.img} alt="" className="dropdown-option-img" />
-              )}
-              <span onClick={() => handleSelect(option.content)}>
-                {option.content}
-              </span>
-              <Button className="dropdown-select" label="선택" />
+      {isOpen &&
+        ReactDom.createPortal(
+          <div
+            style={{
+              position: "absolute",
+              top: dropdownRef.current?.getBoundingClientRect().bottom,
+              left: dropdownRef.current?.getBoundingClientRect().left,
+            }}
+            className="dropdown-menu"
+          >
+            {[
+              ...(className === "dropdown-folder-select"
+                ? [{ content: label, img: null }]
+                : []),
+              ...options,
+            ].map((option, index) => (
+              <div
+                key={index}
+                className="dropdown-option"
+                onClick={() => handleSelect(option)}
+              >
+                {option.img && (
+                  <img
+                    src={option.img}
+                    alt=""
+                    className="dropdown-option-img"
+                  />
+                )}
+                <span onClick={() => handleSelect(option.content)}>
+                  {option.content}
+                </span>
+                <Button className="dropdown-select" label="선택" />
 
-              {onDelete && (
-                <Button
-                  className="dropdown-delete"
-                  label="✕"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete(option.content);
-                  }}
-                />
-              )}
-            </div>
-          ))}
-        </div>
-      )}
+                {onDelete && (
+                  <Button
+                    className="dropdown-delete"
+                    label="✕"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(option.content);
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+          </div>,
+          document.body
+        )}
     </div>
   );
 };
