@@ -22,6 +22,7 @@
 }
 .dropdown-menu {
   position:absolute;
+  cursor: pointer;
   width: 10rem;
   height: auto; max-height: 10rem;
   padding:0.1rem;
@@ -102,3 +103,11 @@
   padding:0.1rem;
 }
 .dropdown.linkcard .dropdown-menu{width:5rem; max-height: 3.5rem;}
+
+
+
+.dropdown.dropdown-folder-edit .dropdown-header{
+  color: white;
+  background: transparent;
+  border-color: transparent;
+}

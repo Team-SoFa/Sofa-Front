@@ -38,7 +38,7 @@ const Dropdown = ({
     <div className="dropdown-menu">
       {[
         ...(className === "dropdown-folder-select"
-          ? [{ content: label, img: null }]
+          ? [{ content: label, Icon: null }]
           : []),
         ...options,
       ].map((option, index) => (
@@ -47,9 +47,7 @@ const Dropdown = ({
           className="dropdown-option"
           onClick={() => handleSelect(option)}
         >
-          {option.img && (
-            <img src={option.img} alt="" className="dropdown-option-img" />
-          )}
+          {option.Icon && <option.Icon className="dropdown-option-img" />}
           <span onClick={() => handleSelect(option.content)}>
             {option.content}
           </span>
@@ -103,43 +101,8 @@ const Dropdown = ({
               top: dropdownRef.current?.getBoundingClientRect().bottom,
               left: dropdownRef.current?.getBoundingClientRect().left,
             }}
-            className="dropdown-menu"
           >
-            {[
-              ...(className === "dropdown-folder-select"
-                ? [{ content: label, img: null }]
-                : []),
-              ...options,
-            ].map((option, index) => (
-              <div
-                key={index}
-                className="dropdown-option"
-                onClick={() => handleSelect(option)}
-              >
-                {option.img && (
-                  <img
-                    src={option.img}
-                    alt=""
-                    className="dropdown-option-img"
-                  />
-                )}
-                <span onClick={() => handleSelect(option.content)}>
-                  {option.content}
-                </span>
-                <Button className="dropdown-select" label="선택" />
-
-                {onDelete && (
-                  <Button
-                    className="dropdown-delete"
-                    label="✕"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      onDelete(option.content);
-                    }}
-                  />
-                )}
-              </div>
-            ))}
+            {dropdownMenu}
           </div>,
           document.body
         )}

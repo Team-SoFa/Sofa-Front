@@ -7,24 +7,62 @@ import Dropdown from "../Dropdown/Dropdown";
 import HomeLineIcon from "../../assets/icon/HomeLineIcon";
 import RemindOnIcon from "../../assets/icon/RemindOnIcon";
 import FolderLineIcon from "../../assets/icon/FolderLineIcon";
+import MenuMeatBallIcon from "../../assets/icon/MenuMeatBallIcon";
+import EditLineIcon from "../../assets/icon/EditLineIcon";
+import TrashLineIcon from "../../assets/icon/TrashLineIcon";
 
 const SideMenu = ({ isOpen }) => {
-  const [folderEditOption, setFolderEditOption] = useState("태그선택");
+  const [folderNames, setFolderNames] = useState({
+    // 폴더명 임시값
+    folder1: "폴더1",
+    folder2: "폴더2",
+    folder3: "폴더3",
+  });
+  const [folderEditOption, setFolderEditOption] = useState("");
 
   const folderEdit = [
-    { img: "example.png", content: "폴더 이름 수정" },
-    { img: "example.png", content: "폴더 삭제" },
+    { Icon: EditLineIcon, content: "폴더 이름 수정" },
+    { Icon: TrashLineIcon, content: "폴더 삭제" },
   ].map((item) => ({
     ...item,
   }));
 
+  const handleFolderEditOption = (option) => {
+    if (option.content === "폴더 이름 수정") {
+      handleFolderNameEdit("folder1"); // 예시로 "폴더 1" 수정, 필요한 폴더에 맞게 변경
+    } else if (option.content === "폴더 삭제") {
+      handleFolderDelete("folder1"); // 예시로 "폴더 1" 삭제, 필요한 폴더에 맞게 변경
+    }
+    setFolderEditOption(option.content);
+  };
+  const handleFolderNameEdit = (folderKey) => {
+    const newFolderName = prompt(
+      "새 폴더 이름을 입력하세요",
+      folderNames[folderKey]
+    );
+    if (newFolderName) {
+      setFolderNames((prevNames) => ({
+        ...prevNames,
+        [folderKey]: newFolderName,
+      }));
+    }
+  };
+  const handleFolderDelete = (folderKey) => {
+    const confirmDelete = window.confirm(
+      `${folderNames[folderKey]} 폴더를 삭제하시겠습니까?`
+    );
+    if (confirmDelete) {
+      setFolderNames((prevNames) => {
+        const updatedNames = { ...prevNames };
+        delete updatedNames[folderKey]; // 해당 폴더 삭제
+        return updatedNames;
+      });
+    }
+  };
+
   const location = useLocation();
   const currentPath = location.pathname;
   const isActive = (path) => currentPath === path;
-
-  const handleFolderEditOption = (option) => {
-    setFolderEditOption(option.content);
-  };
 
   return (
     <div>
@@ -52,10 +90,10 @@ const SideMenu = ({ isOpen }) => {
                     <span className="folder-icon">
                       <FolderLineIcon />
                     </span>
-                    폴더 1
+                    {folderNames.folder1}
                     <Dropdown
                       className="dropdown-folder-edit"
-                      Icon={FolderLineIcon}
+                      Icon={MenuMeatBallIcon}
                       options={folderEdit}
                       onSelect={handleFolderEditOption}
                     />
@@ -96,7 +134,7 @@ const SideMenu = ({ isOpen }) => {
           to="/removeditemspage"
           className={`item ${isActive("/removeditemspage") ? "active" : ""}`}
         >
-          <HomeLineIcon />
+          <TrashLineIcon />
           <p>휴지통</p>
         </Link>
       </div>
