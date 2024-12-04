@@ -1,7 +1,9 @@
 import React, { useState, useRef } from "react";
-import "./Dropdown.css";
+import ReactDom from "react-dom";
 import { OutsideClick } from "../OutsideClick";
 import Button from "../Button/Button";
+
+import "./Dropdown.css";
 
 const Dropdown = ({
   className,
@@ -61,8 +63,8 @@ const Dropdown = ({
       {(isOpen || className === "search-dropdown") && (
         <div className="dropdown-menu">
           {[
-            ...(className === "dropdown-folder-select" // className 조건 추가
-              ? [{ content: label, img: null }]
+            ...(className === "dropdown-folder-select"
+              ? [{ content: label, Icon: null }]
               : []),
             ...options,
           ].map((option, index) => (
@@ -71,14 +73,11 @@ const Dropdown = ({
               className="dropdown-option"
               onClick={() => handleSelect(option)}
             >
-              {option.img && (
-                <img src={option.img} alt="" className="dropdown-option-img" />
-              )}
+              {option.Icon && <option.Icon className="dropdown-option-img" />}
               <span onClick={() => handleSelect(option.content)}>
                 {option.content}
               </span>
               <Button className="dropdown-select" label="선택" />
-
               {onDelete && (
                 <Button
                   className="dropdown-delete"
