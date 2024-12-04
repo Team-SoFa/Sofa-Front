@@ -3,6 +3,8 @@ import "./LinkCard.css";
 import Dropdown from "../Dropdown/Dropdown";
 import Button from "../Button/Button";
 
+import TrashLineIcon from "../../assets/icon/TrashLineIcon";
+
 const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
   const [hover, setHover] = useState(false);
   const [folderOption, setFolderOption] = useState("");
@@ -30,18 +32,18 @@ const LinkCard = ({ bookmark, onDelete, onEdit, onClick }) => {
             <Dropdown
               className="linkcard folder-name"
               options={folderOpt}
-              label="폴더"
+              label="폴더이름"
               onSelect={handleFolderOption}
             />
             <Button className="linkcard alarm" label="@" />
             <Button
               className="linkcard delete"
-              label="D"
+              Icon={TrashLineIcon}
               onClick={() => onDelete(bookmark.id)}
             />
             <Button
               className="linkcard link"
-              label="바로가기"
+              label="링크 바로가기"
               onClick={() =>
                 window.open(bookmark.url, "_blank", "noopener noreferrer")
               }

@@ -9,7 +9,7 @@ export const bookmarks = [
   { id: 6, title: "React", url: "https://reactjs.org", img: "example.png" },
   {
     id: 7,
-    title: "YouTube",
+    title: "YouTube 저기여",
     url: "https://www.youtube.com",
     img: "example.png",
   },
@@ -21,7 +21,8 @@ export const bookmarks = [
   },
   {
     id: 9,
-    title: "URL이 두줄인데 제목도 두줄까지 길어진다면",
+    title:
+      "URL이 두줄인데 제목도 두줄까지 길어진다면 어떨까 이게 무엇일까 코카콜라 맛있다 맛있ㅇ면 또먹어",
     url: "https://www.kw.ac.kr/ko/life/notice.jsp?BoardMode=view&DUID=47837&tpage=1&searchKey=1&searchVal=&srCategoryId=",
     img: "example.png",
   },

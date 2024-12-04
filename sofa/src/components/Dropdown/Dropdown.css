@@ -93,15 +93,15 @@
 /* === 링크카드 드롭다운 === */
 .dropdown.linkcard.folder-name {
   position:absolute;
-  top:8px; left:8px;
+  top:0.7rem; left:0.7rem;
   margin-left: 0px;
   font-size: 0.7rem;
   transition: opacity 0.3s ease;
 }
 .dropdown.linkcard .dropdown-header {
   display: flex; align-items: center;justify-content: center;
-  width: 1.2rem; height: 1.5rem;
-  padding:0.1rem;
+  padding:6px;
+  color:black;
 }
 .dropdown.linkcard .dropdown-menu{width:5rem; max-height: 3.5rem;}
 

@@ -27,22 +27,30 @@ const ShowLinkCard = ({
     if (sideMenuOpen && bookmarkDetailOpen) {
       columns = Math.floor(
         (windowWidth -
-          20 *
+          50 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
-      ); // sideMenu와 bookmarkDetail이 열렸을 때
-    } else if (sideMenuOpen || bookmarkDetailOpen) {
+      ); // 둘다 열렸을 때
+    } else if (sideMenuOpen) {
       columns = Math.floor(
         (windowWidth -
-          10 *
+          30 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
-      ); // 하나만 열렸을 때
+      ); // 사이드메뉴 열렸을 때
+    } else if (bookmarkDetailOpen) {
+      columns = Math.floor(
+        (windowWidth -
+          40 *
+            parseFloat(getComputedStyle(document.documentElement).fontSize)) /
+          200
+      ); // 자세히보기 열렸을 때
     } else {
       columns = Math.floor(windowWidth / 200); // 기본적으로 윈도우 창 크기에 맞춰
     }
 
-    setGridColumns(columns);
+    // gridColumns 값 갱신
+    setGridColumns(Math.min(columns, 6)); // 최대 6열로 제한
   };
 
   // 화면 크기 변경 시 그리드 열 개수 재계산
