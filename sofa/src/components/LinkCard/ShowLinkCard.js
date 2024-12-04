@@ -8,6 +8,7 @@ import "./ShowLinkCard.css";
 //onDelete : 북마크 삭제 함수
 //북마크 목록 길이가 0보다 길면 렌더링
 const ShowLinkCard = ({
+  className,
   bookmarks,
   sideMenuOpen,
   bookmarkDetailOpen,
@@ -94,6 +95,7 @@ const ShowLinkCard = ({
       {sortedBookmarks.length > 0 ? (
         sortedBookmarks.map((bookmark) => (
           <LinkCard
+            className={className}
             key={bookmark.id} //리스트에서 고유 식별자 사용
             bookmark={bookmark} //각 북마크 데이터를 BookmarkItem에 전달
             onDelete={onDelete} //삭제 기능을 BookmarkItem에 전달

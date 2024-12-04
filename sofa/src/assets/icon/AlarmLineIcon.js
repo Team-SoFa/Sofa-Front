@@ -3,7 +3,7 @@ const AlarmLineIcon = () => {
     <svg
       width="1.5rem"
       height="1.5rem"
-      viewBox="1.5 -0.5 22 22"
+      viewBox="-0.5 -2 25 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

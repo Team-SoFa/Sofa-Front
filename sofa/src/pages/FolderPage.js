@@ -6,6 +6,7 @@ import Dropdown from "../components/Dropdown/Dropdown";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
+import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 
 const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const [folderName, setFolderName] = useState(""); //폴더명
@@ -80,12 +81,14 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
         <div className="sorting-options">
           <Dropdown
             className="sorting"
+            Icon={DropdownDownIcon}
             label="최근저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />
           <Dropdown
             className="sorting"
+            Icon={DropdownDownIcon}
             label="오름차순"
             options={sortingDirOpt}
             onSelect={handleSortingDirSelect}

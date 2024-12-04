@@ -2,7 +2,6 @@
 .linkCard{
     cursor: pointer;
     height: 11rem;
-    margin: 0.2rem;
     overflow: hidden;
     border-radius: 1rem;
 }
