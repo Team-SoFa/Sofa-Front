@@ -138,7 +138,7 @@ const SignPage = () => {
       const response = await folderPut(data, lastFolder.id);
       console.log('folderPut response:', response);  // 응답 값 확인
     } catch (err) {
-      console.error('폴더 추가 실패:', err);
+      console.error('폴더 수정 실패:', err);
     }
   };
 
@@ -150,7 +150,7 @@ const SignPage = () => {
       console.log('linkCardPost response:', response);  // 응답 값 확인
     
     } catch (err) {
-      console.error('폴더 추가 실패:', err);
+      console.error('링크카드 추가 실패:', err);
     }
   };
 
