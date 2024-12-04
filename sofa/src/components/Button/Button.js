@@ -1,24 +1,11 @@
-import React from "react";
-import "./Button.css";
+// src/components/Button.js
+import React from 'react';
+import './Button.css';
 
-const Button = ({ label, onClick, className, Icon, imgSrc, imgAlt }) => {
+const Button = ({ label, onClick, type = 'button', className }) => {
   return (
-    <button className={`btn ${className}`} onClick={onClick}>
-      <>
-        {Icon && (
-          <span className="btn-icon" aria-label={imgAlt || "button icon"}>
-            <Icon />
-          </span>
-        )}
-        {imgSrc && (
-          <img
-            className="btn-img"
-            src={imgSrc}
-            alt={imgAlt || "button image"}
-          />
-        )}
-        {label && <span>{label}</span>}
-      </>
+    <button className={`btn ${className}`} type={type} onClick={onClick}>
+      {label}
     </button>
   );
 };
