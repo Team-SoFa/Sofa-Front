@@ -6,16 +6,17 @@ import Dropdown from "../components/Dropdown/Dropdown";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
+import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 
 const RemindPage = ({ bookmarks, onDeleteBookmark }) => {
   const [folderName, setFolderName] = useState(""); //폴더명
   const [loading, setLoading] = useState(true); //로딩 상태
-  const [sortingOption, setSortingOption] = useState("최근저장"); //정렬 기준
+  const [sortingOption, setSortingOption] = useState("최근 저장"); //정렬 기준
   const [sortingDirOption, setSortingDirOption] = useState("오름차순"); //정렬 방향
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedBookmark, setSelectedBookmark] = useState(null);
 
-  const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
+  const sortingOpt = ["최근 저장", "최근 수정", "이름순"].map((item) => ({
     label: item,
     content: item,
   }));
@@ -27,22 +28,6 @@ const RemindPage = ({ bookmarks, onDeleteBookmark }) => {
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
-
-  useEffect(() => {
-    const fetchUserInfo = async () => {
-      try {
-        // 폴더명 API 받아오기
-        const folderNameData = { label: "폴더명" };
-        setFolderName(folderNameData.label);
-
-        setLoading(false);
-      } catch (error) {
-        console.error("Fail to get user information", error);
-        setLoading(false);
-      }
-    };
-    fetchUserInfo();
-  }, []);
 
   const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
@@ -75,17 +60,19 @@ const RemindPage = ({ bookmarks, onDeleteBookmark }) => {
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <section className="main-box">
-        <h3>{folderName}</h3>
+        <h3>리마인드함</h3>
 
         <div className="sorting-options">
           <Dropdown
             className="sorting"
-            label="최근저장"
+            Icon={DropdownDownIcon}
+            label="최근 저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />
           <Dropdown
             className="sorting"
+            Icon={DropdownDownIcon}
             label="오름차순"
             options={sortingDirOpt}
             onSelect={handleSortingDirSelect}

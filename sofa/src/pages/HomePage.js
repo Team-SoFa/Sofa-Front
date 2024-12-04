@@ -40,9 +40,6 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
             <div className="link-set">
               <div className="_text">
                 <p className="_title">{username}님께 추천하는 링크</p>
-                <Link to="/homepage" className="more">
-                  더보기&gt;
-                </Link>
               </div>
               <ShowLinkCard
                 bookmarks={bookmarks}

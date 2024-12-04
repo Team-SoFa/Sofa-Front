@@ -8,6 +8,7 @@ import "./ShowLinkCard.css";
 //onDelete : 북마크 삭제 함수
 //북마크 목록 길이가 0보다 길면 렌더링
 const ShowLinkCard = ({
+  className,
   bookmarks,
   sideMenuOpen,
   bookmarkDetailOpen,
@@ -27,22 +28,30 @@ const ShowLinkCard = ({
     if (sideMenuOpen && bookmarkDetailOpen) {
       columns = Math.floor(
         (windowWidth -
-          20 *
+          50 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
-      ); // sideMenu와 bookmarkDetail이 열렸을 때
-    } else if (sideMenuOpen || bookmarkDetailOpen) {
+      ); // 둘다 열렸을 때
+    } else if (sideMenuOpen) {
       columns = Math.floor(
         (windowWidth -
-          10 *
+          30 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
-      ); // 하나만 열렸을 때
+      ); // 사이드메뉴 열렸을 때
+    } else if (bookmarkDetailOpen) {
+      columns = Math.floor(
+        (windowWidth -
+          40 *
+            parseFloat(getComputedStyle(document.documentElement).fontSize)) /
+          200
+      ); // 자세히보기 열렸을 때
     } else {
       columns = Math.floor(windowWidth / 200); // 기본적으로 윈도우 창 크기에 맞춰
     }
 
-    setGridColumns(columns);
+    // gridColumns 값 갱신
+    setGridColumns(Math.min(columns, 6)); // 최대 6열로 제한
   };
 
   // 화면 크기 변경 시 그리드 열 개수 재계산
@@ -86,6 +95,7 @@ const ShowLinkCard = ({
       {sortedBookmarks.length > 0 ? (
         sortedBookmarks.map((bookmark) => (
           <LinkCard
+            className={className}
             key={bookmark.id} //리스트에서 고유 식별자 사용
             bookmark={bookmark} //각 북마크 데이터를 BookmarkItem에 전달
             onDelete={onDelete} //삭제 기능을 BookmarkItem에 전달

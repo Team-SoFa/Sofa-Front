@@ -1,7 +1,8 @@
 .bookmark-grid{
     display: grid;
     grid-template-columns: repeat(6,1fr);
-    padding:20px;
+    padding:1rem; padding-inline: 0;
+    gap:0.7rem;
 }
 @media(max-width:950px) {
     .bookmark-grid {

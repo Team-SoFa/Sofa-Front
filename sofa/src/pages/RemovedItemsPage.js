@@ -6,15 +6,16 @@ import Dropdown from "../components/Dropdown/Dropdown";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
+import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 
 const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [loading, setLoading] = useState(true); //로딩 상태
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedBookmark, setSelectedBookmark] = useState(false);
-  const [sortingOption, setSortingOption] = useState("최근저장");
+  const [sortingOption, setSortingOption] = useState("최근 삭제");
   const [sortingDirOption, setSortingDirOption] = useState("오름차순");
 
-  const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
+  const sortingOpt = ["최근 삭제", "이름순"].map((item) => ({
     label: item,
     content: item,
   }));
@@ -61,12 +62,14 @@ const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
         <div className="sorting-options">
           <Dropdown
             className="sorting"
-            label="최근저장"
+            Icon={DropdownDownIcon}
+            label="최근 저장"
             options={sortingOpt}
             onSelect={handleSortingSelect}
           />
           <Dropdown
             className="sorting"
+            Icon={DropdownDownIcon}
             label="오름차순"
             options={sortingDirOpt}
             onSelect={handleSortingDirSelect}
@@ -74,6 +77,7 @@ const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
         </div>
 
         <ShowLinkCard
+          className="RemovedItemsPage"
           bookmarks={bookmarks}
           onDelete={handleDelete}
           onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
