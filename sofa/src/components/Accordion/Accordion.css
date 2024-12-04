@@ -33,12 +33,12 @@
 
 /*====== SIDE MENU =====*/
 .accordion.SIDE_MENU{
-    width: 13.5rem;
+    width: 13rem;
     margin-inline:0.8rem;
 }
 .accordion.SIDE_MENU .accordion-header{
     align-items: center;
-    padding:0.5rem;
+    padding:0.5rem; padding-left: 1rem;
     background: var(--purple-main);
     justify-content: left;
     background-color: var(--purple-main);
