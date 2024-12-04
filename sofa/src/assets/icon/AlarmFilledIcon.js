@@ -3,7 +3,7 @@ const AlarmFilledIcon = () => {
     <svg
       width="1.5rem"
       height="1.5rem"
-      viewBox="4 4 26 26"
+      viewBox="1 -1.5 23 23"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

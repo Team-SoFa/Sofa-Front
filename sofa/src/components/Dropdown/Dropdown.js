@@ -4,18 +4,11 @@ import { OutsideClick } from "../OutsideClick";
 import Button from "../Button/Button";
 
 import "./Dropdown.css";
+import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 
-const Dropdown = ({
-  className,
-  Icon,
-  options,
-  label,
-  onSelect,
-  onDelete,
-  onMouseEnter,
-  onMouseLeave,
-}) => {
+const Dropdown = ({ className, Icon, options, label, onSelect, onDelete }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
+  const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
 
@@ -37,21 +30,33 @@ const Dropdown = ({
     <div
       className={`dropdown ${className}`}
       ref={dropdownRef}
-      onMouseEnter={onMouseEnter}
-      onMouseLeave={onMouseLeave}
+      onMouseEnter={() => setIsHovered(true)} // hover 시작
+      onMouseLeave={() => setIsHovered(false)} // hover 종료
     >
       <div
         className={`dropdown-header ${isOpen ? "open" : ""}`}
         onClick={toggleDropdown}
       >
-        {Icon && (
+        {/* alarm 클래스일 경우만 아이콘을 A, B로 지정 */}
+        {className === "alarm" ? (
           <span
             className={`dropdown-header-img ${isOpen ? "rotated" : ""}`}
             aria-label="Icon"
           >
-            <Icon />
+            {isHovered || isOpen ? <AlarmFilledIcon /> : <Icon />}{" "}
+            {/* hover 또는 메뉴가 열렸을 때 B 아이콘 */}
           </span>
+        ) : (
+          Icon && (
+            <span
+              className={`dropdown-header-img ${isOpen ? "rotated" : ""}`}
+              aria-label="Icon"
+            >
+              <Icon />
+            </span>
+          )
         )}
+
         {selectedValue ? (
           selectedValue.label
         ) : (

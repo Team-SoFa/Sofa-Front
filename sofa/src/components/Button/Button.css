@@ -32,10 +32,7 @@
   overflow: hidden;
 }.btn.user-info .btn-img{width:2.5rem;height: 2.5rem;}
 
-
-
-
-/* === Dropdown에서의 사용 === */
+/* === Dropdown 내부 컨텐츠 === */
 .btn.dropdown-select{
   display:none;
   color:white; background:var(--purple-main);
@@ -45,8 +42,8 @@
 }.btn.dropdown-select:hover{background: var(--purple-hover);}
 .btn.dropdown-delete{
   padding:0px;
-  color:black;
   background-color: transparent;
+  border-color: transparent;
 }
 
 

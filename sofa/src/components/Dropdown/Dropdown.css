@@ -6,6 +6,7 @@
 }
 .dropdown-header{
   display: flex;
+  justify-content: center;
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -17,7 +18,6 @@
 }.dropdown-header-img{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
 .dropdown-header:hover, .dropdown-header.open{color:white; background: var(--purple-main);}
 .dropdown-header-img.rotated{color:white; transform:rotate(180deg);}
-
 
 .dropdown-menu {
   position:absolute;
@@ -61,6 +61,12 @@
 .dropdown-tag-select .dropdown-header-img{order:2; margin-left: 0.2rem;}
 .dropdown-folder-select .dropdown-select{display:flex;}
 .dropdown-tag-select .dropdown-select{display: flex;}
+
+
+/* === 알림 === */
+.dropdown.alarm .dropdown-header{padding:0rem; width:2.5rem; height: 2.5rem;}
+.dropdown.alarm .dropdown-header-img{transform:rotate(0deg);}
+
 
 .dropdown.alarm .dropdown-menu{
   width: 15rem;

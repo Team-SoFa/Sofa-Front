@@ -10,7 +10,6 @@ import MenuIcon from "../../assets/icon/MenuIcon";
 import DownIcon from "../../assets/icon/DownIcon";
 import SearchIcon from "../../assets/icon/SearchIcon";
 import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
-import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -79,8 +78,8 @@ const Header = ({ type, toggleMenu }) => {
 
   // ================ 임시 데이터 =====================
 
+  // 메뉴 열림 여부 판정
   const handleMenuToggle = () => {
-    // 메뉴 열림 여부 판정
     setIsMenuOpen(!isMenuOpen);
     toggleMenu();
   };
@@ -114,10 +113,6 @@ const Header = ({ type, toggleMenu }) => {
   // 모달 open/close 함수
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-
-  //마우스 호버 이벤트 함수
-  const handleMouseEnter = () => setIsHovered(true);
-  const handleMouseLeave = () => setIsHovered(false);
 
   return (
     <header className="header" style={headerStyle}>
@@ -164,10 +159,8 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="alarm"
               options={alarmOptions}
-              Icon={isHovered ? AlarmFilledIcon : AlarmLineIcon}
+              Icon={AlarmLineIcon}
               onSelect={handleAlarmSelect}
-              onMouseEnter={handleMouseEnter} // 마우스 오버 시 상태 변경
-              onMouseLeave={handleMouseLeave} // 마우스 아웃 시 상태 변경
             />
             <Button
               className="user-info"
