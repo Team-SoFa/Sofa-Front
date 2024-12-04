@@ -30,7 +30,6 @@ const Dropdown = ({
     onSelect(value);
   };
   const toggleDropdown = () => {
-    //드롭다운 토글 함수
     setIsOpen(!isOpen);
   };
 
@@ -46,7 +45,10 @@ const Dropdown = ({
         onClick={toggleDropdown}
       >
         {Icon && (
-          <span className="dropdown-header-img" aria-label="Dropdown Img">
+          <span
+            className={`dropdown-header-img ${isOpen ? "rotated" : ""}`}
+            aria-label="Icon"
+          >
             <Icon />
           </span>
         )}

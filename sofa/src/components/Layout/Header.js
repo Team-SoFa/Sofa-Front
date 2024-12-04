@@ -35,7 +35,7 @@ const Header = ({ type, toggleMenu }) => {
     label: item,
     content: item,
   }));
-  const tagsOpt = ["Documents", "Pictures", "Music", "태그어쩌구1"].map(
+  const tagsOpt = ["Documents", "Pictures", "PICTURES", "태그어쩌구1"].map(
     (item) => ({
       label: item,
       content: item,
