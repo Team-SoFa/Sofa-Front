@@ -6,7 +6,6 @@
 }
 .dropdown-header{
   display: flex;
-  justify-content: center;
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
@@ -64,7 +63,7 @@
 
 
 /* === 알림 === */
-.dropdown.alarm .dropdown-header{padding:0rem; width:2.5rem; height: 2.5rem;}
+.dropdown.alarm .dropdown-header{padding:0rem; width:2.5rem; height: 2.5rem; justify-content: center;}
 .dropdown.alarm .dropdown-header-img{transform:rotate(0deg);}
 
 
@@ -113,6 +112,7 @@
   background:transparent;
   border-color: transparent;
 }
+.dropdown.dropdown-folder-edit .dropdown-header-img{color:white;}
 .dropdown.dropdown-folder-edit .dropdown-menu{
   right:0rem;
 }
