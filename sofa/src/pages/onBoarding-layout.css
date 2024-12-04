@@ -167,6 +167,7 @@
     align-items: center;
     width: 100%; 
     margin-top: 1.5rem; /* 텍스트와 버튼 사이 간격 */
+    flex-direction: column;
 }
 
 /* 텍스트 섹션 */
