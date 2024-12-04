@@ -125,7 +125,7 @@ const Header = ({ type, toggleMenu }) => {
       {location.pathname !== "/" && (
         <>
           <Button
-            className={`menu-img ${isMenuOpen ? "" : "menu-open"}`}
+            className={`menu-img ${isMenuOpen ? "menu-open" : ""}`}
             onClick={handleMenuToggle}
             Icon={MenuIcon}
             imgAlt="menu"
