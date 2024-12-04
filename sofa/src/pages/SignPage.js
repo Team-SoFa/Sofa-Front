@@ -189,7 +189,7 @@ const SignPage = () => {
         };
       
         // 상태 업데이트
-        setLinkCardListDetail([transformedData]); // 배열 형태로 상태에 저장
+        setLinkCardListDetail(transformedData); // 배열 형태로 상태에 저장
         console.log('가공된 데이터:', transformedData);
       }
     } catch (err) {
