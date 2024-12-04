@@ -19,6 +19,7 @@ const Header = ({ type, toggleMenu }) => {
   const [tagOption, setTagOption] = useState("태그선택");
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [isHovered, setIsHovered] = useState(false);
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
 
   // ================ 임시 데이터 =====================
   const [recentSearches, setRecentSearches] = useState([
@@ -78,6 +79,11 @@ const Header = ({ type, toggleMenu }) => {
 
   // ================ 임시 데이터 =====================
 
+  const handleMenuToggle = () => {
+    // 메뉴 열림 여부 판정
+    setIsMenuOpen(!isMenuOpen);
+    toggleMenu();
+  };
   const handleAlarmSelect = (option) => {
     setAlarmOption(option.content);
   };
@@ -119,8 +125,8 @@ const Header = ({ type, toggleMenu }) => {
       {location.pathname !== "/" && (
         <>
           <Button
-            className="menu-img"
-            onClick={toggleMenu}
+            className={`menu-img ${isMenuOpen ? "" : "menu-open"}`}
+            onClick={handleMenuToggle}
             Icon={MenuIcon}
             imgAlt="menu"
           />
