@@ -11,7 +11,7 @@ import TermsPage from "./pages/TermsPage";
 import PrivacyPolicy from "./pages/PrivacyPolicy";
 import Typography from "./styles/Typography/Typography";
 
-import "./App.css";
+import "./app.css";
 import "./styles/color.css";
 
 function App() {
