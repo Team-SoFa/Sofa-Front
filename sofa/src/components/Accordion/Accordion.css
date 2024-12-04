@@ -2,7 +2,6 @@
     border-radius: 10px;
     margin:0.5rem;
     width: 30rem;
-    overflow: hidden;
 }
 
 .accordion-header{
@@ -13,14 +12,12 @@
     padding:0.5rem;
     cursor: pointer;
 }
-
 .accordion-header p{
     font-weight: 800;
     justify-content: start;
     margin-left: 0.6rem;
     font-size: 1rem;
 }
-
 .accordion-content{
     padding:1rem;
     background-color: #d8d0ff;
@@ -36,7 +33,7 @@
 
 /*====== SIDE MENU =====*/
 .accordion.SIDE_MENU{
-    width: 13rem;
+    width: 13.5rem;
     margin-inline:0.8rem;
 }
 .accordion.SIDE_MENU .accordion-header{

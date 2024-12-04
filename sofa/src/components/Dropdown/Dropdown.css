@@ -32,7 +32,7 @@
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
   overflow-y: scroll;
-  z-index: 1000;
+  z-index: 9999;
 }
 .dropdown-option{
   display: flex;
@@ -63,8 +63,6 @@
 .dropdown-folder-select .dropdown-select{display:flex;}
 .dropdown-tag-select .dropdown-select{display: flex;}
 
-
-/* === 알림 드롭다운 === */
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
   right:-3rem; left:auto;
@@ -103,9 +101,12 @@
 }
 .dropdown.linkcard .dropdown-menu{width:5rem; max-height: 3.5rem;}
 
-
+/* ============== 사이드 메뉴 ==============*/
 .dropdown.dropdown-folder-edit .dropdown-header{
   color:white;
   background:transparent;
   border-color: transparent;
+}
+.dropdown.dropdown-folder-edit .dropdown-menu{
+  right:0rem;
 }

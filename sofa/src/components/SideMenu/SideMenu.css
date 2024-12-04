@@ -4,7 +4,7 @@
     left: 0;
     width: 15rem; /* 사이드 메뉴의 너비 230px */
     height: calc(100vh - 8rem);
-    overflow-y: scroll; overflow-x: hidden;
+    overflow: visible; overflow-y: scroll;
     margin-left: 1rem;
     padding-top: 1rem;
     color: white;
@@ -34,6 +34,7 @@
     text-decoration: none;
     color:white;
 }
+
 .folder-item{
     display: flex;
     align-items: center;
