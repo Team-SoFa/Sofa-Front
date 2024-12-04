@@ -103,7 +103,16 @@ const SideMenu = ({ isOpen }) => {
                       isActive("/folderpage") ? "active" : ""
                     }`}
                   >
-                    ---
+                    <span className="folder-icon">
+                      <FolderLineIcon />
+                    </span>
+                    {folderNames.folder2}
+                    <Dropdown
+                      className="dropdown-folder-edit"
+                      Icon={MenuMeatBallIcon}
+                      options={folderEdit}
+                      onSelect={handleFolderEditOption}
+                    />
                   </Link>
                 </div>
                 <div className="folder-component">
@@ -113,7 +122,16 @@ const SideMenu = ({ isOpen }) => {
                       isActive("/folderpage") ? "active" : ""
                     }`}
                   >
-                    ---
+                    <span className="folder-icon">
+                      <FolderLineIcon />
+                    </span>
+                    {folderNames.folder3}
+                    <Dropdown
+                      className="dropdown-folder-edit"
+                      Icon={MenuMeatBallIcon}
+                      options={folderEdit}
+                      onSelect={handleFolderEditOption}
+                    />
                   </Link>
                 </div>
               </>

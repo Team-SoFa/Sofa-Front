@@ -10,7 +10,7 @@ const Accordion = ({ title, content, type }) => {
   };
 
   return (
-    <div className={`accordion ${type}`}>
+    <div className={`accordion ${type}`} onClick={(e) => e.stopPropagation()}>
       <div className="accordion-header" onClick={toggleAccordion}>
         <p>{title}</p>
         <span className={`accordion-icon ${isOpen ? "rotated" : ""}`}>

@@ -40,16 +40,14 @@
     align-items: center;
     margin-block: 0.5rem;
     padding:0.5rem; padding-inline:1rem;
-    text-decoration: none;
     color: white;
 }
 .item:hover, .folder-item:hover {
     background: var(--sideMenu-hover); /* 원하는 배경색 */
     border-radius: 5rem;
 }
-.folder-icon {
-    margin-right: 0.5rem;
-}
+.folder-icon {margin-right: 0.5rem;}
 .dropdown-folder-edit{
     margin-left: auto;
+    
 }
