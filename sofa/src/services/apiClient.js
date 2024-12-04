@@ -25,6 +25,8 @@ export const get = async (url, params = {}, headers = {}) => {
 
 // POST 요청을 위한 함수 (토큰 없는 기본 POST 요청)
 export const post = async (url, data = {}, headers = {}) => {
+  console.log("Final Headers:", headers);
+  console.log('data:', data);
   const response = await apiClient.post(url, data, { headers });
   return response.data;
 };
@@ -57,12 +59,13 @@ export const tokenGet = async (url, params = {}, headers = {}) => {
 // POST 요청을 위한 함수 (accessToken이 필요한 POST 요청)
 export const tokenPost = async (url, data = {}, headers = {}) => {
   const accessToken = getAccessToken();
-
-  // accessToken이 있으면 Authorization 헤더 추가
+  
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
+  console.log('tlqkf',data);
+  
   const response = await apiClient.post(url, data, { headers });
   return response.data;
 };
@@ -77,6 +80,7 @@ export const tokenPut = async (url, data = {}, headers = {}) => {
   }
 
   const response = await apiClient.put(url, data, { headers });
+  
   return response.data;
 };
 
