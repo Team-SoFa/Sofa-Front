@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SoFa Side Panel</title>
+  <link rel="stylesheet" href="sidePanel.css">
+</head>
+<body>
+  <h1>내 링크에 바로가기</h1>
+  <div class="input-group">
+    <label for="titleInput">제목</label>
+    <input type="text" placeholder="제목" id="titleInput">
+  </div>
+  <div class="input-group">
+    <label for="folderSelect">폴더</label>
+    <select id="folderSelect">
+      <option>예제 폴더</option>
+      <option>폴더 1</option>
+      <option>폴더 2</option>
+    </select>
+  </div>
+  <div class="input-group">
+    <label for="tagInput">태그</label>
+    <input type="text" placeholder="태그 입력" id="tagInput">
+  </div>
+  <div class="input-group">
+    <textarea placeholder="자동 요약" id="autoSummary"></textarea>
+    <textarea placeholder="메모 입력" id="memoInput"></textarea>
+  </div>
+
+  <script src="sidePanel.js"></script>
+</body>
+</html>

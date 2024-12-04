@@ -1,26 +1,112 @@
-.dropdown-container{
-    display: inline-block;
-    margin:20px;
-}
-
 .dropdown{
-    width: fit-content;
-    padding: 10px;
-    font-size: 16px;
-    border:none;
-    outline: none;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* 그림자 효과 */
-    border-radius: 10px;
-    appearance: none;   /*드롭다운 기본 화살표 숨김*/
-    background-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='10' height='5' viewBox='0 0 10 5'><polygon points='0,0 5,5 10,0' fill='%23007bff'/></svg>"); /* 화살표 이미지 */
-    background-repeat: no-repeat; /*배경 이미지 반복 방지*/
-    background-position: right 10px center;
-    padding-right:20px; /*화살표 이미지 크기 고려*/
-    cursor: pointer;
+  position:relative;
+  cursor:pointer;
+  margin-left: 0.5rem;
+  border-radius: 5rem;
+}
+.dropdown-header{
+  display: flex;;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  width: auto; max-width: 5rem;
+  padding:0.7rem;
+  color:var(--font-gray);
+  background:white;
+  border:0.031rem solid var(--border-gray); border-radius: 5rem;
+}
+.dropdown-header:hover{color:white; background: var(--purple-hover);}
+.dropdown-header.open{color:white;background: var(--purple-focus);}
+
+.dropdown-header-img{
+  width:1rem; height: 1rem;
+}
+.dropdown-menu {
+  position:absolute;
+  width: 10rem;
+  height: auto; max-height: 10rem;
+  padding:0.1rem;
+  margin-top:0.2rem;
+
+  color:black;
+  background-color: white;
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
+  border-radius: 1rem;
+  overflow-y: scroll;
+  z-index: 9999;
+}
+.dropdown-option{
+  display: flex;
+  align-items: center;
+  padding:0.4rem;
+  padding-left: 0.5rem;
+  margin:0.2rem;
+  border-radius: 1rem;
+  white-space:normal;
+}.dropdown-option:hover{ background:var(--gray-hover);}
+
+
+.dropdown.search-dropdown .dropdown-header{display: none;}
+.dropdown.search-dropdown .dropdown-menu{
+  margin-top:-1.5rem;
+  padding-top:1.5rem;
+  width:15.8rem;
+  border-top-left-radius: 0rem;
+  border-top-right-radius: 0rem;
+  z-index: -1;
+}
+.dropdown.search-dropdown .dropdown-delete{font-size: 0.7rem; margin-left: auto;}
+
+
+/* === 드롭다운 펼침 화살표, 옵션선택버튼 === */
+.dropdown-folder-select .dropdown-header-img{order:2; margin-left: 0.2rem;}
+.dropdown-tag-select .dropdown-header-img{order:2; margin-left: 0.2rem;}
+.dropdown-folder-select .dropdown-select{display:flex;}
+.dropdown-tag-select .dropdown-select{display: flex;}
+
+.dropdown.alarm .dropdown-menu{
+  width: 15rem;
+  right:-3rem; left:auto;
+}
+.dropdown.alarm .dropdown-option span{
+  white-space: normal;
+  word-break: break-word;
+}
+.dropdown-option-img{
+  width: 1rem; height: 1rem;
+  margin-right: 0.3rem;
+  border-radius: 5px;
+}
+.dropdown-badge {
+  position:absolute;
+  top:-0.2rem; right: -0.2rem;
+  width: 1rem;  height: 1rem;
+  background-color: #FF4500;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
 
-  
-  /* 드롭다운에서 선택된 옵션의 색상 변경 */
-  .dropdown option {
-    padding: 10px; /* 옵션 패딩 */
-  }
+
+/* === 링크카드 드롭다운 === */
+.dropdown.linkcard.folder-name {
+  position:absolute;
+  top:8px; left:8px;
+  margin-left: 0px;
+  font-size: 0.7rem;
+  transition: opacity 0.3s ease;
+}
+.dropdown.linkcard .dropdown-header {
+  display: flex; align-items: center;justify-content: center;
+  width: 1.2rem; height: 1.5rem;
+  padding:0.1rem;
+}
+.dropdown.linkcard .dropdown-menu{width:5rem; max-height: 3.5rem;}
+
+/* ============== 사이드 메뉴 ==============*/
+.dropdown.dropdown-folder-edit .dropdown-header{
+  color:white;
+  background:transparent;
+  border-color: transparent;
+}
+.dropdown.dropdown-folder-edit .dropdown-menu{
+  right:0rem;
+}
