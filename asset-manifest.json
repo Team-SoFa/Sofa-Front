@@ -1,0 +1,23 @@
+{
+  "files": {
+    "main.css": "/static/css/main.01587f65.chunk.css",
+    "main.js": "/static/js/main.aab4272d.chunk.js",
+    "main.js.map": "/static/js/main.aab4272d.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.167eaf22.js",
+    "runtime-main.js.map": "/static/js/runtime-main.167eaf22.js.map",
+    "static/js/2.75631837.chunk.js": "/static/js/2.75631837.chunk.js",
+    "static/js/2.75631837.chunk.js.map": "/static/js/2.75631837.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.693387b344cb35b121e307ad342d7253.js": "/precache-manifest.693387b344cb35b121e307ad342d7253.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/main.01587f65.chunk.css.map": "/static/css/main.01587f65.chunk.css.map",
+    "static/js/2.75631837.chunk.js.LICENSE.txt": "/static/js/2.75631837.chunk.js.LICENSE.txt",
+    "static/media/Typography.css": "/static/media/Pretendard-SemiBold.subset.3ba9cd1e.woff2"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.167eaf22.js",
+    "static/js/2.75631837.chunk.js",
+    "static/css/main.01587f65.chunk.css",
+    "static/js/main.aab4272d.chunk.js"
+  ]
+}
