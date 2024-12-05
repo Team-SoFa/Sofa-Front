@@ -16,15 +16,15 @@ import TagAddIcon from "../../assets/icon/TagAddIcon";
 const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
   const [linkcardImg, setLinkcardImg] = useState(""); //링크카드 대표이미지 변수
   const [isEditingTitle, setIsEditingTitle] = useState(false);
+  // title
   const [title, setTitle] = useState(bookmark?.title || ""); //제목 관리
+  const titleRef = useRef(null);
   // summary
   const [summary, setSummary] = useState("요약 내용입니다");
   const [isEditingSummary, setIsEditingSummary] = useState(false);
   // memo
   const [memo, setMemo] = useState("메모 내용입니다");
   const [isEditingMemo, setIsEditingMemo] = useState(false);
-
-  // focus textarea
 
   useEffect(() => {
     if (bookmark?.title) {
@@ -140,11 +140,16 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
           </div>
           <div className="detail-title-container">
             {isEditingTitle ? (
-              <input
-                type="text"
+              <textarea
+                ref={titleRef}
                 className="detail-text-input"
                 value={title}
                 onChange={(e) => setTitle(e.target.value)}
+                onInput={(e) => {
+                  const target = e.target;
+                  target.style.height = "4rem"; // 높이를 초기화
+                  target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
+                }}
                 onBlur={saveTitle} // 입력 필드에서 포커스 해제 시 저장
                 onKeyDown={(e) => {
                   if (e.key === "Enter") {
@@ -160,12 +165,23 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
           <Button
             className="detail-edit"
             label={isEditingTitle ? "완료" : "수정"}
-            onClick={
-              () =>
-                isEditingTitle
-                  ? setIsEditingTitle(false) // 완료 버튼
-                  : setIsEditingTitle(true) // 수정 버튼
-            }
+            onClick={() => {
+              if (isEditingTitle) {
+                setIsEditingTitle(false); // 완료 버튼 클릭 시 수정 완료
+              } else {
+                setIsEditingTitle(true); // 수정 버튼 클릭 시 수정 모드로 전환
+                setTimeout(() => {
+                  // setTimeout을 사용하여 렌더링 후 포커스를 설정
+                  if (titleRef.current) {
+                    titleRef.current.focus();
+                    titleRef.current.setSelectionRange(
+                      titleRef.current.value.length,
+                      titleRef.current.value.length
+                    );
+                  }
+                }, 0);
+              }
+            }}
           />
         </div>
       </div>
@@ -176,9 +192,15 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
         <div className="detail-text-container">
           {isEditingSummary ? (
             <textarea
+              ref={summaryRef}
               className="detail-text-input"
               value={summary}
               onChange={(e) => setSummary(e.target.value)}
+              onInput={(e) => {
+                const target = e.target;
+                target.style.height = "6rem"; // 높이를 초기화
+                target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
+              }}
               onBlur={saveSummary} // 입력 필드에서 포커스 해제 시 저장
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
@@ -194,12 +216,23 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
         <Button
           className="detail-edit"
           label={isEditingSummary ? "완료" : "수정"}
-          onClick={
-            () =>
-              isEditingSummary
-                ? setIsEditingSummary(false) // 완료 버튼
-                : setIsEditingSummary(true) // 수정 버튼
-          }
+          onClick={() => {
+            if (isEditingSummary) {
+              setIsEditingSummary(false); // 완료 버튼 클릭 시 수정 완료
+            } else {
+              setIsEditingSummary(true); // 수정 버튼 클릭 시 수정 모드로 전환
+              setTimeout(() => {
+                // setTimeout을 사용하여 렌더링 후 포커스를 설정
+                if (summaryRef.current) {
+                  summaryRef.current.focus();
+                  summaryRef.current.setSelectionRange(
+                    summaryRef.current.value.length,
+                    summaryRef.current.value.length
+                  );
+                }
+              }, 0);
+            }
+          }}
         />
       </div>
 
@@ -213,6 +246,11 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
               className="detail-text-input"
               value={memo}
               onChange={(e) => setMemo(e.target.value)}
+              onInput={(e) => {
+                const target = e.target;
+                target.style.height = "6rem"; // 높이를 초기화
+                target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
+              }}
               onBlur={() => setIsEditingMemo(false)} // 포커스 해제 시 저장
               onKeyDown={(e) => {
                 if (e.key === "Enter") {
