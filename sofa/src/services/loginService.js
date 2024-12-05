@@ -15,7 +15,7 @@ export const googleOAuthRedirectUriGet3 = async (headers = {}) => {
 // Google 로그인 URL을 얻는 API 호출
 export const googleOAuthRedirectUriGet2 = async (headers = {}) => {
   try {
-    const url = await get('/auth/google', {}, {}); // GET 요청 보내기
+    const url = await get('/oauth2/authorization/google', {}, {}); // GET 요청 보내기
     return url; // 로그인 URL 반환
   } catch (error) {
     console.error('Google 로그인 URL을 가져오는 데 실패했습니다:', error);
