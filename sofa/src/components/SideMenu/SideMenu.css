@@ -2,8 +2,7 @@
     position: fixed;
     top: 6.5rem;
     left: 0;
-    width: 15rem; /* 사이드 메뉴의 너비 230px */
-    height: calc(100vh - 8rem);
+    width: 15rem; height: calc(100vh - 8rem);
     overflow: visible; overflow-y: scroll;
     margin-left: 1rem;
     padding-top: 1rem;

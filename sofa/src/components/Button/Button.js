@@ -1,7 +1,17 @@
 import React from "react";
 import "./Button.css";
+import CloseIcon from "../../assets/icon/CloseIcon";
 
-const Button = ({ label, onClick, className, Icon, imgSrc, imgAlt }) => {
+const Button = ({
+  className,
+  Icon,
+  label,
+  imgSrc,
+  imgAlt,
+  option,
+  onClick,
+  onDelete,
+}) => {
   return (
     <button className={`btn ${className}`} onClick={onClick}>
       <>
@@ -18,6 +28,16 @@ const Button = ({ label, onClick, className, Icon, imgSrc, imgAlt }) => {
           />
         )}
         {label && <span>{label}</span>}
+        {onDelete && (
+          <Button
+            className="delete-btn"
+            Icon={CloseIcon}
+            onClick={(e) => {
+              e.stopPropagation();
+              onDelete(option.content);
+            }}
+          />
+        )}
       </>
     </button>
   );

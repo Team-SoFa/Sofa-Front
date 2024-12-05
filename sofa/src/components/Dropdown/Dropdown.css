@@ -129,3 +129,10 @@
 /* === SORGING === */
 .dropdown.sorting .dropdown-header{gap:0.2rem; border-radius: 0.5rem; padding: 0.3rem; padding-right:0.7rem; }
 .dropdown.sorting .dropdown-header-img{order:2;}
+
+
+/* === 자세히보기 === */
+.dropdown.detail.folder{margin-left: 0.45rem;}
+.dropdown.detail.folder .dropdown-header{
+  padding-block: 0.2rem;}
+.dropdown.detail.folder .dropdown-header-img{order:2;}
