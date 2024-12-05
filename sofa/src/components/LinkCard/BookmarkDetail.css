@@ -1,122 +1,91 @@
 .bookmark-detail {
-  background-color: rgb(190, 190, 190);
-  border-radius: 0.75rem; /* 12px */
-  padding: 1.25rem; /* 20px */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.1); /* 4px, 8px */
-  width: 100%;
-  height: 95%;
-  max-width: 31.25rem; /* 500px */
-  font-family: Arial, sans-serif;
-  overflow: hidden;
-  box-sizing: border-box;
-  position: relative;
-}
-
-.row {
-  display: flex;
-  flex-direction: row;
-  gap: 0.0625rem; /* 1px */
-}
-
-.bookmark-detail-header {
-  display: flex;
-  flex-wrap: wrap; /* 화면이 좁아지면 줄바꿈 */
-  align-items: center;
-  margin-top: 0.9375rem; /* 15px */
-  margin-bottom: 1.25rem; /* 20px */
-  gap: 0.5rem; /* 요소 간 간격 */
-}
-
-.detail-image {
-  width: 100%; /* 디스플레이 크기에 따라 크기 유연화 */
-  max-width: 12.25rem; /* 196px */
-  height: auto; /* 비율 유지 */
-  border-radius: 0.5rem; /* 8px */
-  margin-right: 0; /* 여백 제거 */
-  flex-shrink: 0;
-}
-
-.detail-info {
-  flex-grow: 1;
-  min-width: 0;
-}
-
-.detail-title {
-  font-size: 1.2rem; /* 약 19.2px */
-  font-weight: bold;
-  margin: 0;
-  white-space: normal; /* 줄바꿈 허용 */
-  word-wrap: break-word; /* 텍스트가 컨테이너 너비에 맞춰 줄바꿈 */
-}
-
-.bookmark-btn {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  padding: 0.3125rem 0.625rem; /* 5px 10px */
-  border-radius: 0.25rem; /* 4px */
-  font-size: 0.8rem; /* 약 12.8px */
-  cursor: pointer;
-  margin-left: 0.3125rem; /* 5px */
-}
-
-.edit-btn {
-  background-color: #4CAF50;
-}
-
-.delete-btn {
-  background-color: #F44336;
-}
-
-.detail-title-container,
-.detail-summary,
-.detail-description {
-  position: relative; /* 버튼의 위치 기준 */
-  background-color: white;
-  margin-top: 0.3125rem; /* 5px */
-  margin-bottom: 0.625rem; /* 10px */
-  padding: 0.625rem; /* 10px */
-  padding-bottom: 2.5rem; /* 버튼 높이 + 여유 공간 (40px) */
-  border-radius: 0.625rem; /* 10px */
   display: flex;
   flex-direction: column;
+  position: fixed;
+  top: 6.5rem;
+  right:0;
+  width: 28rem; height: calc(100vh - 9rem);
+  margin-right: 1rem;
+  padding: 1rem;
+  overflow-y: scroll; overflow-x: hidden;
+  background: white;
+  transform:translateX(17.5rem);
+  transition: transform 0.3s ease; /* 애니메이션 */
+  border-radius: 1rem;  /* 모든 모서리 둥글게 */
+  z-index: 1000;
+}
+.bookmark-detail.open {
+  transform: translateX(0);
 }
 
-.detail-summary h3,
-.detail-description h3 {
-  font-size: 1rem; /* 16px */
-  font-weight: bold;
-  margin-bottom: 0.625rem; /* 10px */
+/* 상단 버튼 컨테이너 */
+.header-btn-container{
+  display:flex;
+  justify-content: flex-end;
+  margin-bottom: 0.3rem;
 }
 
-.summary-text,
-.description-text {
-  font-size: 0.9rem; /* 약 14.4px */
-  line-height: 1.4;
-  color: #333;
+/* 링크카드 정보 : 이미지/링크/폴더/제목 */
+.detail-info{position: relative; height: 9rem;}
+.detail-header {
+  display: flex;
+  align-items: flex-start;
+  height: 9rem;
+  margin-bottom: 1.25rem; /* 20px */
+  gap: 0.45rem; /* 요소 간 간격 */
+}
+.detail-image {
+  width:12.25rem; height: 100%;
+  border-radius: 0.5rem; /* 8px */
+}
+
+.row {display: flex;align-items: start; margin-bottom: 0.45rem;}
+.detail-title-container{width: 13.55rem; height: 4.7rem;}
+.detail-title {
   white-space: normal; /* 줄바꿈 허용 */
   word-wrap: break-word; /* 텍스트가 컨테이너 너비에 맞춰 줄바꿈 */
 }
 
-.detail-tags {
-  margin-top: 1.25rem; /* 20px */
+/*수정 버튼 위치 지정을 위함*/
+.summary-container, .memo-container{ position: relative; margin-bottom: 1.25rem;}
+
+.detail-title-container,
+.detail-text-container {
+  min-height: 4rem;
+  max-height: 15rem;
+  padding: 0.625rem;
+  background-color: var(--box-gray);
+  border-radius: 0.625rem;
+  overflow-y: scroll; overflow-x: hidden;
+}
+.detail-text-input {
+  width: 100%; height: 100%;
+  box-sizing: border-box;
+  border: none;
+  padding:0; margin:0;
+  background-color: var(--purple-light);
+  white-space: normal; /* 줄바꿈 허용 */
+  word-wrap: break-word;
 }
 
-.detail-tags h3 {
-  font-size: 1rem; /* 16px */
-  font-weight: bold;
-  margin-bottom: 0.625rem; /* 10px */
+.detail-text {
+  font-size: 0.9rem; /* 약 14.4px */
+  line-height: 1.4;
+  white-space: normal; /* 줄바꿈 허용 */
+  word-wrap: break-word; /* 텍스트가 컨테이너 너비에 맞춰 줄바꿈 */
 }
 
+
+/* 태그 */
 .tags-container {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
+  margin-top: 0.5rem;
   gap: 0.3125rem; /* 5px */
 }
-
 .tag-item {
   background-color: #e0e0e0;
-  color: #333;
   padding: 0.3125rem 0.625rem; /* 5px 10px */
   border-radius: 0.9375rem; /* 15px */
   font-size: 0.8rem; /* 약 12.8px */
@@ -124,50 +93,21 @@
   word-wrap: break-word; /* 텍스트가 컨테이너 너비에 맞춰 줄바꿈 */
 }
 
-.add-tag-btn {
-  background-color: #ddd;
-  border: none;
-  padding: 0.3125rem 0.625rem; /* 5px 10px */
-  border-radius: 50%;
-  font-size: 1rem; /* 16px */
-  cursor: pointer;
-  margin-left: 0.3125rem; /* 5px */
-}
-
-.close-button {
-  background-color: rgb(218, 218, 218);
-  border: none;
-  font-size: 1rem; /* 16px */
-  font-weight: bold;
-  color: #666;
-  cursor: pointer;
-  position: absolute;
-  right: 1.25rem; /* 20px */
-  top: 0.625rem; /* 10px */
-  padding: 0.3125rem; /* 5px */
-  line-height: 1;
-}
-
-.close-button:hover {
-  background: rgb(204, 204, 204);
-}
-
 @media (max-width: 768px) { /* 태블릿 화면 이하 */
-  .bookmark-detail-header {
+  .detail-header {
     flex-direction: column; /* 세로 방향으로 배치 */
     align-items: flex-start;
   }
-
   .detail-image {
     width: 100%; /* 이미지가 줄어들지 않도록 */
     max-width: none; /* 최대 너비 제한 해제 */
     height: auto; /* 비율 유지 */
     margin: 0 0 0.5rem 0; /* 위아래 간격 조정 */
   }
+  .detail-title-container{width: 26.4rem; height: 4rem;}
 
-  .detail-info {
-    width: 100%; /* 가로 공간 전체 사용 */
-  }
+  .summary-container{position: relative;margin-top: 18rem;}
+
 }
 
 @media (max-width: 480px) { /* 모바일 화면 이하 */

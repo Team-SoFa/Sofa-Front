@@ -15,23 +15,18 @@ import BookmarkDetail from "../components/LinkCard/BookmarkDetail"; // 상세 �
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const location = useLocation();
   const [username, setUsername] = useState(""); //사용자 이름
-  const [mostPopularTags, setMostPopularTags] = useState("");
+  const [mostPopularTags, setMostPopularTags] = useState(""); //탑태그
   const [loading, setLoading] = useState(true); //로딩 상태
   const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
-  // const [sortingOption, setSortingOption] = useState("");
-  // const [selectedTags, setSelectedTags] = useState([]);
-
-  // 북마크 선택 상태 추가
   const [selectedBookmark, setSelectedBookmark] = useState(null);
+  const [isDetailOpen, setIsDetailOpen] = useState(false); //자세히보기메뉴 열림 상태
 
   const renderSection = () => {
     switch (location.pathname) {
       case "/removeditemspage":
         return <RemovedItemsPage />;
       case "/folderpage":
-        return (
-          <FolderPage bookmarks={bookmarks} onAddBookmark={handleAddBookmark} />
-        );
+        return <FolderPage bookmarks={bookmarks} />;
       default:
         return (
           <div className="main-box">
@@ -86,7 +81,6 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 onLinkCardClick={handleBookmarkClick}
                 sideMenuOpen={isMenuOpen}
                 bookmarkDetailOpen={selectedBookmark}
-                // sortingOption={sortingOption}
               />
             </div>
           </div>
@@ -98,14 +92,10 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     const fetchUserInfo = async () => {
       try {
         // USER INFO
-        //const userResponse = await fetch("/api/user");
-        //const userData = await userResponse.json();
         const userData = { nickname: "000" };
         setUsername(userData.nickname);
 
         // MOST_POPULAR_TAGS
-        // const topTagsResponse = await fetch("/api/tags/top");
-        // const topTagsData = await topTagsResponse.json();
         const topTagsData = { label: "탑태그" };
         setMostPopularTags(topTagsData.label);
 
@@ -118,41 +108,24 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     fetchUserInfo();
   }, []);
 
-  const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
     //추후 수정 기능 코드 추가
   };
-  const handleAddBookmark = (newBookmark) => {
-    onAddBookmark(newBookmark);
-  };
-
-  const handleBookmarkClick = (bookmark) => {
-    console.log("Clicked bookmark:", bookmark);
-    setSelectedBookmark(bookmark); // 클릭된 북마크 상태 저장
-  };
-
-  const handleBookmarkClose = () => {
-    setSelectedBookmark(null); // 상세 정보를 닫기
-  };
-
-  // TAG
-  // const handleTagSelect = (tag) => {
-  //   if (!selectedTags.includes(tag)) {
-  //     setSelectedTags([...selectedTags, tag]); //태그 추가
-  //   }
-  // };
-  // const handleTagRemove = (tag) => {
-  //   setSelectedTags(selectedTags.filter((t) => t !== tag)); //태그 제거
-  // };
-
-  // SORTING
-  // const handleSortingSelect = (option) => {
-  //   setSortingOption(option);
-  // };
+  const handleDelete = (id) => onDeleteBookmark(id);
 
   //SideMenu Toggle
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
+  };
+
+  const handleBookmarkClick = (bookmark) => {
+    setSelectedBookmark(bookmark);
+    setIsDetailOpen(true); // 클릭 시 BookmarkDetail 열기
+  };
+
+  const toggleDetail = () => {
+    if (isDetailOpen) setSelectedBookmark(null); // 닫을 때만 선택 초기화
+    setIsDetailOpen(!isDetailOpen);
   };
 
   return (
@@ -163,19 +136,12 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     >
       <Header toggleMenu={toggleMenu} />
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
+      <BookmarkDetail
+        bookmark={selectedBookmark}
+        isOpen={isDetailOpen && selectedBookmark !== null}
+        toggleDetail={toggleDetail}
+      />
       <section>{renderSection()}</section>
-
-      {/* 상세 정보 */}
-      {selectedBookmark && (
-        <div className="bookmark-detail-container">
-          <BookmarkDetail
-            bookmark={selectedBookmark}
-            onEdit={() => console.log("Edit clicked")}
-            onDelete={() => console.log("Delete clicked")}
-            onClose={handleBookmarkClose}
-          />
-        </div>
-      )}
     </div>
   );
 };
