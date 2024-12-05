@@ -14,6 +14,7 @@ import TagIcon from "../../assets/icon/TagAddIcon";
 import TagAddIcon from "../../assets/icon/TagAddIcon";
 
 const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
+  const [titleHover, setTitleHover] = useState(false); //텍스트박스 hover 상태 체크
   const [linkcardImg, setLinkcardImg] = useState(""); //링크카드 대표이미지 변수
   const [isEditingTitle, setIsEditingTitle] = useState(false);
   // title
@@ -94,18 +95,19 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
   const { containerRef: memoRef, containerHeight: memoHeight } =
     useDynamicHeight(memo);
 
-  //저장 로직 함수
+  //수정 모드 종료(저장)
   const saveTitle = () => {
-    setIsEditingTitle(false); // 수정 모드 종료
+    setIsEditingTitle(false);
   };
   const saveSummary = () => {
-    setIsEditingSummary(false); // 수정 모드 종료
+    setIsEditingSummary(false);
   };
   const saveMemo = () => {
-    setIsEditingMemo(false); // 수정 모드 종료
+    setIsEditingMemo(false);
   };
 
   if (!bookmark) return null;
+
   return (
     <div className={`bookmark-detail ${isOpen ? "open" : ""}`}>
       <div className="header-btn-container">
@@ -138,7 +140,11 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
               label="폴더선택"
             />
           </div>
-          <div className="detail-title-container">
+          <div
+            className="detail-title-container"
+            onMouseEnter={() => setTitleHover(true)}
+            onMouseLeave={() => setTitleHover(false)}
+          >
             {isEditingTitle ? (
               <textarea
                 ref={titleRef}
@@ -163,7 +169,7 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
             )}
           </div>
           <Button
-            className="detail-edit"
+            className={`detail-edit ${titleHover ? "hovered" : ""}`}
             label={isEditingTitle ? "완료" : "수정"}
             onClick={() => {
               if (isEditingTitle) {
