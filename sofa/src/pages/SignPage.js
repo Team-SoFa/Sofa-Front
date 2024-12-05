@@ -4,7 +4,7 @@ import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
 import "../components/Layout/HeaderStyle.css";
 import "./onBoarding-layout.css";
 import Button from "../components/Button/Button";
-import { tempLogin } from "../services/loginService"; // Google 로그인 서비스 호출
+import { tempLogin, googleOAuthRedirectUriGet2 } from "../services/loginService"; // Google 로그인 서비스 호출
 import { folderGet, folderPost, folderDelete, folderPut} from "../services/folderService";
 import { put } from "../services/apiClient";
 import { linkCardPost, linkCardAiPost, linkCardListGet } from "../services/linkCardService";
@@ -31,6 +31,29 @@ const SignPage = () => {
   const [folderList, setFolderList] = useState([]); // 초기값은 빈 배열로 설정
   const [linkCardListDetail, setLinkCardListDetail] = useState([]); // 초기값은 빈 배열로 설정
 
+    // 임시 로그인 함수 호출 핸들러
+    const handleGoogleLogin2 = async () => {
+      try {
+  
+        const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
+    
+        console.log('Google Login Response:', response);  // 응답을 제대로 확인
+    
+        // 응답에서 accessToken, refreshToken 추출
+        if (response && response.accessToken && response.refreshToken) {
+          dispatch(setTokens(response.accessToken, response.refreshToken)); // 토큰 저장
+          console.log('로그인 성공!');  // 성공 메시지 설정
+          hanldeMemberGet();
+        } else {
+          console.log('로그인 응답에 문제가 있습니다.');  // 응답이 없거나 이상할 때 처리
+        }
+      } catch (err) {
+        console.log('Login Error:', err);
+      } finally {
+        console.log('로딩 종료');  // 로딩 상태 종료
+      }
+    };
+  
   // 임시 로그인 함수 호출 핸들러
   const handleGoogleLogin = async () => {
     try {
@@ -311,6 +334,10 @@ const SignPage = () => {
             <Button
               label="Google 계정으로 로그인"
               onClick={handleGoogleLogin} 
+            />
+            <Button
+              label="Google 계정으로 로그인2"
+              onClick={handleGoogleLogin2} 
             />
             <Button
               label="폴더추가"
