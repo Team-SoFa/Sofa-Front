@@ -1,0 +1,48 @@
+.main-page {
+    position: relative;
+    display: flex;
+    flex-direction: column; /* 레이아웃 조정 */
+    width: calc(100%-2rem);  /* 기본적으로 100% */
+    margin-top: 6.5rem;
+    margin-bottom: 1rem;
+    margin-inline:1rem;
+    padding: 2rem;
+   
+    box-sizing: border-box;
+    overflow-x: hidden;
+    transition: transform 0.3s ease; /* 너비 조정 애니메이션 */
+    background-color: white;
+    border-radius: 20px;
+  }
+  /* 헤더는 고정 */
+.header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+}
+.main-box { overflow-y:scroll; height:calc(100vh - 9rem);}
+
+/* 사이드 메뉴가 열릴 때 */
+.main-page.menu-open {
+  width: calc(100% - 19rem); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+  margin-left: 17.5rem;  /* 사이드 메뉴의 너비만큼 왼쪽 여백을 추가 */
+}
+
+/* 북마크 상세 정보가 표시될 때 */
+.main-page.show-detail {
+  width: calc(100% - 40%); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+}
+
+/* 사이드 메뉴와 북마크 상세 정보가 동시에 열릴 때 */
+.main-page.menu-open.show-detail {
+  width: calc(100% - 19rem - 26%); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+}
+
+.link-set { margin-top: 2rem; }
+._text {display: flex; align-items: center;}
+.more{ color:black; font-size: 0.8rem; margin-left: 1rem;}
+.sorting-options {
+  display: flex;
+  justify-content: flex-end;
+}

@@ -1,15 +1,137 @@
-/* src/components/Button.css */
+
 .btn {
-    background-color: #007bff;
-    color: white;
-    padding: 0.5rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-    font-size: 1rem;
-  }
-  
-  .btn:hover {
-    background-color: #0056b3;
-  }
-  
+  cursor: pointer;
+  padding-block: 0.75rem; padding-inline: 1rem;
+  margin-left: 0.5rem;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  gap: 0.5rem;
+  color: black;  background: white;  
+  border:0.031rem solid var(--border-gray); border-radius: 5rem;
+  transition: background-color 0.2s ease, color 0.2s ease;
+}.btn:hover {background: var(--gray-hover);}
+
+
+
+/* HEADER >>>>>>>>>>>>>>>>>>> */
+/* === 메뉴 === */
+.btn.menu-img{
+  width: 2.5rem; height: 2.5rem; 
+  padding-block: 0.5rem;
+}.btn.menu-img:hover, .btn.menu-img.menu-open{color:white; border-color: transparent; background: var(--purple-main);}
+
+/* === 검색 === */
+.btn.search{color:white; background: var(--purple-main); border-color: transparent;}
+.btn.search:hover{background: var(--purple-hover);}
+
+/* === 유저페이지 === */
+.btn.user-info{
+  padding: 0px;
+  align-content: center;
+  width: 2.5rem; height: 2.5rem;
+  overflow: hidden;
+}.btn.user-info .btn-img{width:2.5rem;height: 2.5rem;}
+
+/* === Dropdown 내부 컨텐츠 === */
+.btn.dropdown-select{
+  display:none;
+  color:white; background:var(--purple-main);
+  margin-left: auto;
+  font-size: 0.7rem;
+  padding-block: 0.4rem; padding-inline: 0.5rem;
+}.btn.dropdown-select:hover{background: var(--purple-hover);}
+.btn.dropdown-delete{
+  padding:0px;
+  background-color: transparent;
+  border-color: transparent;
+}
+/* <<<<<<<<<<<<<<<<<<<<< HEADER */
+
+
+.btn.tag{
+  user-select: none;
+  cursor: default;
+  padding:0.5rem; margin:0.2rem;
+  font-size: 0.7rem;
+  border-radius: 5px;
+  border-color: transparent;
+  background-color: var(--purple-light);
+} .tag:hover{background: var(--purple-light);}
+.btn.delete-btn{
+  padding:0; margin:0.3rem;
+  width: 0.1rem; height: 0.1rem;
+  background-color: transparent;
+  border-color: transparent;
+}.btn.delete-btn .btn-icon > svg{ width: 1rem;}
+
+
+
+
+
+
+/*LinkCard Hover Menus*/
+.btn.linkcard{
+  position:absolute;
+  padding:5px;
+  font-size: 0.7rem;
+  transition: opacity 0.3s ease;
+}
+.btn.linkcard:hover{color:white; background: var(--purple-main);}
+.btn.linkcard.delete{top:0.7rem;right: 0.7rem;}
+.btn.linkcard.delete .btn-icon > svg {width:1.3rem; height: 1.1rem;}
+.btn.linkcard.alarm{top:0.7rem;right:3.2rem;}
+.btn.linkcard.alarm .btn-icon > svg {width:1.3rem; height: 1.1rem;}
+.btn.linkcard.link{
+  bottom:0.7rem;left:0.7rem;
+  margin-left:0px;
+}
+.btn.linkcard.link .btn-icon > svg {width:1.3rem; height: 1.1rem;}
+.btn.linkcard.delete-forever{
+  bottom:0.7rem;left:0.7rem;
+  margin-left:0px;
+}
+
+
+/* ====== 자세히보기 ====== */
+.btn.detail-header-btn{
+  padding:0;
+  border-color: transparent;
+}
+.btn.detail-header-btn{margin-inline:0.5rem;}
+.btn.detail-header-btn .btn-icon > svg{width:1.3rem;}
+
+.btn.detail.link-btn{
+  height: 2.3rem;
+  gap:0.2rem; margin-left: 0; margin-bottom: 0.3rem;
+  padding-block:0; padding-inline: 0.5rem;
+  color:white; border-color: transparent;
+  background-color: var(--purple-main);
+}.btn.detail.link-btn:hover{background-color: var(--purple-hover);}
+.btn.detail.link-btn .btn-icon > svg {width:1rem;}
+
+.btn.detail-edit,.btn.detail-save,.btn.detail-cancel{
+  position: absolute;
+  bottom:0.3rem; right: 0.3rem;
+  width:3rem; height: 2rem;
+  color: white; background-color: var(--purple-main);
+  /* opacity: 0;
+  visibility: hidden;
+  transition: opacity 0.3s ease, visibility 0.3s ease; */
+}.btn.detail-edit:hover,.btn.detail-save:hover,.btn.detail-cancel:hover{
+  /* opacity: 1;
+  visibility: visible; */
+  background-color: var(--purple-hover);
+}
+.btn.detail-cancel{right:3.5rem !important};
+
+.btn.add-tag-btn {
+  width: 2rem; height: 2rem;
+  padding: 0.3125rem 0.625rem; /* 5px 10px */
+  border-radius: 0.3rem; border-color: transparent;
+  margin-left: 0.3125rem; /* 5px */
+  background-color: var(--purple-light);
+}.btn.add-tag-btn:hover{
+  color: white;
+  background-color: var(--purple-main);
+}
