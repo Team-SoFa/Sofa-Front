@@ -61,6 +61,7 @@ export const linkCardEnterPost = async (id) => {
 // 링크 카드 휴지통 이동
 export const linkCardDelete = async (id) => {
     try {
+        console.log('id', id);
         const response = await tokenPost("/linkCard/"+id+"/delete", {}, {});
         return response;
     } catch (error) {

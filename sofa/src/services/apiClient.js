@@ -50,8 +50,8 @@ export const tokenGet = async (url, params = {}, headers = {}) => {
   // accessToken이 있으면 Authorization 헤더 추가
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
+    console.log(accessToken);
   }
-
   const response = await apiClient.get(url, { params, headers });
   return response.data;
 };
@@ -62,10 +62,7 @@ export const tokenPost = async (url, data = {}, headers = {}) => {
   
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
-  }
-
-  console.log('tlqkf',data);
-  
+  }  
   const response = await apiClient.post(url, data, { headers });
   return response.data;
 };
@@ -98,7 +95,7 @@ export const tokenDel = async (url, headers = {}) => {
 };
 
 // Patch 요청을 위한 함수 (accessToken이 필요한 DELETE 요청)
-export const tokenPatch = async (url, headers = {}) => {
+export const tokenPatch = async (url, data = {}, headers = {}) => {
   const accessToken = getAccessToken();
 
   // accessToken이 있으면 Authorization 헤더 추가
@@ -106,6 +103,6 @@ export const tokenPatch = async (url, headers = {}) => {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
-  const response = await apiClient.patch(url, { headers });
+  const response = await apiClient.patch(url, data, { headers });
   return response.data;
 };

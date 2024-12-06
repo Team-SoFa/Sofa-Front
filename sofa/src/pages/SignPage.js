@@ -4,10 +4,10 @@ import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
 import "../components/Layout/HeaderStyle.css";
 import "./onBoarding-layout.css";
 import Button from "../components/Button/Button";
-import { tempLogin, googleOAuthRedirectUriGet2 } from "../services/loginService"; // Google 로그인 서비스 호출
+import { tempLogin, googleOAuthRedirectUriGet2, googleOAuthLoginGet } from "../services/loginService"; // Google 로그인 서비스 호출
 import { folderGet, folderPost, folderDelete, folderPut} from "../services/folderService";
 import { put } from "../services/apiClient";
-import { linkCardPost, linkCardAiPost, linkCardListGet } from "../services/linkCardService";
+import { linkCardPost, linkCardAiPost, linkCardListGet, linkCardDelete, linkCardInfoPatch } from "../services/linkCardService";
 import { settingGet, settingPatch } from "../services/settingService";
 import { memberGet } from "../services/memberService";
 
@@ -30,6 +30,8 @@ const SignPage = () => {
   // 1. 컴포넌트 내부에서 folderList를 상태로 관리
   const [folderList, setFolderList] = useState([]); // 초기값은 빈 배열로 설정
   const [linkCardListDetail, setLinkCardListDetail] = useState([]); // 초기값은 빈 배열로 설정
+  const [linkCardList, setLinkCardList] = useState([]); // 초기값은 빈 배열로 설정
+
 
     // 임시 로그인 함수 호출 핸들러
     const handleGoogleLogin2 = async () => {
@@ -38,21 +40,73 @@ const SignPage = () => {
         const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
     
         console.log('Google Login Response:', response);  // 응답을 제대로 확인
-    
+
+        const popup = window.open(response, "_blank", "width=500,height=600");
+
+        const checkPopup = setInterval(() => {
+          try {
+            if (popup.closed) {
+              clearInterval(checkPopup);
+              console.log("Popup closed by user.");
+            }
+
+            // 리다이렉트된 URL 확인 (도메인이 같아야 함)
+            if (popup.location.href.includes("https://linkiving.com")) {
+              const currentUrl = popup.location.href;
+              console.log("Final URL:", currentUrl);
+
+              // 필요한 정보 추출
+              const params = new URLSearchParams(new URL(currentUrl).search);
+              const code = params.get("code");
+              console.log("code:", code);
+              
+              popup.close();
+              clearInterval(checkPopup);
+
+              hanldegoogleOAuthLoginGet(code);
+            }
+          } catch (error) {
+            // 다른 도메인일 경우 에러 발생 (CORS 제한)
+            console.log("Waiting for redirection...", error);
+          }
+        }, 500);
+        // window.location.href = response;
         // 응답에서 accessToken, refreshToken 추출
-        if (response && response.accessToken && response.refreshToken) {
-          dispatch(setTokens(response.accessToken, response.refreshToken)); // 토큰 저장
-          console.log('로그인 성공!');  // 성공 메시지 설정
-          hanldeMemberGet();
-        } else {
-          console.log('로그인 응답에 문제가 있습니다.');  // 응답이 없거나 이상할 때 처리
-        }
+        // if (response && response.accessToken && response.refreshToken) {
+        //   dispatch(setTokens(response.accessToken, response.refreshToken)); // 토큰 저장
+        //   console.log('로그인 성공!');  // 성공 메시지 설정
+        //   hanldeMemberGet();
+        // } else {
+        //   console.log('로그인 응답에 문제가 있습니다.');  // 응답이 없거나 이상할 때 처리
+        // }
       } catch (err) {
         console.log('Login Error:', err);
       } finally {
         console.log('로딩 종료');  // 로딩 상태 종료
       }
     };
+
+      // 폴더 추가 핸들러
+  const hanldegoogleOAuthLoginGet = async (data) => {
+    try {
+      
+      const response = await googleOAuthLoginGet(data);
+
+      console.log('googleOAuthLoginGet response:', response);  // 응답 값 확인
+
+      // 응답에서 accessToken, refreshToken 추출
+      if (response) {
+        console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
+
+        dispatch(setTokens(response.token.accessToken, response.token.refreshToken)); // 토큰 저장
+        
+        console.log('로그인 성공!');  // 성공 메시지 설정
+        hanldeMemberGet();
+      }
+    } catch (err) {
+      console.error('googleOAuthLoginGet 실패:', err);
+    }
+  };
   
   // 임시 로그인 함수 호출 핸들러
   const handleGoogleLogin = async () => {
@@ -69,8 +123,11 @@ const SignPage = () => {
       console.log('Google Login Response:', response);  // 응답을 제대로 확인
   
       // 응답에서 accessToken, refreshToken 추출
-      if (response && response.accessToken && response.refreshToken) {
-        dispatch(setTokens(response.accessToken, response.refreshToken)); // 토큰 저장
+      if (response && response.token.accessToken && response.token.refreshToken) {
+        console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
+
+        dispatch(setTokens(response.token.accessToken, response.token.refreshToken)); // 토큰 저장
+        
         console.log('로그인 성공!');  // 성공 메시지 설정
         hanldeMemberGet();
       } else {
@@ -196,6 +253,7 @@ const SignPage = () => {
       // API 요청 보내기 (예시: linkCardAiPost)
       const response = await linkCardAiPost(data);
 
+      console.log(response);
       if (response) {
         // 응답 데이터를 변환
         // response가 객체일 경우 변환
@@ -220,26 +278,89 @@ const SignPage = () => {
     }
   };
 
-    // 링크카드 조회 핸들러
-    const hanldeLinkCardListGet = async () => {
-      try {
-        const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
+  // 링크카드 조회 핸들러
+  const hanldeLinkCardListGet = async () => {
+    try {
+      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 2] : null;
 
-        const response = await linkCardListGet(
-          lastFolder.id,
-          "RECENTLY_SAVED",
-          "ASCENDING",
-          0,
-          10
-        );
-        console.log('링크카드 리스트 조회 응답:', response);
-      } catch (err) {
-        console.log('링크카드 리스트 실패!');
-      } finally {
-        console.log('로딩 종료');  // 로딩 상태 종료
+      const response = await linkCardListGet(
+        lastFolder.id,
+        "RECENTLY_SAVED",
+        "ASCENDING",
+        0,
+        10
+      );
+      console.log('링크카드 리스트 조회 응답:', response);
+      if (response) {
+        console.log(response.data);
+        setLinkCardList(response.data);  
       }
-    };
+    } catch (err) {
+      console.log('링크카드 리스트 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
 
+  // 폴더 삭제 핸들러
+  const hanldeLinkCardDelete = async () => {
+    const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
+
+    if (!lastLinkCard) {
+      console.log('삭제할 링크 카드가 없습니다.');  // 폴더가 없음을 로그로 출력
+      return;  // early return으로 함수 종료
+    }
+
+    console.log('lastLinkCard.id',lastLinkCard.id);
+
+    try {
+      const headers = {};
+      const response = await linkCardDelete(lastLinkCard.id);
+
+      console.log('폴더 삭제 응답:', response);
+
+      // 폴더 삭제 후 폴더 목록 갱신
+      hanldeFolderGet();
+    } catch (err) {
+      console.log(err);
+      console.log('폴더 삭제 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 폴더 삭제 핸들러
+  const hanldeLinkCardInfoPatch = async () => {
+    const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
+
+    if (!lastLinkCard) {
+      console.log('삭제할 링크 카드가 없습니다.');  // 폴더가 없음을 로그로 출력
+      return;  // early return으로 함수 종료
+    }
+
+    console.log('lastLinkCard.id',lastLinkCard.id);
+
+    try {
+      const data = {
+        "title": "string",
+        "memo": "string",
+        "summary": "string"
+      }
+
+      const response = await linkCardInfoPatch(lastLinkCard.id, data);
+
+      console.log('폴더 삭제 응답:', response);
+
+      // 폴더 삭제 후 폴더 목록 갱신
+      hanldeFolderGet();
+    } catch (err) {
+      console.log(err);
+      console.log('폴더 삭제 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
+    
   // 링크 추가 핸들러
   const hanldeSettingGet = async () => {
     try {
@@ -340,32 +461,40 @@ const SignPage = () => {
               onClick={handleGoogleLogin2} 
             />
             <Button
-              label="폴더추가"
+              label="폴더 추가"
               onClick={hanldeFolderPost}
             />
             <Button
-              label="폴더조회"
+              label="폴더 조회"
               onClick={hanldeFolderGet}
             />
             <Button
-              label="폴더삭제"
+              label="폴더 삭제"
               onClick={hanldeFolderDelete}
             />
             <Button
-              label="폴더수정"
+              label="폴더 수정"
               onClick={hanldeFolderPut}
             />
             <Button
-              label="링크카드추가"
+              label="링크카드 추가"
               onClick={hanldeLinkCardPost}
             />
             <Button
-              label="링크카드Ai생성"
+              label="링크카드Ai 생성"
               onClick={handleLinkCardAiPost}
             />
             <Button
-              label="링크카드리스트조회"
+              label="링크카드리스트 조회"
               onClick={hanldeLinkCardListGet}
+            />
+            <Button
+              label="링크카드 삭제"
+              onClick={hanldeLinkCardDelete}
+            />
+            <Button
+              label="링크카드 수정"
+              onClick={hanldeLinkCardInfoPatch}
             />
             <Button
               label="설정조회"
