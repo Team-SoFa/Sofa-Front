@@ -259,6 +259,10 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               options={folderOpt}
               Icon={DownIcon}
               label="폴더선택"
+              onSelect={() => {
+                setValues("title");
+                //❗추후 수정
+              }}
             />
           </div>
 
