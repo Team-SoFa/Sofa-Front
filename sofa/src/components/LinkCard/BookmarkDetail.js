@@ -5,21 +5,30 @@ import Dropdown from "../Dropdown/Dropdown";
 import "./BookmarkDetail.css";
 import LeftIcon from "../../assets/icon/LeftIcon";
 import RightIcon from "../../assets/icon/RightIcon";
+import RemindOnIcon from "../../assets/icon/RemindOnIcon";
 import RemindOffIcon from "../../assets/icon/RemindOffIcon";
 import TrashIcon from "../../assets/icon/TrashLineIcon";
 import CloseIcon from "../../assets/icon/CloseIcon";
 import DownIcon from "../../assets/icon/DownIcon";
 import LinkIcon from "../../assets/icon/LinkIcon";
-import TagIcon from "../../assets/icon/TagAddIcon";
 import TagAddIcon from "../../assets/icon/TagAddIcon";
 
-const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
-  const [titleHover, setTitleHover] = useState(false); //텍스트박스 hover 상태 체크
+const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
+  // 현재 북마크의 인덱스
+  const [currentIndex, setCurrentIndex] = useState(() => {
+    if (!bookmark || !Array.isArray(bookmarks)) {
+      return -1; // 초기 값으로 -1 설정
+    }
+
+    return bookmarks.findIndex((item) => item?.id === bookmark?.id);
+  });
+  const [isReminderActive, setIsReminderActive] = useState(false);
   const [linkcardImg, setLinkcardImg] = useState(""); //링크카드 대표이미지 변수
-  const [isEditingTitle, setIsEditingTitle] = useState(false);
   // title
-  const [title, setTitle] = useState(bookmark?.title || ""); //제목 관리
+  const originalTitleRef = useRef("");
   const titleRef = useRef(null);
+  const [isEditingTitle, setIsEditingTitle] = useState(false);
+  const [title, setTitle] = useState(bookmark?.title || ""); //제목 관리
   // summary
   const [summary, setSummary] = useState("요약 내용입니다");
   const [isEditingSummary, setIsEditingSummary] = useState(false);
@@ -27,11 +36,6 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
   const [memo, setMemo] = useState("메모 내용입니다");
   const [isEditingMemo, setIsEditingMemo] = useState(false);
 
-  useEffect(() => {
-    if (bookmark?.title) {
-      setTitle(bookmark.title); // bookmark가 업데이트될 때 title도 업데이트
-    }
-  }, [bookmark]);
   // 예시 데이터 추가
   const [tagsOpt, setTagsOpt] = useState([
     { label: "Documents", content: "Documents" },
@@ -54,13 +58,79 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
     })
   );
 
+  // 북마크 업데이트 될 때마다의 동작
+  //Id Update
+  useEffect(() => {
+    if (bookmarks.length > 0 && bookmark) {
+      const index = bookmarks.findIndex((item) => item.id === bookmark.id);
+      setCurrentIndex(index);
+    }
+  }, [bookmarks, bookmark]);
+  // Title Update
+  useEffect(() => {
+    if (bookmark?.title) {
+      setTitle(bookmark.title);
+    }
+  }, [bookmark]);
+
   const icons = [
-    { Icon: LeftIcon, onClick: toggleDetail },
-    { Icon: RightIcon, onClick: toggleDetail },
-    { Icon: RemindOffIcon, onClick: toggleDetail },
-    { Icon: TrashIcon, onClick: toggleDetail },
-    { Icon: CloseIcon, onClick: toggleDetail },
+    { id: "left", Icon: LeftIcon },
+    { id: "right", Icon: RightIcon },
+    { id: "remind", Icon: isReminderActive ? RemindOnIcon : RemindOffIcon },
+    { id: "trash", Icon: TrashIcon },
+    { id: "close", Icon: CloseIcon },
   ];
+
+  const handleIconClick = (id) => {
+    switch (id) {
+      case "left":
+        if (currentIndex > 0) {
+          const prevBookmark = bookmarks[currentIndex - 1];
+          setCurrentIndex(currentIndex - 1);
+          // 북마크 정보 업데이트
+          setTitle(prevBookmark.title);
+          setSummary(prevBookmark.summary);
+          setMemo(prevBookmark.memo);
+        } else {
+          console.log("이전 북마크가 없습니다");
+        }
+        break;
+      case "right":
+        if (currentIndex < bookmarks.length - 1) {
+          const nextBookmark = bookmarks[currentIndex + 1];
+          setCurrentIndex(currentIndex + 1);
+          // 북마크 정보 업데이트
+          setTitle(nextBookmark.title);
+          setSummary(nextBookmark.summary);
+          setMemo(nextBookmark.memo);
+        } else {
+          console.log("다음 북마크가 없습니다");
+        }
+        break;
+      case "remind":
+        setIsReminderActive(!isReminderActive);
+        // 여기에 토스트 알림 로직 추가
+        console.log("Reminder toggled!");
+        break;
+      case "trash":
+        if (currentIndex < bookmarks.length - 1) {
+          const nextBookmark = bookmarks[currentIndex + 1];
+          // 북마크 삭제 로직 추가 (북마크 리스트 업데이트 필요)
+          console.log("Bookmark deleted:", bookmark.id);
+          setCurrentIndex(currentIndex + 1);
+        } else if (currentIndex > 0) {
+          const prevBookmark = bookmarks[currentIndex - 1];
+          console.log("Bookmark deleted:", bookmark.id);
+          setCurrentIndex(currentIndex - 1);
+        }
+        break;
+      case "close":
+        toggleDetail();
+        break;
+      default:
+        break;
+    }
+  };
 
   const handleLinkcardImg = () => {
     setLinkcardImg("example.png");
@@ -106,17 +176,42 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
     setIsEditingMemo(false);
   };
 
+  // 제목/수정 클릭 시 원래 제목 저장
+  const handleEditClick = () => {
+    originalTitleRef.current = title; // 수정 전 제목을 ref에 저장
+    setIsEditingTitle(true); // 수정 모드로 전환
+    setTimeout(() => {
+      if (titleRef.current) {
+        titleRef.current.focus();
+        titleRef.current.setSelectionRange(
+          titleRef.current.value.length,
+          titleRef.current.value.length
+        );
+      }
+    }, 0);
+  };
+
+  // 제목/취소 버튼 클릭 시 수정 전 제목으로 되돌리기
+  const handleCancelClick = () => {
+    setIsEditingTitle(false); // 수정 모드 종료
+    setTitle(originalTitleRef.current); // 수정 전 제목으로 되돌리기
+  };
+
+  // 제목/완료 버튼 클릭 시 제목 저장
+  const handleSaveClick = () => {
+    setIsEditingTitle(false); // 수정 모드 종료
+  };
+
   if (!bookmark) return null;
 
   return (
     <div className={`bookmark-detail ${isOpen ? "open" : ""}`}>
       <div className="header-btn-container">
-        {icons.map((item, index) => (
+        {icons.map(({ id, Icon }) => (
           <Button
-            key={index}
             className="detail-header-btn"
-            Icon={item.Icon}
-            onClick={item.onClick}
+            Icon={Icon}
+            onClick={() => handleIconClick(id)}
           />
         ))}
       </div>
@@ -140,11 +235,7 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
               label="폴더선택"
             />
           </div>
-          <div
-            className="detail-title-container"
-            onMouseEnter={() => setTitleHover(true)}
-            onMouseLeave={() => setTitleHover(false)}
-          >
+          <div className="detail-title-container">
             {isEditingTitle ? (
               <textarea
                 ref={titleRef}
@@ -168,27 +259,26 @@ const BookmarkDetail = ({ bookmark, isOpen, toggleDetail }) => {
               <span className="detail-title">{title}</span>
             )}
           </div>
-          <Button
-            className={`detail-edit ${titleHover ? "hovered" : ""}`}
-            label={isEditingTitle ? "완료" : "수정"}
-            onClick={() => {
-              if (isEditingTitle) {
-                setIsEditingTitle(false); // 완료 버튼 클릭 시 수정 완료
-              } else {
-                setIsEditingTitle(true); // 수정 버튼 클릭 시 수정 모드로 전환
-                setTimeout(() => {
-                  // setTimeout을 사용하여 렌더링 후 포커스를 설정
-                  if (titleRef.current) {
-                    titleRef.current.focus();
-                    titleRef.current.setSelectionRange(
-                      titleRef.current.value.length,
-                      titleRef.current.value.length
-                    );
-                  }
-                }, 0);
-              }
-            }}
-          />
+          {isEditingTitle ? (
+            <div className="detail-edit-buttons">
+              <Button
+                className="detail-cancel"
+                label="취소"
+                onClick={handleCancelClick} // 취소 버튼 클릭 시 원래 제목으로 되돌리기
+              />
+              <Button
+                className="detail-save"
+                label="완료"
+                onClick={handleSaveClick} // 완료 버튼 클릭 시 저장 처리
+              />
+            </div>
+          ) : (
+            <Button
+              className="detail-edit"
+              label="수정"
+              onClick={handleEditClick} // 수정 버튼 클릭 시 수정 모드로 전환
+            />
+          )}
         </div>
       </div>
 

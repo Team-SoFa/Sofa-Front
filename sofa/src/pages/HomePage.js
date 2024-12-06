@@ -138,6 +138,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
       <SideMenu isOpen={isMenuOpen} toggleMenu={toggleMenu} />
       <BookmarkDetail
         bookmark={selectedBookmark}
+        bookmarks={bookmarks}
         isOpen={isDetailOpen && selectedBookmark !== null}
         toggleDetail={toggleDetail}
       />
