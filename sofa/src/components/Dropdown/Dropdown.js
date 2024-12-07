@@ -22,7 +22,7 @@ const Dropdown = ({
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
-  const [addValue, setAddValue] = useState(null); //검색용 데이터
+  const [addValue, setAddValue] = useState(null); //작성한 데이터 추가
 
   const handleSelect = (value) => {
     // className이 "alarm"일 때 label을 변경하지 않음
@@ -40,6 +40,7 @@ const Dropdown = ({
 
   const handleAdd = (value) => {
     setAddValue(value);
+    //검색 데이터 추가
   };
 
   return (

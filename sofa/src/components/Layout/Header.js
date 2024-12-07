@@ -143,7 +143,6 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="dropdown-folder-select"
               options={folderOpt}
-              type="add"
               label="폴더 전체"
               Icon={DownIcon}
               onSelect={handleFolderSelect}

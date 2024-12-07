@@ -256,6 +256,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             />
             <Dropdown
               className="detail folder"
+              type="add"
               options={folderOpt}
               Icon={DownIcon}
               label="폴더선택"
@@ -428,7 +429,16 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               />
             </span>
           ))}
-          <Button className="add-tag-btn" Icon={TagAddIcon} />
+          <Dropdown
+            className="detail tag"
+            type="add"
+            options={folderOpt}
+            Icon={TagAddIcon}
+            onSelect={() => {
+              setValues("title");
+              //❗추후 수정
+            }}
+          />
         </div>
       </div>
     </div>
