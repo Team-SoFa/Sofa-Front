@@ -10,6 +10,9 @@ import MenuIcon from "../../assets/icon/MenuIcon";
 import DownIcon from "../../assets/icon/DownIcon";
 import SearchIcon from "../../assets/icon/SearchIcon";
 import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
+import SettingIcon from "../../assets/icon/SettingIcon";
+import CallLineIcon from "../../assets/icon/CallLineIcon";
+import LogoutIcon from "../../assets/icon/LogoutIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -20,7 +23,18 @@ const Header = ({ type, toggleMenu }) => {
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
 
+  const userPage = [
+    { Icon: SettingIcon, content: "설정" },
+    { Icon: CallLineIcon, content: "고객 센터" },
+    { Icon: LogoutIcon, content: "로그아웃" },
+  ];
+
   // ================ 임시 데이터 =====================
+  const userInfo = {
+    profileImage: "example.png", // 프로필 이미지 URL
+    name: "홍길동", // 사용자 이름
+    email: "hong@example.com", // 사용자 이메일
+  };
   const [recentSearches, setRecentSearches] = useState([
     { img: "example.png", content: "React" },
     { img: "example.png", content: "JavaScript" },
@@ -162,11 +176,13 @@ const Header = ({ type, toggleMenu }) => {
               Icon={AlarmLineIcon}
               onSelect={handleAlarmSelect}
             />
-            <Button
+            <Dropdown
               className="user-info"
+              type="user-info"
+              userInfo={userInfo}
               imgSrc="example.png"
-              imgAlt="user-info"
-              onClick={openModal}
+              options={userPage}
+              onSelect={openModal}
             />
             <Modal isOpen={isModalOpen} onClose={closeModal} />
           </div>

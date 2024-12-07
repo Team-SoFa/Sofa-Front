@@ -14,9 +14,9 @@
   color:var(--font-gray);
   background:white;
   border:0.031rem solid var(--border-gray); border-radius: 5rem;
-}.dropdown-header-img{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
+}.dropdown-header-icon{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
 .dropdown-header:hover, .dropdown-header.open{color:white; background: var(--purple-main);}
-.dropdown-header-img.rotated{color:white; transform:rotate(180deg);}
+.dropdown-header-icon.rotated{color:white; transform:rotate(180deg);}
 
 .dropdown-menu {
   position:absolute;
@@ -42,6 +42,15 @@
   white-space:normal;
 }.dropdown-option:hover{ background:var(--gray-hover);}
 
+.dropdown-add{
+  display: flex;
+  position: sticky; bottom: 0;
+  gap: 0.2rem;
+  border-top: 1px solid #eaeaea;
+  background-color: white;
+}
+
+
 
 .dropdown.search-dropdown .dropdown-header{display: none;}
 .dropdown.search-dropdown .dropdown-menu{
@@ -56,15 +65,15 @@
 
 
 /* === 드롭다운 펼침 화살표, 옵션선택버튼 === */
-.dropdown-folder-select .dropdown-header-img{order:2; margin-left: 0.2rem;}
-.dropdown-tag-select .dropdown-header-img{order:2; margin-left: 0.2rem;}
+.dropdown-folder-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
+.dropdown-tag-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
 .dropdown-folder-select .dropdown-select{display:flex;}
 .dropdown-tag-select .dropdown-select{display: flex;}
 
 
 /* === 알림 === */
 .dropdown.alarm .dropdown-header{padding:0rem; width:2.5rem; height: 2.5rem; justify-content: center;}
-.dropdown.alarm .dropdown-header-img{transform:rotate(0deg);}
+.dropdown.alarm .dropdown-header-icon{transform:rotate(0deg);}
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
   right:-3rem; left:auto;
@@ -88,6 +97,38 @@
 }
 
 
+/* === 유저페이지 ===*/
+.dropdown.user-info .dropdown-header{
+  padding:0;
+  width: 2.5rem; height: 2.5rem;
+  overflow: hidden;
+}
+.dropdown-header-img{width:2.5rem; height:2.5rem;}
+.dropdown.user-info .dropdown-menu{
+  right:0;
+  width:13rem; max-height:16.5rem;
+}
+.dropdown-user-info {
+  cursor:auto;
+  display: flex;
+  padding: 1rem;
+  flex-direction: column;
+  align-items: center;
+  border-bottom: 1px solid #eaeaea;
+  gap:0.3rem;
+}
+.dropdown-user-profile{
+  width:3rem; height:3rem;
+  border-radius: 5rem;
+  object-fit: cover;
+  margin-bottom: 0.5rem;
+}
+.dropdown-user-email {
+  font-size: 0.9rem;
+  color: #333;
+}
+
+
 /* === 링크카드 === */
 .dropdown.linkcard.folder-name {
   position:absolute;
@@ -101,9 +142,9 @@
   padding:6px;
   color:black;
 }
-.dropdown.linkcard .dropdown-header-img{order:2; margin-left: 0.2rem;}
+.dropdown.linkcard .dropdown-header-icon{order:2; margin-left: 0.2rem;}
 
-.dropdown.linkcard .dropdown-header-img > svg{padding:0;width:1rem; height: 1.2rem;}
+.dropdown.linkcard .dropdown-header-icon > svg{padding:0;width:1rem; height: 1.2rem;}
 .dropdown.linkcard .dropdown-header:hover{color:white;}
 
 .dropdown.linkcard .dropdown-menu{width:5rem; max-height: 3.5rem;}
@@ -120,7 +161,7 @@
   background:transparent;
   border-color: transparent;
 }
-.dropdown.dropdown-folder-edit .dropdown-header-img{color:white;}
+.dropdown.dropdown-folder-edit .dropdown-header-icon{color:white;}
 .dropdown.dropdown-folder-edit .dropdown-menu{
   right:0rem;
 }
@@ -128,11 +169,11 @@
 
 /* === SORGING === */
 .dropdown.sorting .dropdown-header{gap:0.2rem; border-radius: 0.5rem; padding: 0.3rem; padding-right:0.7rem; }
-.dropdown.sorting .dropdown-header-img{order:2;}
+.dropdown.sorting .dropdown-header-icon{order:2;}
 
 
 /* === 자세히보기 === */
 .dropdown.detail.folder{margin-left: 0.45rem;}
 .dropdown.detail.folder .dropdown-header{padding-block: 0.2rem;}
-.dropdown.detail.folder .dropdown-header-img{order:2;}
+.dropdown.detail.folder .dropdown-header-icon{order:2;}
 .dropdown.detail.folder .dropdown-menu{right:0rem;}
