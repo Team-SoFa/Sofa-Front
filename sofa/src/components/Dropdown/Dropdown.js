@@ -49,7 +49,10 @@ const Dropdown = ({
       ref={dropdownRef}
       onMouseEnter={() => setIsHovered(true)} // hover 시작
       onMouseLeave={() => setIsHovered(false)} // hover 종료
-      onClick={(e) => e.stopPropagation()}
+      onClick={(e) => {
+        e.stopPropagation();
+        e.preventDefault();
+      }}
     >
       <div
         className={`dropdown-header ${isOpen ? "open" : ""}`}
