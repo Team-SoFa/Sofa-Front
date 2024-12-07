@@ -133,6 +133,6 @@
 
 /* === 자세히보기 === */
 .dropdown.detail.folder{margin-left: 0.45rem;}
-.dropdown.detail.folder .dropdown-header{
-  padding-block: 0.2rem;}
+.dropdown.detail.folder .dropdown-header{padding-block: 0.2rem;}
 .dropdown.detail.folder .dropdown-header-img{order:2;}
+.dropdown.detail.folder .dropdown-menu{right:0rem;}
