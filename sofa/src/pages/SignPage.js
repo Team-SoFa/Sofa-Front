@@ -7,7 +7,7 @@ import Button from "../components/Button/Button";
 import { tempLogin, googleOAuthRedirectUriGet2, googleOAuthLoginGet } from "../services/loginService"; // Google 로그인 서비스 호출
 import { folderGet, folderPost, folderDelete, folderPut} from "../services/folderService";
 import { put } from "../services/apiClient";
-import { linkCardPost, linkCardAiPost, linkCardListGet, linkCardDelete, linkCardInfoPatch } from "../services/linkCardService";
+import { linkCardPost, linkCardAiPost, linkCardListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
 import { settingGet, settingPatch } from "../services/settingService";
 import { memberGet } from "../services/memberService";
 
@@ -33,61 +33,92 @@ const SignPage = () => {
   const [linkCardList, setLinkCardList] = useState([]); // 초기값은 빈 배열로 설정
 
 
-    // 임시 로그인 함수 호출 핸들러
+    // // 임시 로그인 함수 호출 핸들러
+    // const handleGoogleLogin2 = async () => {
+    //   try {
+  
+    //     const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
+    
+    //     console.log('Google Login Response:', response);  // 응답을 제대로 확인
+
+    //     const popup = window.open(response, "_blank", "width=500,height=600");
+
+    //     const checkPopup = setInterval(() => {
+    //       try {
+    //         if (popup.closed) {
+    //           clearInterval(checkPopup);
+    //           console.log("Popup closed by user.");
+    //         }
+
+    //         // 리다이렉트된 URL 확인 (도메인이 같아야 함)
+    //         if (popup.location.href.includes("https://linkiving.com")) {
+    //           const currentUrl = popup.location.href;
+    //           console.log("Final URL:", currentUrl);
+
+    //           // 필요한 정보 추출
+    //           const params = new URLSearchParams(new URL(currentUrl).search);
+    //           const code = params.get("code");
+    //           console.log("code:", code);
+              
+    //           popup.close();
+    //           clearInterval(checkPopup);
+
+    //           hanldegoogleOAuthLoginGet(code);
+    //         }
+    //       } catch (error) {
+    //         // 다른 도메인일 경우 에러 발생 (CORS 제한)
+    //         console.log("Waiting for redirection...", error);
+    //       }
+    //     }, 500);
+    //   } catch (err) {
+    //     console.log('Login Error:', err);
+    //   } finally {
+    //     console.log('로딩 종료');  // 로딩 상태 종료
+    //   }
+    // };
+
+    // Google OAuth 로그인 핸들러
     const handleGoogleLogin2 = async () => {
       try {
-  
-        const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
-    
-        console.log('Google Login Response:', response);  // 응답을 제대로 확인
+        const response = await googleOAuthRedirectUriGet2(); // OAuth 로그인 URL 가져오기
 
-        const popup = window.open(response, "_blank", "width=500,height=600");
+        console.log('Google Login Redirect URL:', response); // 확인용 로그
 
-        const checkPopup = setInterval(() => {
-          try {
-            if (popup.closed) {
-              clearInterval(checkPopup);
-              console.log("Popup closed by user.");
-            }
-
-            // 리다이렉트된 URL 확인 (도메인이 같아야 함)
-            if (popup.location.href.includes("https://linkiving.com")) {
-              const currentUrl = popup.location.href;
-              console.log("Final URL:", currentUrl);
-
-              // 필요한 정보 추출
-              const params = new URLSearchParams(new URL(currentUrl).search);
-              const code = params.get("code");
-              console.log("code:", code);
-              
-              popup.close();
-              clearInterval(checkPopup);
-
-              hanldegoogleOAuthLoginGet(code);
-            }
-          } catch (error) {
-            // 다른 도메인일 경우 에러 발생 (CORS 제한)
-            console.log("Waiting for redirection...", error);
-          }
-        }, 500);
-        // window.location.href = response;
-        // 응답에서 accessToken, refreshToken 추출
-        // if (response && response.accessToken && response.refreshToken) {
-        //   dispatch(setTokens(response.accessToken, response.refreshToken)); // 토큰 저장
-        //   console.log('로그인 성공!');  // 성공 메시지 설정
-        //   hanldeMemberGet();
-        // } else {
-        //   console.log('로그인 응답에 문제가 있습니다.');  // 응답이 없거나 이상할 때 처리
-        // }
+        // 현재 페이지에서 Google 로그인 페이지로 리다이렉트
+        window.location.href = response;
       } catch (err) {
-        console.log('Login Error:', err);
+        console.error('Login Error:', err);
       } finally {
-        console.log('로딩 종료');  // 로딩 상태 종료
+        console.log('로딩 종료'); // 로딩 상태 종료
       }
     };
 
-      // 폴더 추가 핸들러
-  const hanldegoogleOAuthLoginGet = async (data) => {
+    // 리다이렉트 후 호출할 함수
+    const handleRedirectedGoogleLogin = async () => {
+      try {
+        const currentUrl = window.location.href; // 현재 페이지의 URL
+        console.log('Redirected URL:', currentUrl); // 디버깅용
+
+        const params = new URLSearchParams(new URL(currentUrl).search);
+        const code = params.get("code"); // Authorization Code 추출
+
+        if (code) {
+          console.log("Authorization Code:", code);
+
+          // 서버로 Authorization Code 전달하여 토큰 요청
+          await hanldegoogleOAuthLoginGet(code);
+
+          console.log('Google OAuth 로그인 성공');
+        } else {
+          console.error("Authorization Code가 없습니다.");
+        }
+      } catch (err) {
+        console.error('Redirect 처리 중 에러 발생:', err);
+      }
+    };
+
+
+    const hanldegoogleOAuthLoginGet = async (data) => {
     try {
       
       const response = await googleOAuthLoginGet(data);
@@ -302,6 +333,27 @@ const SignPage = () => {
     }
   };
 
+  // 링크카드 조회 핸들러
+  const hanldeLinkCardEnterPost = async () => {
+    try {
+      const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
+      
+      window.open(lastLinkCard.url);
+      
+      const response = await linkCardEnterPost(
+        lastLinkCard.id
+      );
+      console.log('링크카드 방문:', response);
+      if (response) {
+        console.log(response);
+      }
+    } catch (err) {
+      console.log('링크카드 리스트 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
+
   // 폴더 삭제 핸들러
   const hanldeLinkCardDelete = async () => {
     const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
@@ -334,7 +386,7 @@ const SignPage = () => {
     const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
 
     if (!lastLinkCard) {
-      console.log('삭제할 링크 카드가 없습니다.');  // 폴더가 없음을 로그로 출력
+      console.log('수정할 링크 카드가 없습니다.');  // 폴더가 없음을 로그로 출력
       return;  // early return으로 함수 종료
     }
 
@@ -394,8 +446,11 @@ const SignPage = () => {
     try {
       const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
       const targetUrl = url;
-  
-      const response = await fetch(proxyUrl + targetUrl);
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+      const response = await fetch(proxyUrl + targetUrl, {
+        origin: API_BASE_URL
+      });
       const html = await response.text(); // HTML 텍스트로 변환
   
       const parser = new DOMParser();
@@ -487,6 +542,10 @@ const SignPage = () => {
             <Button
               label="링크카드리스트 조회"
               onClick={hanldeLinkCardListGet}
+            />
+            <Button
+              label="링크카드리스트 방문"
+              onClick={hanldeLinkCardEnterPost}
             />
             <Button
               label="링크카드 삭제"
