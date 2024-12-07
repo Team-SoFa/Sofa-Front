@@ -159,7 +159,7 @@
   color:white;
   padding: 0; padding-inline: 0.5rem;
   background:transparent;
-  border-color: transparent;
+  /* border-color: transparent; */
 }
 .dropdown.dropdown-folder-edit .dropdown-header-icon{color:white;}
 .dropdown.dropdown-folder-edit .dropdown-menu{
