@@ -110,8 +110,7 @@
 }.btn.detail.link-btn:hover{background-color: var(--purple-hover);}
 .btn.detail.link-btn .btn-icon > svg {width:1rem;}
 
-.btn.detail-edit{
-
+.btn.detail-edit,.btn.detail-save,.btn.detail-cancel{
   position: absolute;
   bottom:0.3rem; right: 0.3rem;
   width:3rem; height: 2rem;
@@ -119,11 +118,12 @@
   /* opacity: 0;
   visibility: hidden;
   transition: opacity 0.3s ease, visibility 0.3s ease; */
-}.btn.detail-edit:hover{
+}.btn.detail-edit:hover,.btn.detail-save:hover,.btn.detail-cancel:hover{
   /* opacity: 1;
   visibility: visible; */
   background-color: var(--purple-hover);
 }
+.btn.detail-cancel{right:3.5rem !important};
 
 .btn.add-tag-btn {
   width: 2rem; height: 2rem;
