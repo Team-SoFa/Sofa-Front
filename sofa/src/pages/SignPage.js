@@ -4,12 +4,14 @@ import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
 import "../components/Layout/HeaderStyle.css";
 import "./onBoarding-layout.css";
 import Button from "../components/Button/Button";
-import { tempLogin, googleOAuthRedirectUriGet2, googleOAuthLoginGet } from "../services/loginService"; // Google 로그인 서비스 호출
+import { tempLogin, googleOAuthRedirectUriGet2, googleOAuthLoginGet } from "../services/oAuthService"; // Google 로그인 서비스 호출
 import { folderGet, folderPost, folderDelete, folderPut} from "../services/folderService";
-import { put } from "../services/apiClient";
-import { linkCardPost, linkCardAiPost, linkCardListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
+import { linkCardGet, linkCardPost, linkCardAiPost, linkCardAllListGet, linkCardFolderListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
 import { settingGet, settingPatch } from "../services/settingService";
 import { memberGet } from "../services/memberService";
+import { recycleBinGet, recycleBinPost, recycleBinDel } from "../services/recycleBinService";
+import { aiTagsAiGet, aiTagsDelete } from "../services/tagSerivce";
+import { searchGet } from "../services/searchService";
 
 const ImagePlaceholder = ({ width, height }) => {
   const placeholderStyle = {
@@ -31,94 +33,55 @@ const SignPage = () => {
   const [folderList, setFolderList] = useState([]); // 초기값은 빈 배열로 설정
   const [linkCardListDetail, setLinkCardListDetail] = useState([]); // 초기값은 빈 배열로 설정
   const [linkCardList, setLinkCardList] = useState([]); // 초기값은 빈 배열로 설정
+  const [recycleBinList, setRecycleBinList] = useState([]); // 초기값은 빈 배열로 설정
+  const [tagList, setTagList] = useState([]); // 초기값은 빈 배열로 설정
+  const [tagsId, setTagsId] = useState(['1', '2', '3']); // 예시 tagsId 배열
 
+  // 임시 로그인 함수 호출 핸들러
+  const handleGoogleLogin2 = async () => {
+    try {
 
-    // // 임시 로그인 함수 호출 핸들러
-    // const handleGoogleLogin2 = async () => {
-    //   try {
+      const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
   
-    //     const response = await googleOAuthRedirectUriGet2();  // tempLogin 호출
-    
-    //     console.log('Google Login Response:', response);  // 응답을 제대로 확인
+      console.log('Google Login Response:', response);  // 응답을 제대로 확인
 
-    //     const popup = window.open(response, "_blank", "width=500,height=600");
+      const popup = window.open(response, "_blank", "width=500,height=600");
 
-    //     const checkPopup = setInterval(() => {
-    //       try {
-    //         if (popup.closed) {
-    //           clearInterval(checkPopup);
-    //           console.log("Popup closed by user.");
-    //         }
+      const checkPopup = setInterval(() => {
+        try {
+          if (popup.closed) {
+            clearInterval(checkPopup);
+            console.log("Popup closed by user.");
+          }
 
-    //         // 리다이렉트된 URL 확인 (도메인이 같아야 함)
-    //         if (popup.location.href.includes("https://linkiving.com")) {
-    //           const currentUrl = popup.location.href;
-    //           console.log("Final URL:", currentUrl);
+          // 리다이렉트된 URL 확인 (도메인이 같아야 함)
+          if (popup.location.href.includes("https://linkiving.com")) {
+            const currentUrl = popup.location.href;
+            console.log("Final URL:", currentUrl);
 
-    //           // 필요한 정보 추출
-    //           const params = new URLSearchParams(new URL(currentUrl).search);
-    //           const code = params.get("code");
-    //           console.log("code:", code);
-              
-    //           popup.close();
-    //           clearInterval(checkPopup);
+            // 필요한 정보 추출
+            const params = new URLSearchParams(new URL(currentUrl).search);
+            const code = params.get("code");
+            console.log("code:", code);
+            
+            popup.close();
+            clearInterval(checkPopup);
 
-    //           hanldegoogleOAuthLoginGet(code);
-    //         }
-    //       } catch (error) {
-    //         // 다른 도메인일 경우 에러 발생 (CORS 제한)
-    //         console.log("Waiting for redirection...", error);
-    //       }
-    //     }, 500);
-    //   } catch (err) {
-    //     console.log('Login Error:', err);
-    //   } finally {
-    //     console.log('로딩 종료');  // 로딩 상태 종료
-    //   }
-    // };
-
-    // Google OAuth 로그인 핸들러
-    const handleGoogleLogin2 = async () => {
-      try {
-        const response = await googleOAuthRedirectUriGet2(); // OAuth 로그인 URL 가져오기
-
-        console.log('Google Login Redirect URL:', response); // 확인용 로그
-
-        // 현재 페이지에서 Google 로그인 페이지로 리다이렉트
-        window.location.href = response;
-      } catch (err) {
-        console.error('Login Error:', err);
-      } finally {
-        console.log('로딩 종료'); // 로딩 상태 종료
-      }
-    };
-
-    // 리다이렉트 후 호출할 함수
-    const handleRedirectedGoogleLogin = async () => {
-      try {
-        const currentUrl = window.location.href; // 현재 페이지의 URL
-        console.log('Redirected URL:', currentUrl); // 디버깅용
-
-        const params = new URLSearchParams(new URL(currentUrl).search);
-        const code = params.get("code"); // Authorization Code 추출
-
-        if (code) {
-          console.log("Authorization Code:", code);
-
-          // 서버로 Authorization Code 전달하여 토큰 요청
-          await hanldegoogleOAuthLoginGet(code);
-
-          console.log('Google OAuth 로그인 성공');
-        } else {
-          console.error("Authorization Code가 없습니다.");
+            hanldegoogleOAuthLoginGet(code);
+          }
+        } catch (error) {
+          // 다른 도메인일 경우 에러 발생 (CORS 제한)
+          console.log("Waiting for redirection...", error);
         }
-      } catch (err) {
-        console.error('Redirect 처리 중 에러 발생:', err);
-      }
-    };
+      }, 500);
+    } catch (err) {
+      console.log('Login Error:', err);
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
 
-
-    const hanldegoogleOAuthLoginGet = async (data) => {
+  const hanldegoogleOAuthLoginGet = async (data) => {
     try {
       
       const response = await googleOAuthLoginGet(data);
@@ -265,6 +228,39 @@ const SignPage = () => {
     }
   };
 
+  const fetchImageUrlFromPage = async (url) => {
+    try {
+      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+      const targetUrl = url;
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+      const response = await fetch(proxyUrl + targetUrl, {
+        origin: API_BASE_URL
+      });
+      const html = await response.text(); // HTML 텍스트로 변환
+  
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+  
+      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+  
+      if (!imageUrl) {
+        // <img> 태그에서 src 추출
+        imageUrl = doc.querySelector('img')?.src;
+      }
+  
+      if (imageUrl) {
+        return imageUrl; // 이미지 URL 반환
+      } else {
+        throw new Error('이미지를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('이미지 URL 추출 실패:', error);
+      throw error;
+    }
+  }; 
+
   const handleLinkCardAiPost = async () => {
     try {
       // 임의의 URL을 설정
@@ -310,11 +306,11 @@ const SignPage = () => {
   };
 
   // 링크카드 조회 핸들러
-  const hanldeLinkCardListGet = async () => {
+  const handlelinkCardFolderListGet = async () => {
     try {
-      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 2] : null;
+      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
 
-      const response = await linkCardListGet(
+      const response = await linkCardFolderListGet(
         lastFolder.id,
         "RECENTLY_SAVED",
         "ASCENDING",
@@ -333,7 +329,57 @@ const SignPage = () => {
     }
   };
 
+  // 링크카드 전체 조회 핸들러
+  const handlelinkCardAllListGet = async () => {
+    try {
+      const queryString = tagsId.map((id) => `&tagsId=${id}`).join('');
+
+      const response = await searchGet(
+        0,
+        queryString,
+        "string",
+        0,
+        0,
+        10,
+        "RECENTLY_SAVED",
+        "ASCENDING"
+      );
+      // const response = await linkCardAllListGet(
+      //   "RECENTLY_SAVED",
+      //   "ASCENDING",
+      //   0,
+      //   10
+      // );
+      console.log('링크카드 리스트 조회 응답:', response);
+      if (response) {
+        console.log(response.data);
+        setLinkCardList(response.data);  
+      }
+    } catch (err) {
+      console.log('링크카드 리스트 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
+
   // 링크카드 조회 핸들러
+  const hanldeLinkCardGet = async (id) => {
+    try {
+      const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
+
+      const response = await linkCardGet(id);
+      console.log('hanldeLinkCardGet:', response);
+      if (response) {
+        // setLinkCardListDetail(response);
+      }
+    } catch (err) {
+      console.log('hanldeLinkCardGet 실패!');
+    } finally {
+      console.log('hanldeLinkCardGet 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 링크카드 방문 핸들러
   const hanldeLinkCardEnterPost = async () => {
     try {
       const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
@@ -354,7 +400,7 @@ const SignPage = () => {
     }
   };
 
-  // 폴더 삭제 핸들러
+  // 링크카드 삭제 핸들러
   const hanldeLinkCardDelete = async () => {
     const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
 
@@ -381,7 +427,7 @@ const SignPage = () => {
     }
   };
 
-  // 폴더 삭제 핸들러
+  // 링크카드 수정 핸들러
   const hanldeLinkCardInfoPatch = async () => {
     const lastLinkCard = linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
 
@@ -441,41 +487,8 @@ const SignPage = () => {
       console.error('설정 조회 실패:', err);
     }
   };
-  
-  const fetchImageUrlFromPage = async (url) => {
-    try {
-      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-      const targetUrl = url;
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-      const response = await fetch(proxyUrl + targetUrl, {
-        origin: API_BASE_URL
-      });
-      const html = await response.text(); // HTML 텍스트로 변환
-  
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
-  
-      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
-      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
-  
-      if (!imageUrl) {
-        // <img> 태그에서 src 추출
-        imageUrl = doc.querySelector('img')?.src;
-      }
-  
-      if (imageUrl) {
-        return imageUrl; // 이미지 URL 반환
-      } else {
-        throw new Error('이미지를 찾을 수 없습니다.');
-      }
-    } catch (error) {
-      console.error('이미지 URL 추출 실패:', error);
-      throw error;
-    }
-  }; 
-
-  // 폴더 조회 핸들러
+  // 멤버 조회 핸들러
   const hanldeMemberGet = async () => {
     try {
       const headers = {};
@@ -488,7 +501,104 @@ const SignPage = () => {
       console.log('로딩 종료');  // 로딩 상태 종료
     }
   };
+
+  // 휴지통 복원 핸들러
+  const hanldeRecyclePost = async () => {
+    try {
+      const lastrecycleBin = recycleBinList.length > 0 ? recycleBinList[recycleBinList.length - 1] : null;
+      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
+      console.log(lastFolder.id);
+      const data = {
+        "folderId": lastFolder.id
+      };
+      
+      const response = await recycleBinPost(lastrecycleBin.id, data);
+
+      console.log('hanldeRecyclePost 응답:', response);
+    } catch (err) {
+      console.log('hanldeRecyclePost 실패!');
+    } finally {
+      console.log('hanldeRecyclePost 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 휴지통 삭제 핸들러
+  const hanldeRecycleDelete = async () => {
+    const lastrecycleBin = recycleBinList.length > 0 ? recycleBinList[recycleBinList.length - 1] : null;
+
+    console.log(lastrecycleBin.id);
+    try {
+      const response = await recycleBinDel(lastrecycleBin.id);
+
+      console.log('hanldeRecycleDelete 응답:', response);
+    } catch (err) {
+      console.log('hanldeRecycleDelete 실패!');
+    } finally {
+      console.log('hanldeRecycleDelete 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 휴지통 조회 핸들러
+  const hanldeRecycleGet = async () => {
+    try {
+      const response = await recycleBinGet(        
+        "RECENTLY_DELETE",
+        "ASCENDING",
+        0,
+        10
+      );
+
+      if (response) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        setRecycleBinList(response.data);  
+        console.log(response.data);
+      }
+      console.log('hanldeRecycleGet 응답:', response);
+    } catch (err) {
+      console.log('hanldeRecycleGet 실패!');
+    } finally {
+      console.log('hanldeRecycleGet 종료');  // 로딩 상태 종료
+    }
+  };
     
+  // 태그 조회 핸들러
+  const hanldeTagGet = async () => {
+    try {
+      const response = await aiTagsAiGet();
+
+      if (response) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        setTagList(response);  
+        console.log(response);
+      }
+      console.log('hanldeTagGet 응답:', response);
+    } catch (err) {
+      console.log('hanldeTagGet 실패!');
+    } finally {
+      console.log('hanldeTagGet 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 태그 삭제 핸들러
+  const hanldeTagDelete = async () => {
+    const lastTag = tagList.length > 0 ? tagList[tagList.length - 1] : null;
+
+    try {
+      const response = await aiTagsDelete(lastTag);
+
+      if (response) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        setTagList(response);  
+        console.log(response);
+      }
+      console.log('hanldeTagDelete 응답:', response);
+    } catch (err) {
+      console.log('hanldeTagDelete 실패!');
+    } finally {
+      console.log('hanldeTagDelete 종료');  // 로딩 상태 종료
+    }
+  };
+
   return (
     <div className="signpage">
       <header className="header">
@@ -540,8 +650,16 @@ const SignPage = () => {
               onClick={handleLinkCardAiPost}
             />
             <Button
-              label="링크카드리스트 조회"
-              onClick={hanldeLinkCardListGet}
+              label="링크카드전체리스트 조회"
+              onClick={handlelinkCardAllListGet}
+            />
+            <Button
+              label="링크카드폴더리스트 조회"
+              onClick={handlelinkCardFolderListGet}
+            />
+            <Button
+              label="링크카드 조회"
+              onClick={hanldeLinkCardGet}
             />
             <Button
               label="링크카드리스트 방문"
@@ -554,6 +672,26 @@ const SignPage = () => {
             <Button
               label="링크카드 수정"
               onClick={hanldeLinkCardInfoPatch}
+            />
+            <Button
+              label="휴지통 복원"
+              onClick={hanldeRecyclePost}
+            />
+            <Button
+              label="휴지통 삭제"
+              onClick={hanldeRecycleDelete}
+            />
+            <Button
+              label="휴지통 조회"
+              onClick={hanldeRecycleGet}
+            />
+            <Button
+              label="태그 조회"
+              onClick={hanldeTagGet}
+            />
+            <Button
+              label="태그 삭제"
+              onClick={hanldeTagDelete}
             />
             <Button
               label="설정조회"

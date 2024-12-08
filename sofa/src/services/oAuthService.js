@@ -1,7 +1,7 @@
 // src/services/loginService.js
 import axios from 'axios';
 
-import { get, post, put, del} from "./apiClient";
+import { get, post, put, del, tokenPost} from "./apiClient";
 
 // Google 로그인 URL을 얻는 API 호출
 export const googleOAuthRedirectUriGet3 = async (headers = {}) => {
@@ -58,6 +58,24 @@ export const tempLogin = async (data) => {
     // 응답 데이터에서 필요한 정보 반환
     if (response) {
       return response;  // response.data에 accessToken과 refreshToken이 포함되어 있음
+    } else {
+      throw new Error('응답 데이터가 없습니다.');
+    }
+  } catch (error) {
+    console.error("Login failed:", error);
+    throw error;  // 에러 발생 시 호출한 곳으로 에러 전달
+  }
+};
+
+// 토큰 갱신 (accessToken, refreshToken)
+export const oAuth2RefreshPost = async () => {
+  try {
+    const response = await tokenPost("/oauth2/refresh", {}, {});
+    console.log('tempLogin response:', response);  // 응답을 제대로 출력해보세요
+
+    // 응답 데이터에서 필요한 정보 반환
+    if (response) {
+      return response // 토큰 저장
     } else {
       throw new Error('응답 데이터가 없습니다.');
     }

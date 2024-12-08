@@ -95,7 +95,7 @@ export const linkCardFolderPatch = async (id, data) => {
 // 링크 카드 조회
 export const linkCardGet = async (id) => {
     try {
-        const response = await tokenPatch("/linkCard/"+id, {}, {});
+        const response = await tokenGet("/linkCard/"+id, {}, {});
         return response;
     } catch (error) {
         console.error("linkCardFolderPatch failed:", error);
@@ -103,8 +103,8 @@ export const linkCardGet = async (id) => {
     }
 };
 
-// 링크 카드 리스트 조회
-export const linkCardListGet = async (
+// 링크 카드 전체 리스트 조회
+export const linkCardFolderListGet = async (
     folderId,
     sortBy,
     sortOrder,
@@ -114,6 +114,28 @@ export const linkCardListGet = async (
     try {
         const response = await tokenGet(
             "/linkCard/list/"+folderId+
+            "?sortBy="+sortBy+
+            "&sortOrder="+sortOrder+
+            "&lastId="+lastId+
+            "&limit="+limit,
+        {}, {});
+        return response;
+    } catch (error) {
+        console.error("linkCardListGet failed:", error);
+        throw error;
+    }
+};
+
+// 링크 카드 폴더 리스트 조회
+export const linkCardAllListGet = async (
+    sortBy,
+    sortOrder,
+    lastId,
+    limit
+) => {
+    try {
+        const response = await tokenGet(
+            "/linkCard/list"+
             "?sortBy="+sortBy+
             "&sortOrder="+sortOrder+
             "&lastId="+lastId+
