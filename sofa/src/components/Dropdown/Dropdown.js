@@ -105,6 +105,7 @@ const Dropdown = ({
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
           )}
+
           {[
             ...(className === "dropdown-folder-select"
               ? [{ content: label, Icon: null }]
@@ -117,9 +118,7 @@ const Dropdown = ({
               onClick={() => handleSelect(option)}
             >
               {option.Icon && <option.Icon className="dropdown-option-icon" />}
-              <span onClick={() => handleSelect(option.content)}>
-                {option.content}
-              </span>
+              <span>{option.content}</span>
               <Button className="dropdown-select" label="선택" />
               {onDelete && (
                 <Button

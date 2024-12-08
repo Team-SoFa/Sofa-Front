@@ -22,6 +22,9 @@ const Header = ({ type, toggleMenu }) => {
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  // Modal
+  const [modalContent, setModalContent] = useState(null); // 모달에 표시할 내용 상태
+  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
 
   const userPage = [
     { Icon: SettingIcon, content: "설정" },
@@ -90,7 +93,7 @@ const Header = ({ type, toggleMenu }) => {
   }));
   const profileImg = "example.png";
 
-  // ================ 임시 데이터 =====================
+  // <<<<<<<<<<<<<<<<<<<<< 임시 데이터
 
   // 메뉴 열림 여부 판정
   const handleMenuToggle = () => {
@@ -118,15 +121,33 @@ const Header = ({ type, toggleMenu }) => {
     setRecentSearches(updatedSearches); // 상태 업데이트
   };
 
+  // Modal Contents >>>>>>>>>>>>>>>>>>
+  const openModal = (option) => {
+    let content;
+    switch (option.content) {
+      case "설정":
+        content = <div>여기서 설정을 변경할 수 있습니다.</div>;
+        break;
+      case "고객 센터":
+        content = <div>고객 센터 정보를 확인하세요.</div>;
+        break;
+      case "로그아웃":
+        content = <div>로그아웃하시겠습니까?</div>;
+        break;
+      default:
+        content = <div>알 수 없는 작업입니다.</div>;
+    }
+    setModalContent(content);
+    setIsModalOpen(true); // 모달 열기
+  };
+  const closeModal = () => {
+    setIsModalOpen(false); // 모달 닫기
+  };
+
   const headerStyle =
     type === "ONBOARDING"
       ? { backgroundColor: "#F1F1F1", paddingTop: "1rem" }
       : {};
-  const [isModalOpen, setIsModalOpen] = useState(false); // 모달 상태 추가
-
-  // 모달 open/close 함수
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <header className="header" style={headerStyle}>
@@ -184,7 +205,9 @@ const Header = ({ type, toggleMenu }) => {
               options={userPage}
               onSelect={openModal}
             />
-            <Modal isOpen={isModalOpen} onClose={closeModal} />
+            <Modal isOpen={isModalOpen} onClose={closeModal}>
+              {modalContent}
+            </Modal>
           </div>
         </>
       )}
