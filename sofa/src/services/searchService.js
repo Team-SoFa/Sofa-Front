@@ -3,9 +3,13 @@ import {tokenPost, tokenGet, tokenDel, tokenPut} from "./apiClient";
 // 검색
 export const searchGet = async (folderId, tagsId, keyword, lastId, limit, sortBy, sortOrder) => {
     try {
+        if(tagsId==null) {
+            tagsId="&tagsId="+null;
+        }
         const response = await tokenGet("/search?"+
-            "?folderId="+folderId+
+            "folderId="+folderId+
             tagsId+
+            "&keyword="+keyword+
             "&lastId="+lastId+
             "&limit="+limit+ 
             "&sortBy="+sortBy+
@@ -30,7 +34,7 @@ export const searchTagsGet = async (keyword) => {
 };
 
 // 검색 최근 tags
-export const searchHistoryTagsGet = async (keyword) => {
+export const searchHistoryTagsGet = async () => {
     try {
         const response = await tokenGet("/search/history/tags", {}, {});
         return response;
@@ -41,7 +45,7 @@ export const searchHistoryTagsGet = async (keyword) => {
 };
 
 // 검색 최근 keywords
-export const searchHistoryKeywordsGet = async (keyword) => {
+export const searchHistoryKeywordsGet = async () => {
     try {
         const response = await tokenGet("/search/history/keywords", {}, {});
         return response;

@@ -18,6 +18,7 @@ const TextField = forwardRef(
       recentSearches = [],
       onSearchSelect,
       onSearchDelete,
+      onFetchSearches, // 새로운 prop 추가 (클릭 시 호출될 API 핸들러)
     },
     ref
   ) => {
@@ -31,9 +32,13 @@ const TextField = forwardRef(
       setIsDropdownOpen(true);
     };
 
-    const handleClick = () => {
+    const handleClick = async () => {
       setIsDropdownOpen(true); // 입력 필드 클릭 시 항상 드롭다운 열기
-    };
+      if (onFetchSearches) {
+        // API 호출
+        await onFetchSearches();
+      }
+    };    
 
     const handleSelectSearch = (selected) => {
       onSearchSelect(selected.content); // 부모 컴포넌트로 선택된 값을 전달
