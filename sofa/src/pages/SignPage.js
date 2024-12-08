@@ -11,7 +11,7 @@ import { settingGet, settingPatch } from "../services/settingService";
 import { memberGet } from "../services/memberService";
 import { recycleBinGet, recycleBinPost, recycleBinDel } from "../services/recycleBinService";
 import { aiTagsAiGet, aiTagsDelete } from "../services/tagSerivce";
-import { searchGet } from "../services/searchService";
+import { searchGet, searchTagsGet } from "../services/searchService";
 
 const ImagePlaceholder = ({ width, height }) => {
   const placeholderStyle = {
@@ -600,6 +600,23 @@ const SignPage = () => {
     }
   };
 
+    // 태그 삭제 핸들러
+    const handleSearchTagsGet = async () => {  
+      try {
+        const response = await searchTagsGet("test");
+  
+        if (response) {
+          // 새롭게 받아온 폴더 리스트를 상태에 저장
+          console.log(response);
+        }
+        console.log('hanldeTagDelete 응답:', response);
+      } catch (err) {
+        console.log('hanldeTagDelete 실패!');
+      } finally {
+        console.log('hanldeTagDelete 종료');  // 로딩 상태 종료
+      }
+    };
+
   return (
     <div className="signpage">
       <header className="header">
@@ -701,6 +718,10 @@ const SignPage = () => {
             <Button
               label="설정변경"
               onClick={hanldeSettingPatch}
+            />
+            <Button
+              label="태그검색"
+              onClick={handleSearchTagsGet}
             />
           </div>
         </div>

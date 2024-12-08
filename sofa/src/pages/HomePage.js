@@ -21,23 +21,6 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
   const [selectedBookmark, setSelectedBookmark] = useState(null);
   const [isDetailOpen, setIsDetailOpen] = useState(false); //자세히보기메뉴 열림 상태
-  const [folderOptions, setFolderOptions] = useState([]); // 폴더 목록 상태 관리
-
-  useEffect(() => {
-    const fetchFolders = async () => {
-      try {
-        const response = await folderGet(); // API 호출
-        const folders = response.folderList.map((folder) => ({
-          content: folder.name, // Dropdown에 표시될 폴더 이름
-          id: folder.id, // 선택된 폴더를 식별하기 위한 ID
-        }));
-        setFolderOptions(folders); // 상태에 폴더 목록 저장
-      } catch (error) {
-        console.error("Failed to fetch folders:", error);
-      }
-    };
-    fetchFolders();
-  }, []);
 
   const renderSection = () => {
     switch (location.pathname) {

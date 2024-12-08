@@ -4,8 +4,6 @@ import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
-import { folderGet, folderPost, folderDelete, folderPut} from "../../services/folderService";
-import { searchHistoryTagsGet} from "../../services/searchService";
 
 import "./HeaderStyle.css";
 import MenuIcon from "../../assets/icon/MenuIcon";
@@ -15,60 +13,107 @@ import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
 import SettingIcon from "../../assets/icon/SettingIcon";
 import CallLineIcon from "../../assets/icon/CallLineIcon";
 import LogoutIcon from "../../assets/icon/LogoutIcon";
+import { memberGet } from "../../services/memberService";
+
+import { folderGet, folderPost, folderDelete, folderPut} from "../../services/folderService";
+import { searchHistoryKeywordsGet, searchHistoryTagsGet, searchGet} from "../../services/searchService";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
   const [alarmOption, setAlarmOption] = useState("");
-  const [folderOption, setFolderOption] = useState([]);
-  const [tagOption, setTagOption] = useState("태그선택");
-  const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
 
-  const [folderOptions, setFolderOptions] = useState([]);
-
-  useEffect(() => {
-
-    fetchFolders();
-    
-    fetchTags();
-  }, []);
-
-  const fetchFolders = async () => {
+  const [folderOption, setFolderOption] = useState([]);
+  const [tagOption, setTagOption] = useState([]);
+  const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
+  const [member, setMember] = useState([]); //검색창 최근검색어 임시 값
+  const [searchRecent, setSearchRecent] = useState("");
+  // 폴더 조회 핸들러
+  const handleFolderGet = async () => {
     try {
+      const headers = {};
       const response = await folderGet();
 
-      if(response) {
-        console.log(response?.floderList);
-        const folders = response?.floderList.map((folder) => ({
-          id: folder.id, // 폴더 ID
-          label: folder.name, // 표시할 라벨
-          content: folder.name, // 추가적으로 name 속성
+      if (response && response.floderList) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        const folderData = response.floderList.map((folder) => ({
+          id: folder.id,
+          label: folder.name,
+          content: folder.name,
         }));
-        setFolderOption(folders);
+        setFolderOption(folderData);
       }
-    } catch (error) {
-      console.error("Failed to fetch folders:", error);
+      console.log('handleFolderGet 응답:', response);
+    } catch (err) {
+      console.log('handleFolderGet 실패!');
+    } finally {
+      console.log('handleFolderGet 종료');  // 로딩 상태 종료
     }
   };
 
-  const fetchTags = async () => {
+  // 태그 조회 핸들러
+  const handleSearchHistoryTagsGet = async () => {
     try {
+      const headers = {};
       const response = await searchHistoryTagsGet();
-      
-      console.log(response);
 
-      if(response) {
-        const tags = response?.map((tag) => ({
-          label: tag, // 표시할 라벨
-          content: tag, // 추가적으로 name 속성
+      if (response) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        const tagData = response.map((tag) => ({
+          label: tag,
+          content: tag,
         }));
-        setTagOption(tags);
-        console.log("tagOption.length:", tagOption.length);
+        setTagOption(tagData);
       }
-    } catch (error) {
-      console.error("Failed to fetch tags:", error);
+      console.log('handleSearchHistoryTagsGet 응답:', response);
+    } catch (err) {
+      console.log('handleSearchHistoryTagsGet 실패!');
+    } finally {
+      console.log('handleSearchHistoryTagsGet 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 태그 조회 핸들러
+  const handleMemberGet = async () => {
+    try {
+      const headers = {};
+      const response = await memberGet();
+
+      if (response) {
+        const memberData = {
+          profileImage: "example.png",
+          name: response.name,
+          email: response.email
+        }
+        setMember(memberData);
+      }
+      console.log('handleMemeberGet 응답:', response);
+    } catch (err) {
+      console.log('handleMemeberGet 실패!');
+    } finally {
+      console.log('handleMemeberGet 종료');  // 로딩 상태 종료
+    }
+  };
+
+  // 태그 조회 핸들러
+  const handleHistoryKeywordGet = async () => {
+    try {
+      const headers = {};
+      const response = await searchHistoryKeywordsGet();
+
+      if (response) {
+        const historyData = response.map((history)=> ({
+          img: "example.png",
+          content: history
+        }));
+        setSearchRecent(historyData);
+      }
+      console.log('handleHistoryKeywordGet 응답:', response);
+    } catch (err) {
+      console.log('handleHistoryKeywordGet 실패!');
+    } finally {
+      console.log('handleHistoryKeywordGet 종료');  // 로딩 상태 종료
     }
   };
 
@@ -93,10 +138,10 @@ const Header = ({ type, toggleMenu }) => {
     { img: "example.png", content: "html은 무엇인가" },
   ]);
 
-  // const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
-  //   label: item,
-  //   content: item,
-  // }));
+  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
+    label: item,
+    content: item,
+  }));
   const tagsOpt = ["Documents", "Pictures", "PICTURES", "태그어쩌구1"].map(
     (item) => ({
       label: item,
@@ -177,6 +222,27 @@ const Header = ({ type, toggleMenu }) => {
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
 
+  const hanldeSearchGet = async () => {
+    try {
+      const response = await searchGet(
+        null,
+        null,
+        null,
+        0,
+        10,
+        "RECENTLY_MODIFIED",
+        "DESCENDING"
+      );
+
+      console.log(searchValue);
+
+      if(response) {
+        console.log(response);
+      }
+    } catch (err) {
+      console.error('hanldeSearchGet 실패:', err);
+    }
+  };
   return (
     <header className="header" style={headerStyle}>
       {/* ========== LINK CARD PAGES ========== */}
@@ -191,21 +257,19 @@ const Header = ({ type, toggleMenu }) => {
           <div className="searchers">
             <Dropdown
               className="dropdown-folder-select"
-              options={folderOption.length > 0 ? folderOption : [
-                { content: "폴더1" },
-                { content: "폴더2" },
-                { content: "폴더3" },
-              ]}              
+              options={folderOption}              
               label="폴더 전체"
               Icon={DownIcon}
               onSelect={handleFolderSelect}
+              onOpen={handleFolderGet}
             />
             <Dropdown
               className="dropdown-tag-select"
-              options={tagOption.length > 0 ? tagOption: tagsOpt}
+              options={tagOption}
               label="태그선택"
               Icon={DownIcon}
               onSelect={handleTagSelect}
+              onOpen={handleSearchHistoryTagsGet}
             />
             <TextField
               className="text_field"
@@ -213,13 +277,18 @@ const Header = ({ type, toggleMenu }) => {
               Icon={SearchIcon}
               value={searchValue}
               onChange={handleSearchChange}
-              recentSearches={recentSearches} // 최근 검색어 전달
+              recentSearches={searchRecent} // 최근 검색어 전달
               onSearchSelect={
                 (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
               }
               onSearchDelete={handleSearchDelete}
+              onFetchSearches={handleHistoryKeywordGet} // 클릭 시 호출될 API 핸들러 전달
             />
-            <Button className="search" label="검색" />
+            <Button 
+              className="search" 
+              label="검색" 
+              onClick={hanldeSearchGet}
+            />
             <Button label="초기화" />
           </div>
           <div className="user_info">
@@ -232,10 +301,11 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="user-info"
               type="user-info"
-              userInfo={userInfo}
+              userInfo={member ? member: userInfo}
               imgSrc="example.png"
               options={userPage}
               onSelect={openModal}
+              onOpen={handleMemberGet}
             />
             <Modal isOpen={isModalOpen} onClose={closeModal} />
           </div>
