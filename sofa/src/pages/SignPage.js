@@ -165,6 +165,7 @@ const SignPage = () => {
       if (response && response.floderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
         setFolderList(response.floderList);  
+        console.log(folderList[0].id);
       }
       console.log('폴더 조회 응답:', response);
     } catch (err) {

@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
+import { folderGet, folderPost, folderDelete, folderPut} from "../../services/folderService";
+import { searchHistoryTagsGet} from "../../services/searchService";
 
 import "./HeaderStyle.css";
 import MenuIcon from "../../assets/icon/MenuIcon";
@@ -17,11 +19,58 @@ import LogoutIcon from "../../assets/icon/LogoutIcon";
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
   const [alarmOption, setAlarmOption] = useState("");
-  const [folderOption, setFolderOption] = useState("폴더선택");
+  const [folderOption, setFolderOption] = useState([]);
   const [tagOption, setTagOption] = useState("태그선택");
   const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(true); // 로딩 상태
+
+  const [folderOptions, setFolderOptions] = useState([]);
+
+  useEffect(() => {
+
+    fetchFolders();
+    
+    fetchTags();
+  }, []);
+
+  const fetchFolders = async () => {
+    try {
+      const response = await folderGet();
+
+      if(response) {
+        console.log(response?.floderList);
+        const folders = response?.floderList.map((folder) => ({
+          id: folder.id, // 폴더 ID
+          label: folder.name, // 표시할 라벨
+          content: folder.name, // 추가적으로 name 속성
+        }));
+        setFolderOption(folders);
+      }
+    } catch (error) {
+      console.error("Failed to fetch folders:", error);
+    }
+  };
+
+  const fetchTags = async () => {
+    try {
+      const response = await searchHistoryTagsGet();
+      
+      console.log(response);
+
+      if(response) {
+        const tags = response?.map((tag) => ({
+          label: tag, // 표시할 라벨
+          content: tag, // 추가적으로 name 속성
+        }));
+        setTagOption(tags);
+        console.log("tagOption.length:", tagOption.length);
+      }
+    } catch (error) {
+      console.error("Failed to fetch tags:", error);
+    }
+  };
 
   const userPage = [
     { Icon: SettingIcon, content: "설정" },
@@ -44,10 +93,10 @@ const Header = ({ type, toggleMenu }) => {
     { img: "example.png", content: "html은 무엇인가" },
   ]);
 
-  const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
-    label: item,
-    content: item,
-  }));
+  // const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
+  //   label: item,
+  //   content: item,
+  // }));
   const tagsOpt = ["Documents", "Pictures", "PICTURES", "태그어쩌구1"].map(
     (item) => ({
       label: item,
@@ -142,14 +191,18 @@ const Header = ({ type, toggleMenu }) => {
           <div className="searchers">
             <Dropdown
               className="dropdown-folder-select"
-              options={folderOpt}
+              options={folderOption.length > 0 ? folderOption : [
+                { content: "폴더1" },
+                { content: "폴더2" },
+                { content: "폴더3" },
+              ]}              
               label="폴더 전체"
               Icon={DownIcon}
               onSelect={handleFolderSelect}
             />
             <Dropdown
               className="dropdown-tag-select"
-              options={tagsOpt}
+              options={tagOption.length > 0 ? tagOption: tagsOpt}
               label="태그선택"
               Icon={DownIcon}
               onSelect={handleTagSelect}
