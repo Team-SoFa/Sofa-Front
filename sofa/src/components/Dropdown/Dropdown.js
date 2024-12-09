@@ -18,7 +18,7 @@ const Dropdown = ({
   onSelect,
   onDelete,
   recentTags,
-  onOpen
+  onOpen,
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
@@ -36,7 +36,7 @@ const Dropdown = ({
     setIsOpen(false); // 드롭다운 닫기
     onSelect(value);
   };
-  
+
   const toggleDropdown = () => {
     const nextState = !isOpen; // 드롭다운의 다음 상태
     setIsOpen(nextState); // 드롭다운 상태 업데이트
@@ -169,8 +169,9 @@ const Dropdown = ({
           {type === "tag" && (
             <div className="dropdown-tag-menu">
               <TextField
-                className="dropdown-add-input"
+                className="dropdown-tag-input"
                 placeholder="태그를 검색해보세요."
+                recentSearches={options} //태그검색
                 onChange={(e) => setAddValue(e.target.value)}
                 value={addValue}
               />
@@ -178,25 +179,28 @@ const Dropdown = ({
                 {recentTags.map((tag) => (
                   <span key={tag.label} className="recent-tag">
                     <Button
-                      className="tag"
+                      className="tag-selectable"
                       label={tag.label}
                       option={tag} // 태그 정보를 option으로 전달
                     />
                   </span>
                 ))}
               </div>
+              <div className="vertical-line" />
               <div className="selected-tags">
-                {options.map((tag) => (
-                  <span key={tag.label} className="selected-tag">
-                    <Button
-                      className="tag"
-                      label={tag.label}
-                      option={tag} // 태그 정보를 option으로 전달
-                      onDelete={() => onDelete?.(tag.content)} // 삭제 함수가 전달되었다면 호출
-                    />
-                  </span>
-                ))}
+                {options?.length > 0 &&
+                  options.map((tag) => (
+                    <span key={tag.label} className="selected-tag">
+                      <Button
+                        className="tag"
+                        label={tag.label}
+                        option={tag} // 태그 정보를 option으로 전달
+                        onDelete={() => onDelete?.(tag.content)} // 삭제 함수가 전달되었다면 호출
+                      />
+                    </span>
+                  ))}
               </div>
+              <div className="vertical-line" />
               <div className="dropdown-tag-btn-container">
                 <Button label="초기화" />
                 <Button label="적용" />

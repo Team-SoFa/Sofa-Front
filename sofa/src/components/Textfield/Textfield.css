@@ -36,6 +36,12 @@
 .dropdown-add-input .text-filed-wrapper{
   margin-block: 0.5rem;
   padding-block:0.7rem;
-  width:90%; height: 1rem;
+  width:13rem; height: 1rem;
   border:solid 0.5px var(--border-gray);
+}
+
+.dropdown-tag-input .text-field-input{
+  border:solid 1px var(--bdorder-gray);
+  border-radius: 1rem;
+  padding:0.3rem;
 }

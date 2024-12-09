@@ -49,7 +49,7 @@
 /* <<<<<<<<<<<<<<<<<<<<< HEADER */
 
 
-.btn.tag{
+.btn.tag, .btn.tag-selectable{
   user-select: none;
   cursor: default;
   padding:0.5rem; margin:0.2rem;
@@ -64,6 +64,10 @@
   background-color: transparent;
   border-color: transparent;
 }.btn.delete-btn .btn-icon > svg{ width: 1rem;}
+.btn.tag-selectable{
+  user-select: all;
+  cursor:pointer;
+}
 
 
 
