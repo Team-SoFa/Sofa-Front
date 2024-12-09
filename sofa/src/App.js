@@ -15,7 +15,7 @@ import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 
 // Styls
 import Typography from "./styles/Typography/Typography";
-import "./app.css";
+import "./App.css";
 import "./styles/color.css";
 
 // Services
@@ -97,7 +97,7 @@ function App() {
       />
 
       <Route
-        path="/folderpage"
+        path="/folderpage/:folderName"
         element={
           <FolderPage
             bookmarks={bookmarks}
@@ -106,6 +106,7 @@ function App() {
           />
         }
       />
+
       <Route
         path="/remindpage"
         element={

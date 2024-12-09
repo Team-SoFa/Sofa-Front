@@ -268,16 +268,13 @@ const SignPage = () => {
       const url = "https://velog.io/@anhesu11/소프트웨어-공학-내용-정리2";
   
       // URL에서 이미지 URL 추출
-      const imageUrl = await fetchImageUrlFromPage(url);
+      // const imageUrl = await fetchImageUrlFromPage(url);
   
       // 헤더에 이미지 URL과 URL 추가
       const data = {
         "url": url,
-        "imageUrl": imageUrl,
       };
-  
-      console.log('추출된 이미지 URL:', imageUrl);
-  
+    
       // API 요청 보내기 (예시: linkCardAiPost)
       const response = await linkCardAiPost(data);
 
@@ -306,23 +303,42 @@ const SignPage = () => {
     }
   };
 
-  // 링크카드 조회 핸들러
+  // 링크카드 폴더 조회 핸들러
   const handlelinkCardFolderListGet = async () => {
     try {
-      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
-
-      const response = await linkCardFolderListGet(
-        lastFolder.id,
-        "RECENTLY_SAVED",
-        "ASCENDING",
-        0,
-        10
+      // const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
+      
+      // const response = await linkCardFolderListGet(
+      //   lastFolder.id,
+      //   "RECENTLY_SAVED",
+      //   "ASCENDING",
+      //   0,
+      //   10
+      // );
+      // console.log('링크카드 리스트 조회 응답:', response);
+      // if (response) {
+      //   console.log(response.data);
+      //   setLinkCardList(response.data);  
+      // }
+      const allResponses = await Promise.all(
+        folderList.map(async (folder) => {
+          const response = await linkCardFolderListGet(
+            folder.id, // 현재 폴더 ID 사용
+            "RECENTLY_SAVED",
+            "ASCENDING",
+            0,
+            10
+          );
+          console.log(response);
+          return { folderId: folder.id, data: response.data }; // 각 폴더의 데이터 반환
+        })
       );
-      console.log('링크카드 리스트 조회 응답:', response);
-      if (response) {
-        console.log(response.data);
-        setLinkCardList(response.data);  
-      }
+  
+      // 각 폴더의 응답 데이터 확인
+      console.log("모든 폴더의 링크카드 조회 응답:", allResponses);
+  
+      // 링크카드 리스트 업데이트
+      setLinkCardList(allResponses); // 필요에 따라 병합하거나 구조를 조정
     } catch (err) {
       console.log('링크카드 리스트 실패!');
     } finally {
@@ -335,22 +351,22 @@ const SignPage = () => {
     try {
       const queryString = tagsId.map((id) => `&tagsId=${id}`).join('');
 
-      const response = await searchGet(
-        0,
-        queryString,
-        "string",
-        0,
-        0,
-        10,
-        "RECENTLY_SAVED",
-        "ASCENDING"
-      );
-      // const response = await linkCardAllListGet(
-      //   "RECENTLY_SAVED",
-      //   "ASCENDING",
+      // const response = await searchGet(
       //   0,
-      //   10
+      //   queryString,
+      //   "string",
+      //   0,
+      //   0,
+      //   10,
+      //   "RECENTLY_SAVED",
+      //   "ASCENDING"
       // );
+      const response = await linkCardAllListGet(
+        "RECENTLY_SAVED",
+        "ASCENDING",
+        0,
+        10
+      );
       console.log('링크카드 리스트 조회 응답:', response);
       if (response) {
         console.log(response.data);

@@ -103,9 +103,10 @@ const SideMenu = ({ isOpen }) => {
               folderNames.map((folder) => (
                 <div className="folder-component" key={folder.id}>
                   <Link
-                    to={`/folder/${folder.id}`}
+                    to={`/folderpage/${folder.name}`}
+                    state={{id: folder.id}}
                     className={`folder-item ${
-                      isActive(`/folder/${folder.id}`) ? "active" : ""
+                      isActive(`/folder/${folder.name}`) ? "active" : ""
                     }`}
                   >
                     <span className="folder-icon">
@@ -131,7 +132,7 @@ const SideMenu = ({ isOpen }) => {
               <>
                 <div className="folder-component">
                   <Link
-                    to="/folderpage"
+                    to="/folderpage/folder1"
                     className={`folder-item ${
                       isActive("/folderpage") ? "active" : ""
                     }`}

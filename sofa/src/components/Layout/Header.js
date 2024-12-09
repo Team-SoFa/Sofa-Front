@@ -83,12 +83,11 @@ const Header = ({ type, toggleMenu }) => {
   // 태그 조회 핸들러
   const handleMemberGet = async () => {
     try {
-      const headers = {};
       const response = await memberGet();
 
       if (response) {
         const memberData = {
-          profileImage: "example.png",
+          profileImage: `${process.env.PUBLIC_URL}/example.png`,
           name: response.name,
           email: response.email
         }
@@ -110,7 +109,7 @@ const Header = ({ type, toggleMenu }) => {
 
       if (response) {
         const historyData = response.map((history)=> ({
-          img: "example.png",
+          img: `${process.env.PUBLIC_URL}/example.png`,
           content: history
         }));
         setSearchRecent(historyData);
@@ -131,17 +130,17 @@ const Header = ({ type, toggleMenu }) => {
 
   // ================ 임시 데이터 =====================
   const userInfo = {
-    profileImage: "example.png", // 프로필 이미지 URL
+    profileImage: `${process.env.PUBLIC_URL}/example.png`, // 프로필 이미지 URL
     name: "홍길동", // 사용자 이름
     email: "hong@example.com", // 사용자 이메일
   };
   const [recentSearches, setRecentSearches] = useState([
-    { img: "example.png", content: "React" },
-    { img: "example.png", content: "JavaScript" },
-    { img: "example.png", content: "Frontend" },
-    { img: "example.png", content: "CSS" },
-    { img: "example.png", content: "개발자 꿀팁" },
-    { img: "example.png", content: "html은 무엇인가" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "React" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "JavaScript" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "Frontend" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "CSS" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "개발자 꿀팁" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "html은 무엇인가" },
   ]);
 
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
@@ -168,39 +167,39 @@ const Header = ({ type, toggleMenu }) => {
   );
   const alarmOptions = [
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다.",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "어쩌구",
       content: "또 어떤 알람이 있을까요",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "새로운 업데이트가 있습니다.",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "새로운 업데이트가 있습니다.",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "새로운 업데이트가 있습니다.",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "새로운 업데이트가 있습니다.",
     },
   ].map((item) => ({
     ...item,
   }));
-  const profileImg = "example.png";
+  const profileImg = `${process.env.PUBLIC_URL}/example.png`;
 
   // <<<<<<<<<<<<<<<<<<<<< 임시 데이터
 
@@ -421,7 +420,7 @@ const Header = ({ type, toggleMenu }) => {
               className="user-info"
               type="user-info"
               userInfo={member ? member: userInfo}
-              imgSrc="example.png"
+              imgSrc={`${process.env.PUBLIC_URL}/example.png`}
               options={userPage}
               onSelect={openModal}
               onOpen={handleMemberGet}
