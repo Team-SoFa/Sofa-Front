@@ -229,46 +229,43 @@ const SignPage = () => {
     }
   };
 
-  const fetchImageUrlFromPage = async (url) => {
-    try {
-      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-      const targetUrl = url;
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  // const fetchImageUrlFromPage = async (url) => {
+  //   try {
+  //     const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+  //     const targetUrl = url;
+  //     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-      const response = await fetch(proxyUrl + targetUrl, {
-        origin: API_BASE_URL
-      });
-      const html = await response.text(); // HTML 텍스트로 변환
+  //     const response = await fetch(proxyUrl + targetUrl, {
+  //       origin: API_BASE_URL
+  //     });
+  //     const html = await response.text(); // HTML 텍스트로 변환
   
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+  //     const parser = new DOMParser();
+  //     const doc = parser.parseFromString(html, 'text/html');
   
-      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
-      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+  //     // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+  //     let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
   
-      if (!imageUrl) {
-        // <img> 태그에서 src 추출
-        imageUrl = doc.querySelector('img')?.src;
-      }
+  //     if (!imageUrl) {
+  //       // <img> 태그에서 src 추출
+  //       imageUrl = doc.querySelector('img')?.src;
+  //     }
   
-      if (imageUrl) {
-        return imageUrl; // 이미지 URL 반환
-      } else {
-        throw new Error('이미지를 찾을 수 없습니다.');
-      }
-    } catch (error) {
-      console.error('이미지 URL 추출 실패:', error);
-      throw error;
-    }
-  }; 
+  //     if (imageUrl) {
+  //       return imageUrl; // 이미지 URL 반환
+  //     } else {
+  //       throw new Error('이미지를 찾을 수 없습니다.');
+  //     }
+  //   } catch (error) {
+  //     console.error('이미지 URL 추출 실패:', error);
+  //     throw error;
+  //   }
+  // }; 
 
   const handleLinkCardAiPost = async () => {
     try {
       // 임의의 URL을 설정
       const url = "https://velog.io/@anhesu11/소프트웨어-공학-내용-정리2";
-  
-      // URL에서 이미지 URL 추출
-      // const imageUrl = await fetchImageUrlFromPage(url);
   
       // 헤더에 이미지 URL과 URL 추가
       const data = {

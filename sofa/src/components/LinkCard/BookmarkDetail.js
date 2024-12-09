@@ -91,9 +91,9 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       setCurrentIndex(index);
       if (bookmark.img) {
         // Update Image
-        setLinkcardImg(bookmark.img);
+        setLinkcardImg(bookmark.imageUrl);
       } else {
-        setLinkcardImg("example.png");
+        setLinkcardImg(`${process.env.PUBLIC_URL}/example.png`);
       }
       // Update Title, Summary, and Memo
       setValues({
@@ -271,7 +271,16 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       </div>
 
       <div className="detail-header">
-        <img className="detail-image" src="example.png" alt={bookmark.title} />
+        <img 
+          className="detail-image" 
+          src={bookmark.imageUrl} 
+          alt={bookmark.title} 
+          onError={(e) => {
+            if (e.target.src !== `${process.env.PUBLIC_URL}/example.png`) {
+              e.target.src = `${process.env.PUBLIC_URL}/example.png`; // 기본 이미지로 대체
+            }
+          }}
+        />
         <div className="detail-info">
           <div className="row">
             <Button
@@ -449,8 +458,8 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       <div className="detail-tags">
         <p>태그</p>
         <div className="tags-container">
-          {tagsOpt.map((tag, index) => (
-            <span key={index}>
+          {tagsOpt.map((tag) => (
+            <span key={tag.label}>
               <Button
                 className="tag"
                 label={tag.label}

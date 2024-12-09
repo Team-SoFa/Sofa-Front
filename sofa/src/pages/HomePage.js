@@ -127,6 +127,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const toggleDetail = () => {
     if (isDetailOpen) setSelectedBookmark(null); // 닫을 때만 선택 초기화
     setIsDetailOpen(!isDetailOpen);
+    console.log('넌누구냐',bookmarks);
   };
 
   return (

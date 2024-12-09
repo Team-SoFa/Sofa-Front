@@ -178,7 +178,7 @@ const Dropdown = ({
                 <span>{option.content}</span>
                 {/* 3. 선택 버튼 */}
                 <Button className="dropdown-select" label="선택" />
-                {onDelete && (
+                {/* {onDelete && (
                   <Button
                     className="dropdown-delete"
                     label="✕"
@@ -187,7 +187,7 @@ const Dropdown = ({
                       onDelete(option.content);
                     }}
                   />
-                )}
+                )} */}
               </div>
             ))}
 

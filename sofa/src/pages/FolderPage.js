@@ -10,6 +10,8 @@ import "../components/Layout/main-layout.css";
 import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 
 import { linkCardGet, linkCardPost, linkCardAiPost, linkCardAllListGet, linkCardFolderListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
+import store from '../redux/store'; // store 가져오기
+import { useSelector } from "react-redux";
 
 const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const [loading, setLoading] = useState(true); //로딩 상태
@@ -22,6 +24,8 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const { folderName } = useParams(); // URL에서 폴더 ID 가져오기
   const { id: folderId } = location.state || {}; // 전달된 state에서 name 추출
   const [linkCardList, setLinkCardList] = useState([]); // 초기값은 빈 배열로 설정
+  const state = store.getState();  // store 상태 가져오기
+  const accessToken = useSelector((state) => state.auth.accessToken); // Redux 상태 구독
 
   const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
     label: item,
@@ -32,12 +36,20 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
     content: item,
   }));
 
+  const [isDetailOpen, setIsDetailOpen] = useState(false);
+
   const toggleMenu = () => {
     setIsMenuOpen(!isMenuOpen);
   };
 
+  const toggleDetail = () => {
+    if (isDetailOpen) setSelectedBookmark(null); // 닫을 때 선택 초기화
+    setIsDetailOpen(!isDetailOpen);
+  };
+  
   useEffect(() => {
-    if (!folderId) return;
+    if (!accessToken || !folderId) return;
+
     setLinkCardList([]); // 기존 데이터 초기화
   
     const fetchLinkCardList = async () => {
@@ -60,7 +72,7 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
     };
   
     fetchLinkCardList();
-  }, [folderId]);
+  }, [accessToken, folderId]);
   
   useEffect(() => {
     console.log("Updated linkCardList:", linkCardList);
@@ -83,6 +95,7 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const handleBookmarkClick = (bookmark) => {
     console.log("Clicked bookmark:", bookmark);
     setSelectedBookmark(bookmark); // 클릭된 북마크 상태 저장
+    setIsDetailOpen(true); // 클릭 시 상세 보기 열기
   };
 
   const handleBookmarkClose = () => {
@@ -132,9 +145,13 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
         <div className="bookmark-detail-container">
           <BookmarkDetail
             bookmark={selectedBookmark}
+            bookmarks={linkCardList}
             onEdit={() => console.log("Edit clicked")}
             onDelete={() => console.log("Delete clicked")}
+            isOpen={isDetailOpen && selectedBookmark !== null}
+            toggleDetail={toggleDetail}
             onClose={handleBookmarkClose}
+            onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
           />
         </div>
       )}
