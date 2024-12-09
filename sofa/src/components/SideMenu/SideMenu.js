@@ -41,8 +41,8 @@ const SideMenu = ({ isOpen }) => {
         setIsFetching(true);
   
         const foldersResponse = await folderGet();
-        if (foldersResponse?.floderList) {
-          const folderData = foldersResponse.floderList.map((folder) => ({
+        if (foldersResponse?.folderList) {
+          const folderData = foldersResponse.folderList.map((folder) => ({
             id: folder.id,
             name: folder.name,
           }));

@@ -35,9 +35,9 @@ const Header = ({ type, toggleMenu }) => {
       const headers = {};
       const response = await folderGet();
 
-      if (response && response.floderList) {
+      if (response && response.folderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
-        const folderData = response.floderList.map((folder) => ({
+        const folderData = response.folderList.map((folder) => ({
           id: folder.id,
           label: folder.name,
           content: folder.name,

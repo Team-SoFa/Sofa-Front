@@ -147,9 +147,9 @@ const SignPage = () => {
 
       console.log('folderPost response:', response);  // 응답 값 확인
       
-      if (response && response.floderList) {
+      if (response && response.folderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
-        setFolderList(response.floderList);
+        setFolderList(response.folderList);
       }
     } catch (err) {
       console.error('폴더 추가 실패:', err);
@@ -162,9 +162,9 @@ const SignPage = () => {
       const headers = {};
       const response = await folderGet();
 
-      if (response && response.floderList) {
+      if (response && response.folderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
-        setFolderList(response.floderList);  
+        setFolderList(response.folderList);  
         console.log(folderList[0].id);
       }
       console.log('폴더 조회 응답:', response);
