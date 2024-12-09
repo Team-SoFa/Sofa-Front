@@ -12,13 +12,47 @@
 }
 .modal {
   position: relative;
-  padding: 2rem;
-  border-radius: 5rem;
-  width: 100%;max-width: 500px;
+  padding: 1rem;
+  border-radius: 1rem;
+  width: 40rem; height: 30rem;
   background-color: white;
+  overflow: hidden;
 }
+.modal-contents {
+  display: flex;
+}
+
+
+/* === HEADER:개인 정보 ===*/
+.modal-container {display: flex; flex-direction: row;}
+.modal-title { display: flex; gap: 0.5rem; margin:1rem;}
+.modal-sidebar {
+  display: flex; flex-direction: column;
+  height: 30rem;
+  padding-right: 2rem; margin-right: 2rem;
+  border-right: solid 0.1rem var(--border-gray);
+}
+
+.modal-content-container{margin-top:1rem;}
 .modal-content {
-  margin-top: 1rem;
-  color:black;
+  display: flex; flex-direction: column;
+  margin-bottom: 2rem;
+}
+
+.modal-content-container h4 {margin-bottom: 12px;}
+.modal-content-container p {margin-bottom: 16px;}
+
+.modal-content-container .alarm-setting {
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.modal-btn-container {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+  margin-top: 16px;
 }
   
