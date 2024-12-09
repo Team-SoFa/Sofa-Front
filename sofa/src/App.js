@@ -15,12 +15,16 @@ import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 
 // Styls
 import Typography from "./styles/Typography/Typography";
-import "./App.css";
+import "./app.css";
 import "./styles/color.css";
 
 // Services
-import { tempLogin, googleOAuthRedirectUriGet2, googleOAuthLoginGet } from "./services/oAuthService"; // Google 로그인 서비스 호출
-import { useDispatch } from "react-redux";  // Redux 관련 hooks
+import {
+  tempLogin,
+  googleOAuthRedirectUriGet2,
+  googleOAuthLoginGet,
+} from "./services/oAuthService"; // Google 로그인 서비스 호출
+import { useDispatch } from "react-redux"; // Redux 관련 hooks
 import { setTokens } from "./redux/actions/authActions"; // 액션 임포트
 
 function App() {
@@ -40,9 +44,15 @@ function App() {
 
         console.log("Google Login Response:", response);
 
-        if (response && response.token.accessToken && response.token.refreshToken) {
+        if (
+          response &&
+          response.token.accessToken &&
+          response.token.refreshToken
+        ) {
           console.log(response.token.accessToken, response.token.refreshToken);
-          dispatch(setTokens(response.token.accessToken, response.token.refreshToken));
+          dispatch(
+            setTokens(response.token.accessToken, response.token.refreshToken)
+          );
           console.log("로그인 성공!");
         } else {
           console.log("로그인 응답에 문제가 있습니다.");
