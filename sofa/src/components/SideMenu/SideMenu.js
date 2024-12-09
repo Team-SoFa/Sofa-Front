@@ -108,27 +108,30 @@ const SideMenu = ({ isOpen }) => {
           <Accordion
             type="SIDE_MENU"
             title="폴더"
-            content={folderNames.map((folder) => (
-              <div className="folder-component" key={folder.id}>
-                <Link
-                  to={`/folder/${folder.id}`}
-                  className={`folder-item ${
-                    isActive(`/folder/${folder.id}`) ? "active" : ""
-                  }`}
-                >
-                  <span className="folder-icon">
-                    <FolderLineIcon />
-                  </span>
-                  {folder.name}
-                  <Dropdown
-                    className="dropdown-folder-edit"
-                    Icon={MenuMeatBallIcon}
-                    options={folderEdit}
-                    onSelect={() => handleFolderEditOption(folder)}
-                  />
-                </Link>
-              </div>
-            ))}
+            content={
+              folderNames.map((folder) => (
+                <div className="folder-component" key={folder.id}>
+                  <Link
+                    to={`/folderpage/${folder.name}`}
+                    state={{id: folder.id}}
+                    className={`folder-item ${
+                      isActive(`/folder/${folder.name}`) ? "active" : ""
+                    }`}
+                  >
+                    <span className="folder-icon">
+                      <FolderLineIcon />
+                    </span>
+                    {folder.name}
+                    <Dropdown
+                      className="dropdown-folder-edit"
+                      Icon={MenuMeatBallIcon}
+                      options={folderEdit}
+                      onSelect={() => handleFolderEditOption(folder)}
+                    />
+                  </Link>
+                </div>
+              ))
+            }
             onToggle={handleAccordionToggle} // Accordion 열릴 때 API 호출
           />
           {/* <Accordion
@@ -138,7 +141,7 @@ const SideMenu = ({ isOpen }) => {
               <>
                 <div className="folder-component">
                   <Link
-                    to="/folderpage"
+                    to="/folderpage/folder1"
                     className={`folder-item ${
                       isActive("/folderpage") ? "active" : ""
                     }`}

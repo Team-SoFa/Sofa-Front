@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useParams, useLocation } from "react-router-dom";
 import Header from "../components/Layout/Header";
 import SideMenu from "../components/SideMenu/SideMenu";
 import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
@@ -8,13 +9,19 @@ import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 import "../components/Layout/main-layout.css";
 import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 
+import { linkCardGet, linkCardPost, linkCardAiPost, linkCardAllListGet, linkCardFolderListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
+
 const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
-  const [folderName, setFolderName] = useState(""); //폴더명
   const [loading, setLoading] = useState(true); //로딩 상태
   const [sortingOption, setSortingOption] = useState("최근저장"); //정렬 기준
   const [sortingDirOption, setSortingDirOption] = useState("오름차순"); //정렬 방향
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [selectedBookmark, setSelectedBookmark] = useState(null);
+
+  const location = useLocation(); // 현재 라우트의 location 정보 가져오기
+  const { folderName } = useParams(); // URL에서 폴더 ID 가져오기
+  const { id: folderId } = location.state || {}; // 전달된 state에서 name 추출
+  const [linkCardList, setLinkCardList] = useState([]); // 초기값은 빈 배열로 설정
 
   const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
     label: item,
@@ -30,20 +37,35 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   };
 
   useEffect(() => {
-    const fetchUserInfo = async () => {
+    if (!folderId) return;
+    setLinkCardList([]); // 기존 데이터 초기화
+  
+    const fetchLinkCardList = async () => {
       try {
-        // 폴더명 API 받아오기
-        const folderNameData = { label: "폴더명" };
-        setFolderName(folderNameData.label);
-
-        setLoading(false);
+        const response = await linkCardFolderListGet(
+          folderId,
+          "RECENTLY_SAVED",
+          "ASCENDING",
+          0,
+          10
+        );
+  
+        if (response) {
+          console.log("API Response:", response.data);
+          setLinkCardList(response.data); // 상태 업데이트
+        }
       } catch (error) {
-        console.error("Fail to get user information", error);
-        setLoading(false);
+        console.log("fetchLinkCardList error:", error);
       }
     };
-    fetchUserInfo();
-  }, []);
+  
+    fetchLinkCardList();
+  }, [folderId]);
+  
+  useEffect(() => {
+    console.log("Updated linkCardList:", linkCardList);
+  }, [linkCardList]);
+  
 
   const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {
@@ -96,7 +118,7 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
         </div>
 
         <ShowLinkCard
-          bookmarks={bookmarks}
+          bookmarks={linkCardList}
           onDelete={handleDelete}
           onEdit={handleEdit}
           onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
