@@ -135,3 +135,13 @@
   color: white;
   background-color: var(--purple-main);
 }
+
+
+/* 모달 */
+.btn.modal-close{
+  position: absolute;
+  cursor: pointer;
+  top: 10px; right: 10px;
+  border: none;
+  background: none;
+}

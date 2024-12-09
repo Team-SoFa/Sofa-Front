@@ -4,15 +4,18 @@ import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
+import Toggle from "../Toggle/Toggle";
 
 import "./HeaderStyle.css";
+import "../Modal/Modal.css";
 import MenuIcon from "../../assets/icon/MenuIcon";
 import DownIcon from "../../assets/icon/DownIcon";
-import SearchIcon from "../../assets/icon/SearchIcon";
 import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
 import SettingIcon from "../../assets/icon/SettingIcon";
 import CallLineIcon from "../../assets/icon/CallLineIcon";
 import LogoutIcon from "../../assets/icon/LogoutIcon";
+import ProfileFilledIcon from "../../assets/icon/ProfileFilledIcon";
+import CancelLineIcon from "../../assets/icon/CancelLineIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -51,6 +54,18 @@ const Header = ({ type, toggleMenu }) => {
     label: item,
     content: item,
   }));
+
+  //최근 검색 태그
+  const [recentTags, setRecentTags] = useState(
+    ["Documents", "Pictures", "오잉", "웅", "모던웹을위한Javascript"].map(
+      (item) => ({
+        label: item,
+        content: item,
+      })
+    )
+  );
+
+  //선택된 태그
   const tagsOpt = ["Documents", "Pictures", "PICTURES", "태그어쩌구1"].map(
     (item) => ({
       label: item,
@@ -126,10 +141,93 @@ const Header = ({ type, toggleMenu }) => {
     let content;
     switch (option.content) {
       case "설정":
-        content = <div>여기서 설정을 변경할 수 있습니다.</div>;
+        content = (
+          <div className="modal container">
+            <div className="modal sidebar">
+              <div className="modal title">
+                <SettingIcon />
+                <h3>설정</h3>
+              </div>
+              <Button
+                className="modal-side-menu"
+                label="계정 정보"
+                Icon={ProfileFilledIcon}
+              />
+              <Button
+                className="modal-side-menu"
+                label="알림 설정"
+                Icon={AlarmLineIcon}
+              />
+            </div>
+            <div className="modal content-container">
+              <h4>이메일</h4>
+              <p>{userInfo.email}</p>
+              <div className="modal content">
+                <h4>회원 탈퇴</h4>
+                <p>
+                  회원 탈퇴 후 저장한 정보 및 맞춤 서비스 이용기록은 모두
+                  삭제됩니다.
+                </p>
+                <Button
+                  className="modal-basic-btn"
+                  Icon={CancelLineIcon}
+                  label="회원 탈퇴"
+                />
+              </div>
+            </div>
+            <div className="modal content-container">
+              <h4>이메일 알림</h4>
+              <div className="alarm-setting">
+                <Toggle label="전체" />
+              </div>
+              <div className="alarm-setting">
+                <Toggle label="리마인드함 알림" />
+                <Toggle label="추천 링크 알림" />
+                <Toggle label="서비스 공지사항 및 업데이트 안내" />
+              </div>
+            </div>
+            <div className="modal content-container">
+              <h3>회원 탈퇴</h3>
+              <p>
+                링카이빙에 아껴주신 시간에 감사드립니다. 고객님이 느끼셨던 점을
+                공유해주시면 더욱 건강한 서비스를 제공할 수 있도록 하겠습니다.
+              </p>
+              <div className="modal btn-container">
+                <Button label="취소" />
+                <Button label="탈퇴" />
+              </div>
+            </div>
+            <div className="modal content-container">
+              <h4>회원 탈퇴</h4>
+              <p>탈퇴가 완료되었습니다. 소중한 의견 감사드립니다.</p>
+              <Button label="확인" />
+            </div>
+          </div>
+        );
         break;
       case "고객 센터":
-        content = <div>고객 센터 정보를 확인하세요.</div>;
+        content = (
+          <div className="modal container">
+            <div className="modal sidebar">
+              <div className="modal title">
+                <CallLineIcon />
+                <h3>고객 센터</h3>
+              </div>
+            </div>
+            <div className="modal content-container">
+              <div className="modal content">
+                <h4>문의하기</h4>
+                <p>서비스 이용 중 문의사항 발생 시, 다음으로 문의해주세요.</p>
+                <Button label="피드백 보내기" />
+              </div>
+              <div className="modal content">
+                <h4>피드백 보내기</h4>
+                <p>피드백을 보내보세요! 링카이빙에게 큰 힘이 됩니다.</p>
+                <Button label="피드백 보내기" />
+              </div>
+            </div>
+          </div>
+        );
         break;
       case "로그아웃":
         content = <div>로그아웃하시겠습니까?</div>;
@@ -169,16 +267,17 @@ const Header = ({ type, toggleMenu }) => {
               onSelect={handleFolderSelect}
             />
             <Dropdown
-              className="dropdown-tag-select"
+              className="tag"
               options={tagsOpt}
+              type="tag"
               label="태그선택"
               Icon={DownIcon}
               onSelect={handleTagSelect}
+              recentTags={recentTags}
             />
             <TextField
               className="text_field"
               placeholder="검색어를 입력하세요."
-              Icon={SearchIcon}
               value={searchValue}
               onChange={handleSearchChange}
               recentSearches={recentSearches} // 최근 검색어 전달
