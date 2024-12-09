@@ -11,7 +11,12 @@ import MenuMeatBallIcon from "../../assets/icon/MenuMeatBallIcon";
 import EditLineIcon from "../../assets/icon/EditLineIcon";
 import TrashLineIcon from "../../assets/icon/TrashLineIcon";
 
-import { folderGet, folderPost, folderDelete, folderPut} from "../../services/folderService";
+import {
+  folderGet,
+  folderPost,
+  folderDelete,
+  folderPut,
+} from "../../services/folderService";
 
 const SideMenu = ({ isOpen }) => {
   const location = useLocation();
@@ -39,7 +44,7 @@ const SideMenu = ({ isOpen }) => {
       // 폴더 데이터가 없는 경우만 호출
       try {
         setIsFetching(true);
-  
+
         const foldersResponse = await folderGet();
         if (foldersResponse?.folderList) {
           const folderData = foldersResponse.folderList.map((folder) => ({
@@ -54,7 +59,7 @@ const SideMenu = ({ isOpen }) => {
         setIsFetching(false);
       }
     }
-  };  
+  };
 
   const handleFolderEditOption = (option) => {
     if (option.content === "폴더 이름 수정") {
@@ -67,7 +72,7 @@ const SideMenu = ({ isOpen }) => {
   const handleFolderNameEdit = (folderId) => {
     const folder = folderNames.find((folder) => folder.id === folderId);
     const newFolderName = prompt("새 폴더 이름을 입력하세요", folder?.name);
-  
+
     if (newFolderName) {
       setFolderNames((prevNames) =>
         prevNames.map((folder) =>
@@ -76,15 +81,19 @@ const SideMenu = ({ isOpen }) => {
       );
     }
   };
-  
+
   const handleFolderDelete = (folderId) => {
     const folder = folderNames.find((folder) => folder.id === folderId);
-    const confirmDelete = window.confirm(`${folder?.name} 폴더를 삭제하시겠습니까?`);
-  
+    const confirmDelete = window.confirm(
+      `${folder?.name} 폴더를 삭제하시겠습니까?`
+    );
+
     if (confirmDelete) {
-      setFolderNames((prevNames) => prevNames.filter((folder) => folder.id !== folderId));
+      setFolderNames((prevNames) =>
+        prevNames.filter((folder) => folder.id !== folderId)
+      );
     }
-  };  
+  };
 
   return (
     <div>
@@ -99,29 +108,27 @@ const SideMenu = ({ isOpen }) => {
           <Accordion
             type="SIDE_MENU"
             title="폴더"
-            content={
-              folderNames.map((folder) => (
-                <div className="folder-component" key={folder.id}>
-                  <Link
-                    to={`/folder/${folder.id}`}
-                    className={`folder-item ${
-                      isActive(`/folder/${folder.id}`) ? "active" : ""
-                    }`}
-                  >
-                    <span className="folder-icon">
-                      <FolderLineIcon />
-                    </span>
-                    {folder.name}
-                    <Dropdown
-                      className="dropdown-folder-edit"
-                      Icon={MenuMeatBallIcon}
-                      options={folderEdit}
-                      onSelect={() => handleFolderEditOption(folder)}
-                    />
-                  </Link>
-                </div>
-              ))
-            }
+            content={folderNames.map((folder) => (
+              <div className="folder-component" key={folder.id}>
+                <Link
+                  to={`/folder/${folder.id}`}
+                  className={`folder-item ${
+                    isActive(`/folder/${folder.id}`) ? "active" : ""
+                  }`}
+                >
+                  <span className="folder-icon">
+                    <FolderLineIcon />
+                  </span>
+                  {folder.name}
+                  <Dropdown
+                    className="dropdown-folder-edit"
+                    Icon={MenuMeatBallIcon}
+                    options={folderEdit}
+                    onSelect={() => handleFolderEditOption(folder)}
+                  />
+                </Link>
+              </div>
+            ))}
             onToggle={handleAccordionToggle} // Accordion 열릴 때 API 호출
           />
           {/* <Accordion

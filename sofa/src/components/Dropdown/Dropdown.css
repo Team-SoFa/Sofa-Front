@@ -13,6 +13,7 @@
   padding:0.7rem;
   color:var(--font-gray);
   background:white;
+  transition: color 0.3s ease, background-color 0.3s ease;
   border:0.031rem solid var(--border-gray); border-radius: 5rem;
 }.dropdown-header-icon{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
 .dropdown-header:hover, .dropdown-header.open{color:white; background: var(--purple-main);}
@@ -36,12 +37,19 @@
 .dropdown-option{
   display: flex;
   align-items: center;
-  padding:0.4rem;
-  padding-left: 0.5rem;
+  width:100%;
+  padding:0.4rem; padding-left: 0.5rem;
   margin:0.2rem;
   border-radius: 2rem;
   white-space:normal;
 }.dropdown-option:hover{ background:var(--gray-hover);}
+.dropdown-option span{
+  display: block; /* span을 블록으로 처리하여 너비를 설정 */
+  max-width: 6rem; /* 최대 너비 설정 (6rem) */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
+  white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+}
 
 .dropdown-add{
   display: flex;
@@ -135,11 +143,11 @@
   width:13rem; max-height:16.5rem;
 }
 .dropdown-user-info {
-  cursor:auto;
-  display: flex;
-  padding: 1rem;
+  cursor:auto; display: flex;
   flex-direction: column;
   align-items: center;
+  width: 100%;
+  padding: 1rem;
   border-bottom: 1px solid #eaeaea;
   gap:0.3rem;
 }
@@ -198,19 +206,24 @@
 .dropdown.sorting .dropdown-header-icon{order:2;}
 
 
-/* === 자세히보기 === */
-.dropdown.detail.folder{margin-left: 0.45rem;}
-.dropdown.detail.folder .dropdown-header{padding-block: 0.2rem;}
-.dropdown.detail.folder .dropdown-header-icon{order:2;}
-.dropdown.detail.folder .dropdown-menu{right:0rem;}
 
-.dropdown.tag .dropdown-menu{
-  position: absolute;
-  bottom: 100%; /* 트리거 요소 위로 배치 */
-  left: 0; /* 필요에 따라 조정 */
-  margin-bottom: 0.2rem; /* 간격 설정 */
-  width: 15rem; /* 원하는 너비 */
-  max-height: 10rem;
+/* === 자세히보기 === */
+.dropdown.detail.dropdown-folder-select{margin-left: 0.45rem;}
+.dropdown.detail.dropdown-folder-select .dropdown-header{padding-block: 0.2rem;}
+.dropdown.detail.dropdown-folder-select .dropdown-header-icon{order:2;}
+.dropdown.detail.dropdown-folder-select .dropdown-menu{right:0rem; width: 14rem;}
+
+.dropdown.detail-tag .dropdown-header{
+  width: 1.5rem; height: 1.5rem;
+  padding:0.2rem; margin:0.2rem;
+  border-radius: 5px;
+  border:none; background-color: var(--purple-light);
+}
+.dropdown.detail-tag .dropdown-header:hover, .dropdown-header.open{background: var(--purple-main);}
+.dropdown.detail-tag .dropdown-menu{
+  position: absolute; top:2.2rem;
+  width: 14rem;
+  height:20rem; max-height: 20rem;
   padding: 0.5rem;
   background-color: white;
   border-radius: 0.5rem;

@@ -29,6 +29,7 @@ import {
   searchHistoryTagsGet,
   searchGet,
 } from "../../services/searchService";
+import SearchIcon from "../../assets/icon/SearchIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -402,6 +403,7 @@ const Header = ({ type, toggleMenu }) => {
             />
             <TextField
               className="text_field"
+              Icon={SearchIcon}
               placeholder="검색어를 입력하세요."
               value={searchValue}
               onChange={handleSearchChange}
