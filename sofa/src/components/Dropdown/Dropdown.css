@@ -196,9 +196,7 @@
   /* border-color: transparent; */
 }
 .dropdown.dropdown-folder-edit .dropdown-header-icon{color:white;}
-.dropdown.dropdown-folder-edit .dropdown-menu{
-  right:0rem;
-}
+.dropdown.dropdown-folder-edit .dropdown-menu{right:0rem;}
 
 
 /* === SORGING === */
@@ -212,7 +210,15 @@
 .dropdown.detail.dropdown-folder-select .dropdown-header{padding-block: 0.2rem;}
 .dropdown.detail.dropdown-folder-select .dropdown-header-icon{order:2;}
 .dropdown.detail.dropdown-folder-select .dropdown-menu{right:0rem; width: 14rem;}
+.dropdown.detail.dropdown-folder-select .dropdown-header span{
+  display: block; /* span을 블록으로 처리하여 너비를 설정 */
+  max-width: 5rem; /* 최대 너비 설정 */
+  overflow: hidden; /* 넘치는 텍스트 숨기기 */
+  text-overflow: ellipsis; /* 넘치는 텍스트에 "..." 추가 */
+  white-space: nowrap; /* 텍스트가 줄 바꿈되지 않도록 설정 */
+} /* 작동이 안되네.. */
 
+/* 자세히보기 태그 추가 드롭다운*/
 .dropdown.detail-tag .dropdown-header{
   width: 1.5rem; height: 1.5rem;
   padding:0.2rem; margin:0.2rem;
@@ -221,9 +227,9 @@
 }
 .dropdown.detail-tag .dropdown-header:hover, .dropdown-header.open{background: var(--purple-main);}
 .dropdown.detail-tag .dropdown-menu{
-  position: absolute; top:2.2rem;
+  position: relative;
   width: 14rem;
-  height:20rem; max-height: 20rem;
+  height:fit-content; max-height: 20rem;
   padding: 0.5rem;
   background-color: white;
   border-radius: 0.5rem;

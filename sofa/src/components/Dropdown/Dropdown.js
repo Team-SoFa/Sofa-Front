@@ -21,6 +21,7 @@ const Dropdown = ({
   recentTags, //최근 검색 태그
   onOpen,
   onAddValue, //추가된 값 처리 함수
+  setTagsOpt, //태그 목록 수정 함수
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
@@ -37,6 +38,7 @@ const Dropdown = ({
         value.content === "폴더 전체" ? { label: "폴더 전체" } : value
       );
     }
+    setTagsOpt((prevTags) => [...prevTags, value]); // 기존 태그 목록에 추가
     setIsOpen(false); // 드롭다운 닫기
     onSelect(value);
   };
@@ -54,7 +56,8 @@ const Dropdown = ({
   // 새로운 값 추가
   const handleAdd = (newValue) => {
     const newOption = { content: newValue, label: newValue };
-    setOptionsList([...optionsList, newOption]); // 새로운 값 추가
+    setOptionsList([...optionsList, newOption]); // 옵션 리스트에 추가
+    setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
   };
 
   return (
@@ -187,6 +190,7 @@ const Dropdown = ({
                       className="tag-selectable"
                       label={tag.label}
                       option={tag} // 태그 정보를 option으로 전달
+                      onClick={() => handleSelect(tag)} //클릭 시 태그 추가
                     />
                   </span>
                 ))}
@@ -195,10 +199,10 @@ const Dropdown = ({
                 <div className="dropdown-add">
                   <TextField
                     className="add"
-                    placeholder="새 폴더 생성"
+                    placeholder="새 태그 생성"
                     onChange={(e) => setAddValue(e.target.value)}
                     value={addValue}
-                    onAddValue={handleAdd} //부모로부터 값 추가 처리
+                    onAddValue={handleAdd} //새 태그 추가
                   />
                 </div>
               )}

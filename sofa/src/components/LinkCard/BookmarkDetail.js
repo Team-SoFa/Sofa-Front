@@ -451,6 +451,8 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               />
             </span>
           ))}
+        </div>
+        {tagsOpt.length < 5 && (
           <Dropdown
             className="detail-tag"
             type="tag"
@@ -461,8 +463,9 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               setValues("title");
               //❗추후 수정
             }}
+            setTagsOpt={setTagsOpt} // 태그 목록을 업데이트하는 함수 전달
           />
-        </div>
+        )}
       </div>
     </div>
   );
