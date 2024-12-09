@@ -6,25 +6,31 @@ import TextField from "../Textfield/Textfield";
 
 import "./Dropdown.css";
 import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
+import SearchIcon from "../../assets/icon/SearchIcon";
 
 const Dropdown = ({
   className,
   type,
-  options,
+  options = [],
   label,
   Icon,
   imgSrc,
   userInfo,
-  onSelect,
-  onDelete,
-  recentTags,
-  onOpen
+  onSelect = () => {},
+  onDelete = () => {}, // 옵션 삭제
+  recentTags = [], //최근 검색 태그
+  onOpen,
+  onAddValue, //추가된 값 처리 함수
+  setTagsOpt = () => {}, //태그 목록 수정 함수
+  onSearchSelect,
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
   const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
-  const [addValue, setAddValue] = useState(null); //작성한 데이터 추가
+  // options 추가
+  const [optionsList, setOptionsList] = useState(options); // options 상태
+  const [addValue, setAddValue] = useState(null); //텍스트 필드 입력값
 
   const handleSelect = (value) => {
     // className이 "alarm"일 때 label을 변경하지 않음
@@ -33,10 +39,11 @@ const Dropdown = ({
         value.content === "폴더 전체" ? { label: "폴더 전체" } : value
       );
     }
+    setTagsOpt((prevTags) => [...prevTags, value]); // 기존 태그 목록에 추가
     setIsOpen(false); // 드롭다운 닫기
-    onSelect(value);
+    onSelect(value); // 선택된 값 부모로 전달
   };
-  
+
   const toggleDropdown = () => {
     const nextState = !isOpen; // 드롭다운의 다음 상태
     setIsOpen(nextState); // 드롭다운 상태 업데이트
@@ -47,9 +54,23 @@ const Dropdown = ({
     }
   };
 
-  const handleAdd = (value) => {
-    setAddValue(value);
-    //검색 데이터 추가
+  // 새로운 값 추가
+  const handleAdd = (newValue) => {
+    const newOption = { content: newValue, label: newValue };
+    setOptionsList([...optionsList, newOption]); // 옵션 리스트에 추가
+    setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
+  };
+
+  // 검색된 태그 목록 필터링
+  const filteredTags = addValue
+    ? optionsList.filter((option) =>
+        option.label.toLowerCase().includes(addValue.toLowerCase())
+      )
+    : optionsList; // addValue가 비어 있으면 전체 옵션 반환
+  const handleTagSelect = (tag) => {
+    if (onSearchSelect) {
+      onSearchSelect(tag); // onSearchSelect 호출
+    }
   };
 
   return (
@@ -130,10 +151,13 @@ const Dropdown = ({
                 className="dropdown-option"
                 onClick={() => handleSelect(option)}
               >
+                {/* 1. 아이콘 있으면 아이콘 */}
                 {option.Icon && (
                   <option.Icon className="dropdown-option-icon" />
                 )}
+                {/* 2. 옵션 */}
                 <span>{option.content}</span>
+                {/* 3. 선택 버튼 */}
                 <Button className="dropdown-select" label="선택" />
                 {onDelete && (
                   <Button
@@ -152,15 +176,11 @@ const Dropdown = ({
           {type === "add" && (
             <div className="dropdown-add">
               <TextField
-                className="dropdown-add-input"
-                placeholder="폴더명"
+                className="add"
+                placeholder="새 폴더 생성"
                 onChange={(e) => setAddValue(e.target.value)}
                 value={addValue}
-              />
-              <Button
-                className="dropdown-add-button"
-                label="추가"
-                onClick={handleAdd}
+                onAddValue={handleAdd} //부모로부터 값 추가 처리
               />
             </div>
           )}
@@ -169,38 +189,78 @@ const Dropdown = ({
           {type === "tag" && (
             <div className="dropdown-tag-menu">
               <TextField
-                className="dropdown-add-input"
+                className="dropdown-tag-add"
+                Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
-                onChange={(e) => setAddValue(e.target.value)}
+                recentSearches={options} //태그검색
+                onChange={(e) => setAddValue(e.target.value)} // 검색값 입력 시 업데이트
                 value={addValue}
+                onSearchSelect={handleSelect}
               />
               <div className="recent-tags">
                 {recentTags.map((tag) => (
                   <span key={tag.label} className="recent-tag">
                     <Button
-                      className="tag"
+                      className="tag-selectable"
                       label={tag.label}
                       option={tag} // 태그 정보를 option으로 전달
+                      onClick={() => handleSelect(tag)} //클릭 시 태그 추가
                     />
                   </span>
                 ))}
               </div>
-              <div className="selected-tags">
-                {options.map((tag) => (
-                  <span key={tag.label} className="selected-tag">
+
+              {/* 검색된 태그 목록 */}
+              <div className="filtered-tags">
+                {filteredTags.map((tag) => (
+                  <span
+                    key={tag.label}
+                    className="tag-option"
+                    onClick={() => handleTagSelect(tag)}
+                  >
                     <Button
-                      className="tag"
+                      className="tag-selectable"
                       label={tag.label}
-                      option={tag} // 태그 정보를 option으로 전달
-                      onDelete={() => onDelete?.(tag.content)} // 삭제 함수가 전달되었다면 호출
+                      option={tag}
                     />
                   </span>
                 ))}
               </div>
-              <div className="dropdown-tag-btn-container">
-                <Button label="초기화" />
-                <Button label="적용" />
-              </div>
+
+              {className === "detail-tag" && (
+                <div className="dropdown-add">
+                  <TextField
+                    className="add"
+                    placeholder="새 태그 생성"
+                    value={addValue}
+                    onChange={(e) => setAddValue(e.target.value)} //새로운 태그 입력
+                    onAddValue={handleAdd} //새 태그 추가
+                  />
+                </div>
+              )}
+              {className !== "detail-tag" && (
+                <>
+                  <div className="vertical-line" />
+                  <div className="selected-tags">
+                    {options?.length > 0 &&
+                      options.map((tag) => (
+                        <span key={tag.label} className="selected-tag">
+                          <Button
+                            className="tag"
+                            label={tag.label}
+                            option={tag} // 태그 정보를 option으로 전달
+                            onDelete={() => onDelete?.(tag.content)} // 삭제 함수가 전달되었다면 호출
+                          />
+                        </span>
+                      ))}
+                  </div>
+                  <div className="vertical-line" />
+                  <div className="dropdown-tag-btn-container">
+                    <Button label="초기화" />
+                    <Button label="적용" />
+                  </div>
+                </>
+              )}
             </div>
           )}
         </div>

@@ -18,8 +18,18 @@ import ProfileFilledIcon from "../../assets/icon/ProfileFilledIcon";
 import CancelLineIcon from "../../assets/icon/CancelLineIcon";
 
 import { memberGet } from "../../services/memberService";
-import { folderGet, folderPost, folderDelete, folderPut} from "../../services/folderService";
-import { searchHistoryKeywordsGet, searchHistoryTagsGet, searchGet} from "../../services/searchService";
+import {
+  folderGet,
+  folderPost,
+  folderDelete,
+  folderPut,
+} from "../../services/folderService";
+import {
+  searchHistoryKeywordsGet,
+  searchHistoryTagsGet,
+  searchGet,
+} from "../../services/searchService";
+import SearchIcon from "../../assets/icon/SearchIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -50,11 +60,11 @@ const Header = ({ type, toggleMenu }) => {
         }));
         setFolderOption(folderData);
       }
-      console.log('handleFolderGet 응답:', response);
+      console.log("handleFolderGet 응답:", response);
     } catch (err) {
-      console.log('handleFolderGet 실패!');
+      console.log("handleFolderGet 실패!");
     } finally {
-      console.log('handleFolderGet 종료');  // 로딩 상태 종료
+      console.log("handleFolderGet 종료"); // 로딩 상태 종료
     }
   };
 
@@ -72,11 +82,11 @@ const Header = ({ type, toggleMenu }) => {
         }));
         setTagOption(tagData);
       }
-      console.log('handleSearchHistoryTagsGet 응답:', response);
+      console.log("handleSearchHistoryTagsGet 응답:", response);
     } catch (err) {
-      console.log('handleSearchHistoryTagsGet 실패!');
+      console.log("handleSearchHistoryTagsGet 실패!");
     } finally {
-      console.log('handleSearchHistoryTagsGet 종료');  // 로딩 상태 종료
+      console.log("handleSearchHistoryTagsGet 종료"); // 로딩 상태 종료
     }
   };
 
@@ -90,15 +100,15 @@ const Header = ({ type, toggleMenu }) => {
         const memberData = {
           profileImage: "example.png",
           name: response.name,
-          email: response.email
-        }
+          email: response.email,
+        };
         setMember(memberData);
       }
-      console.log('handleMemeberGet 응답:', response);
+      console.log("handleMemeberGet 응답:", response);
     } catch (err) {
-      console.log('handleMemeberGet 실패!');
+      console.log("handleMemeberGet 실패!");
     } finally {
-      console.log('handleMemeberGet 종료');  // 로딩 상태 종료
+      console.log("handleMemeberGet 종료"); // 로딩 상태 종료
     }
   };
 
@@ -109,17 +119,17 @@ const Header = ({ type, toggleMenu }) => {
       const response = await searchHistoryKeywordsGet();
 
       if (response) {
-        const historyData = response.map((history)=> ({
+        const historyData = response.map((history) => ({
           img: "example.png",
-          content: history
+          content: history,
         }));
         setSearchRecent(historyData);
       }
-      console.log('handleHistoryKeywordGet 응답:', response);
+      console.log("handleHistoryKeywordGet 응답:", response);
     } catch (err) {
-      console.log('handleHistoryKeywordGet 실패!');
+      console.log("handleHistoryKeywordGet 실패!");
     } finally {
-      console.log('handleHistoryKeywordGet 종료');  // 로딩 상태 종료
+      console.log("handleHistoryKeywordGet 종료"); // 로딩 상태 종료
     }
   };
 
@@ -355,11 +365,11 @@ const Header = ({ type, toggleMenu }) => {
 
       console.log(searchValue);
 
-      if(response) {
+      if (response) {
         console.log(response);
       }
     } catch (err) {
-      console.error('hanldeSearchGet 실패:', err);
+      console.error("hanldeSearchGet 실패:", err);
     }
   };
   return (
@@ -376,7 +386,7 @@ const Header = ({ type, toggleMenu }) => {
           <div className="searchers">
             <Dropdown
               className="dropdown-folder-select"
-              options={folderOption}              
+              options={folderOption}
               label="폴더 전체"
               Icon={DownIcon}
               onSelect={handleFolderSelect}
@@ -393,6 +403,7 @@ const Header = ({ type, toggleMenu }) => {
             />
             <TextField
               className="text_field"
+              Icon={SearchIcon}
               placeholder="검색어를 입력하세요."
               value={searchValue}
               onChange={handleSearchChange}
@@ -403,11 +414,7 @@ const Header = ({ type, toggleMenu }) => {
               onSearchDelete={handleSearchDelete}
               onFetchSearches={handleHistoryKeywordGet} // 클릭 시 호출될 API 핸들러 전달
             />
-            <Button 
-              className="search" 
-              label="검색" 
-              onClick={hanldeSearchGet}
-            />
+            <Button className="search" label="검색" onClick={hanldeSearchGet} />
             <Button label="초기화" />
           </div>
           <div className="user_info">
@@ -420,7 +427,7 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="user-info"
               type="user-info"
-              userInfo={member ? member: userInfo}
+              userInfo={member ? member : userInfo}
               imgSrc="example.png"
               options={userPage}
               onSelect={openModal}

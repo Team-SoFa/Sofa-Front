@@ -14,6 +14,15 @@ import LinkIcon from "../../assets/icon/LinkIcon";
 import TagAddIcon from "../../assets/icon/TagAddIcon";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
+  const [folderOption, setFolderOption] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
+  const handleAddFolder = (newFolder) => {
+    setFolderOption((prevOptions) => [
+      ...prevOptions,
+      { content: newFolder, label: newFolder },
+    ]);
+  };
+
   // 현재 북마크의 인덱스
   const [currentIndex, setCurrentIndex] = useState(() => {
     if (!bookmark || !Array.isArray(bookmarks)) {
@@ -54,12 +63,25 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       content: "모던웹을위한Javascript+jQuery입문",
     },
   ]);
-  const folderOpt = ["폴더1", "오렌지방구는누가꼈나", "어쩌구", "우와우"].map(
-    (item) => ({
-      label: item,
-      content: item,
-    })
+  //최근 검색 태그
+  const [recentTags, setRecentTags] = useState(
+    ["Documents", "Pictures", "오잉", "웅", "모던웹을위한Javascript"].map(
+      (item) => ({
+        label: item,
+        content: item,
+      })
+    )
   );
+  const folderOpt = [
+    "폴더1",
+    "오렌지방구는누가꼈나",
+    "어쩌구",
+    "컬러버스",
+    "우와우",
+  ].map((item) => ({
+    label: item,
+    content: item,
+  }));
 
   // Activates Updating Bookmark
   useEffect(() => {
@@ -228,6 +250,12 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     }));
   };
 
+  //태그..?
+  const handleSearchSelect = (tag) => {
+    setSelectedTag(tag);
+    console.log("선택된 태그:", tag); // 선택된 태그를 처리하는 코드
+  };
+
   if (!bookmark) return null;
 
   return (
@@ -255,7 +283,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               }
             />
             <Dropdown
-              className="detail folder"
+              className="detail dropdown-folder-select"
               type="add"
               options={folderOpt}
               Icon={DownIcon}
@@ -264,6 +292,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
                 setValues("title");
                 //❗추후 수정
               }}
+              onAddValue={handleAddFolder}
             />
           </div>
 
@@ -429,17 +458,20 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               />
             </span>
           ))}
+        </div>
+        {tagsOpt.length < 5 && (
           <Dropdown
-            className="detail tag"
-            type="add"
-            options={folderOpt}
+            className="detail-tag"
+            type="tag"
+            options={recentTags}
             Icon={TagAddIcon}
             onSelect={() => {
               setValues("title");
               //❗추후 수정
             }}
+            setTagsOpt={setTagsOpt} // 태그 목록을 업데이트하는 함수 전달
           />
-        </div>
+        )}
       </div>
     </div>
   );

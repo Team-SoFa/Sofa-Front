@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const TagAddIcon = () => {
   return (
     <svg
       width="1.5rem"
-      height="1.5rem"
+      height="1.3rem"
       viewBox="0 -2 25 24"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
