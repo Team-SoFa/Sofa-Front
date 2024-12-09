@@ -39,9 +39,25 @@ const Dropdown = ({
         value.content === "폴더 전체" ? { label: "폴더 전체" } : value
       );
     }
-    setTagsOpt((prevTags) => [...prevTags, value]); // 기존 태그 목록에 추가
+
+    // 중복된 값이 아니라면 추가
+    setTagsOpt((prevTags) => {
+      if (!prevTags.some((existingTag) => existingTag.label === value.label)) {
+        return [...prevTags, value];
+      }
+      return prevTags; // 중복된 태그가 있으면 그대로 반환
+    });
+
     setIsOpen(false); // 드롭다운 닫기
     onSelect(value); // 선택된 값 부모로 전달
+  };
+  // 새로운 값 추가
+  const handleAdd = (newValue) => {
+    if (!newValue) return; // 값이 비어있으면 추가하지 않음
+    const newOption = { content: newValue, label: newValue }; // label과 content 값 추가
+    setOptionsList((prevOptions) => [...prevOptions, newOption]); // 옵션 리스트에 추가
+    setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
+    setAddValue(""); // 입력 필드 초기화
   };
 
   const toggleDropdown = () => {
@@ -54,13 +70,6 @@ const Dropdown = ({
     }
   };
 
-  // 새로운 값 추가
-  const handleAdd = (newValue) => {
-    const newOption = { content: newValue, label: newValue };
-    setOptionsList([...optionsList, newOption]); // 옵션 리스트에 추가
-    setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
-  };
-
   // 검색된 태그 목록 필터링
   const filteredTags = addValue
     ? optionsList.filter((option) =>
@@ -68,9 +77,19 @@ const Dropdown = ({
       )
     : optionsList; // addValue가 비어 있으면 전체 옵션 반환
   const handleTagSelect = (tag) => {
+    // onSearchSelect 함수가 전달된 경우에만 호출
     if (onSearchSelect) {
-      onSearchSelect(tag); // onSearchSelect 호출
+      onSearchSelect(tag);
     }
+
+    // 중복된 태그가 아닌 경우에만 추가
+    setTagsOpt((prevTags) => {
+      // 태그가 이미 존재하는지 확인
+      if (!prevTags.some((existingTag) => existingTag.label === tag.label)) {
+        return [...prevTags, tag]; // 중복이 없으면 추가
+      }
+      return prevTags; // 중복이 있으면 기존 배열 반환
+    });
   };
 
   return (

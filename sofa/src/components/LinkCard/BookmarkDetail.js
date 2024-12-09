@@ -445,6 +445,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
         )}
       </div>
 
+      {/* 태그 */}
       <div className="detail-tags">
         <p>태그</p>
         <div className="tags-container">
@@ -467,7 +468,6 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             Icon={TagAddIcon}
             onSelect={() => {
               setValues("title");
-              //❗추후 수정
             }}
             setTagsOpt={setTagsOpt} // 태그 목록을 업데이트하는 함수 전달
           />
