@@ -34,6 +34,8 @@
 
 /* === 드롭다운 내부 추가 === */
 .dropdown-add-input .text-filed-wrapper{
-  width:5rem; height: 1rem;
-  border:solid black;
+  margin-block: 0.5rem;
+  padding-block:0.7rem;
+  width:90%; height: 1rem;
+  border:solid 0.5px var(--border-gray);
 }

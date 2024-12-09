@@ -4,6 +4,8 @@ import "./Textfield.css"; // 스타일 파일 (선택)
 import Dropdown from "../Dropdown/Dropdown";
 import { OutsideClick } from "../OutsideClick";
 
+import SearchIcon from "../../assets/icon/SearchIcon";
+
 const TextField = forwardRef(
   (
     {
@@ -14,7 +16,6 @@ const TextField = forwardRef(
       placeholder,
       type = "text",
       required = false,
-      Icon,
       recentSearches = [],
       onSearchSelect,
       onSearchDelete,
@@ -49,12 +50,10 @@ const TextField = forwardRef(
       <div className={`text-field ${className}`} ref={dropdownRef}>
         {label && <label className="text-field-label">{label}</label>}
         <div className="text-filed-wrapper">
-          {Icon && (
-            <span className="text-field-img" aria-label="Field Icon">
-              {" "}
-              <Icon />{" "}
-            </span>
-          )}
+          <span className="text-field-img" aria-label="Field Icon">
+            <SearchIcon />{" "}
+          </span>
+
           <input
             className="text-field-input"
             type={type}

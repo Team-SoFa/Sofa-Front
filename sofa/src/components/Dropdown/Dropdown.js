@@ -17,6 +17,7 @@ const Dropdown = ({
   userInfo,
   onSelect,
   onDelete,
+  recentTags,
   onOpen
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
@@ -98,10 +99,12 @@ const Dropdown = ({
           <span className="dropdown-badge"></span>
         )}
       </div>
+      {/* <<<<<<<<<< DROPDOWN HEADER */}
 
+      {/* DROPDOWN MENU >>>>>>>>>> */}
       {(isOpen || className === "search-dropdown") && (
         <div className="dropdown-menu">
-          {/* type이 user-info일 경우 상단 고정 공간 */}
+          {/* type이 user-info일 경우 */}
           {type === "user-info" && userInfo && (
             <div className="dropdown-user-info">
               <img
@@ -113,36 +116,39 @@ const Dropdown = ({
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
           )}
-          {[
-            ...(className === "dropdown-folder-select"
-              ? [{ content: label, Icon: null }]
-              : []),
-            ...options,
-          ].map((option, index) => (
-            <div
-              key={index}
-              className="dropdown-option"
-              onClick={() => handleSelect(option)}
-            >
-              {option.Icon && <option.Icon className="dropdown-option-icon" />}
-              <span onClick={() => handleSelect(option.content)}>
-                {option.content}
-              </span>
-              <Button className="dropdown-select" label="선택" />
-              {onDelete && (
-                <Button
-                  className="dropdown-delete"
-                  label="✕"
-                  onClick={(e) => {
-                    e.stopPropagation();
-                    onDelete(option.content);
-                  }}
-                />
-              )}
-            </div>
-          ))}
 
-          {/* type이 add일 경우 하단 고정 공간 */}
+          {/* 일반적인 드롭다운 메뉴 */}
+          {type !== "tag" &&
+            [
+              ...(className === "dropdown-folder-select"
+                ? [{ content: label, Icon: null }]
+                : []),
+              ...options,
+            ].map((option, index) => (
+              <div
+                key={index}
+                className="dropdown-option"
+                onClick={() => handleSelect(option)}
+              >
+                {option.Icon && (
+                  <option.Icon className="dropdown-option-icon" />
+                )}
+                <span>{option.content}</span>
+                <Button className="dropdown-select" label="선택" />
+                {onDelete && (
+                  <Button
+                    className="dropdown-delete"
+                    label="✕"
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      onDelete(option.content);
+                    }}
+                  />
+                )}
+              </div>
+            ))}
+
+          {/* type이 add일 경우 */}
           {type === "add" && (
             <div className="dropdown-add">
               <TextField
@@ -156,6 +162,45 @@ const Dropdown = ({
                 label="추가"
                 onClick={handleAdd}
               />
+            </div>
+          )}
+
+          {/* type이 tag일 경우 */}
+          {type === "tag" && (
+            <div className="dropdown-tag-menu">
+              <TextField
+                className="dropdown-add-input"
+                placeholder="태그를 검색해보세요."
+                onChange={(e) => setAddValue(e.target.value)}
+                value={addValue}
+              />
+              <div className="recent-tags">
+                {recentTags.map((tag) => (
+                  <span key={tag.label} className="recent-tag">
+                    <Button
+                      className="tag"
+                      label={tag.label}
+                      option={tag} // 태그 정보를 option으로 전달
+                    />
+                  </span>
+                ))}
+              </div>
+              <div className="selected-tags">
+                {options.map((tag) => (
+                  <span key={tag.label} className="selected-tag">
+                    <Button
+                      className="tag"
+                      label={tag.label}
+                      option={tag} // 태그 정보를 option으로 전달
+                      onDelete={() => onDelete?.(tag.content)} // 삭제 함수가 전달되었다면 호출
+                    />
+                  </span>
+                ))}
+              </div>
+              <div className="dropdown-tag-btn-container">
+                <Button label="초기화" />
+                <Button label="적용" />
+              </div>
             </div>
           )}
         </div>

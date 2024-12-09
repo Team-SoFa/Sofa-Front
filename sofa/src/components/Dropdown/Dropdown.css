@@ -20,6 +20,7 @@
 
 .dropdown-menu {
   position:absolute;
+  display: flex;flex-wrap: wrap;
   width: 10rem;
   height: auto; max-height: 10rem;
   padding:0.1rem;
@@ -29,7 +30,7 @@
   background-color: white;
   box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.3);
   border-radius: 1rem;
-  overflow-y: scroll;
+  overflow-y: scroll; overflow-x: hidden;
   z-index: 9999;
 }
 .dropdown-option{
@@ -66,9 +67,23 @@
 
 /* === 드롭다운 펼침 화살표, 옵션선택버튼 === */
 .dropdown-folder-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
-.dropdown-tag-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
+.dropdown.tag .dropdown-header-icon{order:2; margin-left: 0.2rem;}
 .dropdown-folder-select .dropdown-select{display:flex;}
-.dropdown-tag-select .dropdown-select{display: flex;}
+.dropdowntag .dropdown-select{display: flex;}
+
+/* === 태그 ===*/
+.dropdown.tag .dropdown-menu{
+  width: 17rem; height: 25rem; max-height: 25rem;
+  padding:0.3rem;
+}
+.recent-tags, .selected-tags {
+  display: flex; /* 태그를 가로로 배치 */
+  flex-wrap: wrap; /* 화면을 넘어가면 줄바꿈 */
+  gap: 0.1rem; /* 태그 간격 설정 */
+  border-bottom: 1px solid var(--border-gray); /* 하단에 가로줄 추가 */
+  padding-bottom: 0.8rem; /* 가로줄과 내용 간 간격 추가 */
+}
+
 
 
 /* === 알림 === */
