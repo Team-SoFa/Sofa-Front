@@ -48,10 +48,10 @@ const initializeSidePanel = async () => {
     console.log("로그인 시도 중...");
     const response = await tempLogin(loginData);
 
-    if (response.accessToken && response.refreshToken) {
-      store.dispatch(setTokens(response.accessToken, response.refreshToken));
+    if (response.token.accessToken && response.token.refreshToken) {
+      store.dispatch(setTokens(response.token.accessToken, response.token.refreshToken));
       console.log("로그인 성공! 토큰 저장 완료");
-      console.log("acessToken:", response.accessToken);
+      console.log("acessToken:", response.token.accessToken);
     } else {
       console.error("로그인 응답에 문제가 있습니다.", response);
     }
