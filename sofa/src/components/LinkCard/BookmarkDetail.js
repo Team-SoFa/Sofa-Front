@@ -15,6 +15,7 @@ import TagAddIcon from "../../assets/icon/TagAddIcon";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   const [folderOption, setFolderOption] = useState([]);
+  const [selectedTag, setSelectedTag] = useState("");
   const handleAddFolder = (newFolder) => {
     setFolderOption((prevOptions) => [
       ...prevOptions,
@@ -249,6 +250,12 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     }));
   };
 
+  //태그..?
+  const handleSearchSelect = (tag) => {
+    setSelectedTag(tag);
+    console.log("선택된 태그:", tag); // 선택된 태그를 처리하는 코드
+  };
+
   if (!bookmark) return null;
 
   return (
@@ -456,8 +463,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
           <Dropdown
             className="detail-tag"
             type="tag"
-            options={folderOpt}
-            recentTags={recentTags}
+            options={recentTags}
             Icon={TagAddIcon}
             onSelect={() => {
               setValues("title");

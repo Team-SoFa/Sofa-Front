@@ -45,6 +45,7 @@ const TextField = forwardRef(
     const handleSelectSearch = (selected) => {
       onSearchSelect(selected.content); // 부모 컴포넌트로 선택된 값을 전달
       setIsDropdownOpen(false); // 선택 시 드롭다운 닫기
+      if (onAddValue) onAddValue(selected.content); // 선택된 값을 태그로 추가
     };
 
     // 입력된 값을 부모에게 전달하여 Dropdown에 추가

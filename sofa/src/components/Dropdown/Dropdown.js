@@ -11,17 +11,18 @@ import SearchIcon from "../../assets/icon/SearchIcon";
 const Dropdown = ({
   className,
   type,
-  options,
+  options = [],
   label,
   Icon,
   imgSrc,
   userInfo,
-  onSelect,
-  onDelete, // 옵션 삭제
-  recentTags, //최근 검색 태그
+  onSelect = () => {},
+  onDelete = () => {}, // 옵션 삭제
+  recentTags = [], //최근 검색 태그
   onOpen,
   onAddValue, //추가된 값 처리 함수
-  setTagsOpt, //태그 목록 수정 함수
+  setTagsOpt = () => {}, //태그 목록 수정 함수
+  onSearchSelect,
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
@@ -40,7 +41,7 @@ const Dropdown = ({
     }
     setTagsOpt((prevTags) => [...prevTags, value]); // 기존 태그 목록에 추가
     setIsOpen(false); // 드롭다운 닫기
-    onSelect(value);
+    onSelect(value); // 선택된 값 부모로 전달
   };
 
   const toggleDropdown = () => {
@@ -58,6 +59,18 @@ const Dropdown = ({
     const newOption = { content: newValue, label: newValue };
     setOptionsList([...optionsList, newOption]); // 옵션 리스트에 추가
     setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
+  };
+
+  // 검색된 태그 목록 필터링
+  const filteredTags = addValue
+    ? optionsList.filter((option) =>
+        option.label.toLowerCase().includes(addValue.toLowerCase())
+      )
+    : optionsList; // addValue가 비어 있으면 전체 옵션 반환
+  const handleTagSelect = (tag) => {
+    if (onSearchSelect) {
+      onSearchSelect(tag); // onSearchSelect 호출
+    }
   };
 
   return (
@@ -180,8 +193,9 @@ const Dropdown = ({
                 Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
                 recentSearches={options} //태그검색
-                onChange={(e) => setAddValue(e.target.value)}
+                onChange={(e) => setAddValue(e.target.value)} // 검색값 입력 시 업데이트
                 value={addValue}
+                onSearchSelect={handleSelect}
               />
               <div className="recent-tags">
                 {recentTags.map((tag) => (
@@ -195,13 +209,31 @@ const Dropdown = ({
                   </span>
                 ))}
               </div>
+
+              {/* 검색된 태그 목록 */}
+              <div className="filtered-tags">
+                {filteredTags.map((tag) => (
+                  <span
+                    key={tag.label}
+                    className="tag-option"
+                    onClick={() => handleTagSelect(tag)}
+                  >
+                    <Button
+                      className="tag-selectable"
+                      label={tag.label}
+                      option={tag}
+                    />
+                  </span>
+                ))}
+              </div>
+
               {className === "detail-tag" && (
                 <div className="dropdown-add">
                   <TextField
                     className="add"
                     placeholder="새 태그 생성"
-                    onChange={(e) => setAddValue(e.target.value)}
                     value={addValue}
+                    onChange={(e) => setAddValue(e.target.value)} //새로운 태그 입력
                     onAddValue={handleAdd} //새 태그 추가
                   />
                 </div>
