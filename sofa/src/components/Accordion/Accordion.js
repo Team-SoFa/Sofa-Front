@@ -2,11 +2,15 @@ import React, { useState } from "react";
 import "./Accordion.css";
 import DownIcon from "../../assets/icon/DownIcon";
 
-const Accordion = ({ title, content, type }) => {
+const Accordion = ({ title, content, type, onToggle }) => {
   const [isOpen, setIsOpen] = useState(false);
 
   const toggleAccordion = () => {
-    setIsOpen(!isOpen);
+    const nextState = !isOpen;
+    setIsOpen(nextState);
+    if (onToggle) {
+      onToggle(nextState); // 상태 변경 시 콜백 호출
+    }
   };
 
   return (

@@ -10,11 +10,9 @@ import './styles/Typography/Typography.css';
 // root에 Provider로 스토어 제공
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
-  <React.StrictMode>
-    <Provider store={store}>  {/* Redux store를 제공 */}
-      <BrowserRouter>
-        <App />
-      </BrowserRouter>
-    </Provider>
-  </React.StrictMode>
+  <Provider store={store}>  {/* Redux store를 제공 */}
+    <BrowserRouter>
+      <App />
+    </BrowserRouter>
+  </Provider>
 );

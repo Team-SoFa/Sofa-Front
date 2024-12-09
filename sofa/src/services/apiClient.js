@@ -50,7 +50,6 @@ export const tokenGet = async (url, params = {}, headers = {}) => {
   // accessToken이 있으면 Authorization 헤더 추가
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
-    console.log(accessToken);
   }
   const response = await apiClient.get(url, { params, headers });
   return response.data;

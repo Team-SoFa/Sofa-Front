@@ -192,3 +192,18 @@
 .dropdown.detail.folder .dropdown-header{padding-block: 0.2rem;}
 .dropdown.detail.folder .dropdown-header-icon{order:2;}
 .dropdown.detail.folder .dropdown-menu{right:0rem;}
+
+.dropdown.tag .dropdown-menu{
+  position: absolute;
+  bottom: 100%; /* 트리거 요소 위로 배치 */
+  left: 0; /* 필요에 따라 조정 */
+  margin-bottom: 0.2rem; /* 간격 설정 */
+  width: 15rem; /* 원하는 너비 */
+  max-height: 10rem;
+  padding: 0.5rem;
+  background-color: white;
+  border-radius: 0.5rem;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 9999;
+  overflow-y: auto;
+}

@@ -18,6 +18,7 @@ const Dropdown = ({
   onSelect,
   onDelete,
   recentTags,
+  onOpen
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
@@ -35,8 +36,15 @@ const Dropdown = ({
     setIsOpen(false); // 드롭다운 닫기
     onSelect(value);
   };
+  
   const toggleDropdown = () => {
-    setIsOpen(!isOpen);
+    const nextState = !isOpen; // 드롭다운의 다음 상태
+    setIsOpen(nextState); // 드롭다운 상태 업데이트
+
+    // 드롭다운이 열릴 때(onOpen이 전달된 경우에만 호출)
+    if (nextState && onOpen) {
+      onOpen(); // 드롭다운 열림 시 외부에서 전달된 핸들러 호출
+    }
   };
 
   const handleAdd = (value) => {
