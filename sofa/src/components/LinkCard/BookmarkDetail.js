@@ -12,15 +12,71 @@ import CloseIcon from "../../assets/icon/CloseIcon";
 import DownIcon from "../../assets/icon/DownIcon";
 import LinkIcon from "../../assets/icon/LinkIcon";
 import TagAddIcon from "../../assets/icon/TagAddIcon";
+import {
+  folderGet,
+  folderPost,
+  folderDelete,
+  folderPut,
+} from "../../services/folderService";
+import { linkCardGet } from "../../services/linkCardService";
+import { searchHistoryTagsGet, searchTagsGet } from "../../services/searchService";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   const [folderOption, setFolderOption] = useState([]);
+  const [tagOption, setTagOption] = useState([]);
+
   const [selectedTag, setSelectedTag] = useState("");
-  const handleAddFolder = (newFolder) => {
-    setFolderOption((prevOptions) => [
-      ...prevOptions,
-      { content: newFolder, label: newFolder },
-    ]);
+  const [linkCard, setLinkCard] = useState([]); // 초기값은 빈 배열로 설정
+  const [recentTagList, setRecentTagList] = useState([]); // 초기값은 빈 배열로 설정
+  const [searchTagList, setSearchTagList] = useState([]); // 검색된 태그 목록
+
+  const handleFetchRecentTags = async () => {
+    try {
+      const response = await searchHistoryTagsGet(); // 최근 태그 API 호출
+      console.log("handleFetchRecentTags", response);
+      if(response) {
+        setRecentTagList(response);
+      }
+    } catch (error) {
+      console.error("Failed to fetch recent tags:", error);
+    }
+  };
+
+  const handleSearchTags = async (query) => {
+    try {
+      const response = await searchTagsGet(query); // 태그 검색 API 호출
+      console.log("handleSearchTags", response);
+      if(response) {
+        const searchData = response.map((search) => ({
+          id: search.id,
+          label: search.name,
+          name: search.name,
+          type: search.type
+        }))
+        setSearchTagList(searchData);
+      }
+    } catch (error) {
+      console.error("Failed to search tags:", error);
+      return [];
+    }
+  };
+
+  const handleAddFolder = async (newFolder) => {
+    try {
+      console.log("newFolder",newFolder);
+      // 새 폴더 생성 요청
+      const data = {
+        "name": newFolder
+      };
+      const response = await folderPost(data);
+  
+      if (response) {
+        // 폴더 생성 성공 시 폴더 목록 업데이트
+        await handleFolderGet();
+      }
+    } catch (err) {
+      console.error("폴더 생성 실패:", err);
+    }
   };
 
   // 현재 북마크의 인덱스
@@ -50,6 +106,27 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   const [linkcardImg, setLinkcardImg] = useState(""); //링크카드 대표이미지 변수
 
+  const handleFolderGet = async () => {
+    try {
+      const headers = {};
+      const response = await folderGet();
+
+      if (response && response.folderList) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        const folderData = response.folderList.map((folder) => ({
+          id: folder.id,
+          label: folder.name,
+          content: folder.name,
+        }));
+        setFolderOption(folderData);
+      }
+      console.log("handleFolderGet 응답:", response);
+    } catch (err) {
+      console.log("handleFolderGet 실패!");
+    } finally {
+      console.log("handleFolderGet 종료"); // 로딩 상태 종료
+    }
+  };
   // 임시 데이터 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const [isReminderActive, setIsReminderActive] = useState(false);
   const [tagsOpt, setTagsOpt] = useState([
@@ -57,11 +134,6 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     { label: "Pictures", content: "Pictures" },
     { label: "PICTURES", content: "PICTURES" },
     { label: "오잉", content: "오잉" },
-    { label: "웅", content: "웅" },
-    {
-      label: "모던웹을위한Javascript",
-      content: "모던웹을위한Javascript+jQuery입문",
-    },
   ]);
   //최근 검색 태그
   const [recentTags, setRecentTags] = useState(
@@ -87,19 +159,42 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   useEffect(() => {
     if (bookmarks.length > 0 && bookmark) {
       // Update ID
-      const index = bookmarks.findIndex((item) => item.id === bookmark.id);
+      const fetchLinkCardGet = async () => {
+        try {
+          const response = await linkCardGet(bookmark.id);
+    
+          if (response) {
+            console.log("API Response:", response);
+            setLinkCard(response); // 상태 업데이트
+            console.log(linkCard);
+
+          }
+        } catch (error) {
+          console.log("fetchLinkCardList error:", error);
+        }
+      };
+    
+      fetchLinkCardGet();  
+    }
+  }, [bookmarks, bookmark]);
+
+  useEffect(() => {
+    if (linkCard) {
+      console.log("Updated linkCard:", linkCard);
+  
+      const index = bookmarks.findIndex((item) => item.id === linkCard.id);
       setCurrentIndex(index);
-      if (bookmark.img) {
-        // Update Image
-        setLinkcardImg(bookmark.imageUrl);
+  
+      if (linkCard.imageUrl) {
+        setLinkcardImg(linkCard.imageUrl);
       } else {
         setLinkcardImg(`${process.env.PUBLIC_URL}/example.png`);
       }
-      // Update Title, Summary, and Memo
+  
       setValues({
-        title: bookmark.title || "",
-        summary: bookmark.summary || "요약 내용입니다.",
-        memo: bookmark.memo || "메모 내용입니다.",
+        title: linkCard.title || "",
+        summary: linkCard.summary || "요약 내용입니다.",
+        memo: linkCard.memo || "메모 내용입니다.",
       });
 
       // Update editing state to false when bookmark is loaded
@@ -108,9 +203,27 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
         summary: false,
         memo: false,
       });
+    
+      // Safe handling for tagList
+      if (linkCard.tagList && Array.isArray(linkCard.tagList)) {
+        const tagData = linkCard.tagList.map((tag) => ({
+          id: tag.id,
+          label: tag.name,
+          content: tag.name,
+          tagType: tag.tagType,
+        }));
+        setTagOption(tagData);
+      } else {
+        console.log("No tags found in linkCard");
+        setTagOption([]);
+      }
     }
-  }, [bookmarks, bookmark]);
+  }, [linkCard, bookmarks]);
 
+  useEffect(() => {
+    console.log("Updated tagOption:", tagOption);
+  }, [tagOption]);
+  
   // HEADER BTNS >>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const icons = [
     { id: "left", Icon: LeftIcon },
@@ -176,8 +289,8 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   // [ TAGS ]
   const handleTagDelete = (tagToDelete) => {
-    const updatedTags = tagsOpt.filter((tag) => tag.content !== tagToDelete); // content 기준으로 삭제
-    setTagsOpt(updatedTags); // 상태 업데이트
+    const updatedTags = tagOption.filter((tag) => tag.content !== tagToDelete); // content 기준으로 삭제
+    setTagOption(updatedTags); // 상태 업데이트
   };
 
   // Summary, Memo 높이 동적 계산
@@ -294,7 +407,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             <Dropdown
               className="detail dropdown-folder-select"
               type="add"
-              options={folderOpt}
+              options={folderOption}
               Icon={DownIcon}
               label="폴더선택"
               onSelect={() => {
@@ -302,6 +415,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
                 //❗추후 수정
               }}
               onAddValue={handleAddFolder}
+              onOpen={handleFolderGet}
             />
           </div>
 
@@ -458,7 +572,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       <div className="detail-tags">
         <p>태그</p>
         <div className="tags-container">
-          {tagsOpt.map((tag) => (
+          {tagOption.map((tag) => (
             <span key={tag.label}>
               <Button
                 className="tag"
@@ -469,16 +583,19 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             </span>
           ))}
         </div>
-        {tagsOpt.length < 5 && (
+        {tagOption.length < 5 && (
           <Dropdown
             className="detail-tag"
             type="tag"
-            options={recentTags}
+            options={searchTagList}
+            recentTags={recentTagList}
             Icon={TagAddIcon}
             onSelect={() => {
               setValues("title");
             }}
-            setTagsOpt={setTagsOpt} // 태그 목록을 업데이트하는 함수 전달
+            onSearchSelect={handleSearchTags} // 검색 시 호출
+            onOpen={(handleFetchRecentTags)}
+            setTagOption={setTagOption} // 태그 목록을 업데이트하는 함수 전달
           />
         )}
       </div>

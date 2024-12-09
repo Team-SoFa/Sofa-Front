@@ -1,4 +1,4 @@
-import React, { useState, useRef } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import ReactDom from "react-dom";
 import { OutsideClick } from "../OutsideClick";
 import Button from "../Button/Button";
@@ -32,6 +32,10 @@ const Dropdown = ({
   const [optionsList, setOptionsList] = useState(options); // options 상태
   const [addValue, setAddValue] = useState(null); //텍스트 필드 입력값
 
+  useEffect(() => {
+    setOptionsList(options); // 외부 options가 변경될 때 optionsList 업데이트
+  }, [options]);
+  
   const handleSelect = (value) => {
     // className이 "alarm"일 때 label을 변경하지 않음
     if (className !== "alarm") {
@@ -57,6 +61,8 @@ const Dropdown = ({
     const newOption = { content: newValue, label: newValue }; // label과 content 값 추가
     setOptionsList((prevOptions) => [...prevOptions, newOption]); // 옵션 리스트에 추가
     setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
+    
+    onAddValue(newValue)
     setAddValue(""); // 입력 필드 초기화
   };
 
@@ -72,10 +78,11 @@ const Dropdown = ({
 
   // 검색된 태그 목록 필터링
   const filteredTags = addValue
-    ? optionsList.filter((option) =>
-        option.label.toLowerCase().includes(addValue.toLowerCase())
-      )
-    : optionsList; // addValue가 비어 있으면 전체 옵션 반환
+  ? optionsList.filter((option) =>
+      option.label.toLowerCase().includes(addValue.toLowerCase())
+    )
+  : optionsList;
+
   const handleTagSelect = (tag) => {
     // onSearchSelect 함수가 전달된 경우에만 호출
     if (onSearchSelect) {
@@ -212,12 +219,13 @@ const Dropdown = ({
                 Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
                 recentSearches={options} //태그검색
-                onChange={(e) => setAddValue(e.target.value)} // 검색값 입력 시 업데이트
+                onChange={(e) => {
+                  onSearchSelect(e.target.value); // 검색 API 호출
+                }}                
                 value={addValue}
-                onSearchSelect={handleSelect}
               />
               <div className="recent-tags">
-                {recentTags.map((tag) => (
+                {filteredTags.map((tag) => (
                   <span key={tag.label} className="recent-tag">
                     <Button
                       className="tag-selectable"
@@ -231,7 +239,7 @@ const Dropdown = ({
 
               {/* 검색된 태그 목록 */}
               <div className="filtered-tags">
-                {filteredTags.map((tag) => (
+                {recentTags.map((tag) => (
                   <span
                     key={tag.label}
                     className="tag-option"

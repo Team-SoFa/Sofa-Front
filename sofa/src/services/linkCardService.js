@@ -103,7 +103,7 @@ export const linkCardGet = async (id) => {
     }
 };
 
-// 링크 카드 전체 리스트 조회
+// 링크 카드 폴더 리스트 조회
 export const linkCardFolderListGet = async (
     folderId,
     sortBy,
@@ -126,7 +126,7 @@ export const linkCardFolderListGet = async (
     }
 };
 
-// 링크 카드 폴더 리스트 조회
+// 링크 카드 전체 리스트 조회
 export const linkCardAllListGet = async (
     sortBy,
     sortOrder,
