@@ -122,8 +122,15 @@ const Dropdown = ({
       if(newTag) {
         console.log("태그 생성 성공:", newTag);
   
+        // 반환된 newTag 데이터의 구조를 확인하여 올바르게 매핑
+        const tagData = {
+          id: newTag.name, // newTag의 id
+          label: newTag.id, // newTag의 name
+          content: newTag.id, // name을 content로 설정
+          type: "CUSTOM", // type은 고정된 값으로 설정
+        };
         // 부모 컴포넌트로 새 태그 전달
-        onAddValue({ id: newTag.id, label: newTag.name, content: newTag.name, type: newTag.type });
+        onAddValue(tagData);
     
         setNewTagValue(""); // 입력 필드 초기화
       }

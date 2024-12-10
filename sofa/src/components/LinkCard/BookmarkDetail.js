@@ -33,13 +33,14 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   const handleAddTagToLinkCard = async (newTag) => {
     if (!linkCard.id || !newTag) return; // 링크 카드 ID나 태그가 없으면 실행하지 않음
   
+    console.log("handleAddTagToLinkCard newTag:", newTag);
     try {
       // 링크 카드 태그 추가 API 호출
       const data = {
         "tagList": [
           {
             "id": newTag.id,
-            "tagType": "CUSTOM"
+            "tagType": newTag.type
           }
         ]
       }
