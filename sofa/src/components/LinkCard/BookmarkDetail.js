@@ -18,7 +18,7 @@ import {
   folderDelete,
   folderPut,
 } from "../../services/folderService";
-import { linkCardGet } from "../../services/linkCardService";
+import { linkCardGet, linkCardTagPost } from "../../services/linkCardService";
 import { searchHistoryTagsGet, searchTagsGet } from "../../services/searchService";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
@@ -27,15 +27,51 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   const [selectedTag, setSelectedTag] = useState("");
   const [linkCard, setLinkCard] = useState([]); // 초기값은 빈 배열로 설정
-  const [recentTagList, setRecentTagList] = useState([]); // 초기값은 빈 배열로 설정
-  const [searchTagList, setSearchTagList] = useState([]); // 검색된 태그 목록
+  const [recentTagList, setRecentTagList] = useState([]);
+  const [searchTagList, setSearchTagList] = useState([]);
 
+  const handleAddTagToLinkCard = async (newTag) => {
+    if (!linkCard.id || !newTag) return; // 링크 카드 ID나 태그가 없으면 실행하지 않음
+  
+    try {
+      // 링크 카드 태그 추가 API 호출
+      const data = {
+        "tagList": [
+          {
+            "id": newTag.id,
+            "tagType": "CUSTOM"
+          }
+        ]
+      }
+      console.log(data);
+      const response = await linkCardTagPost(linkCard.id, data);
+  
+      if (response) {
+        const tagData = linkCard.tagList.map((tag) => ({
+          id: tag.id,
+          label: tag.name,
+          content: tag.name,
+          tagType: tag.tagType,
+        }));
+        setTagOption(tagData);
+        console.log(`링크 카드 ${linkCard.id}에 태그 ${newTag.label} 추가 성공`);
+      }
+    } catch (error) {
+      console.error("링크 카드 태그 추가 실패:", error);
+    }
+  };
+  
   const handleFetchRecentTags = async () => {
     try {
       const response = await searchHistoryTagsGet(); // 최근 태그 API 호출
       console.log("handleFetchRecentTags", response);
       if(response) {
-        setRecentTagList(response);
+        const recentData = response.map((recent) => ({
+          label: recent,
+          content: recent,
+          name: recent
+        }))
+        setSearchTagList(recentData);
       }
     } catch (error) {
       console.error("Failed to fetch recent tags:", error);
@@ -50,6 +86,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
         const searchData = response.map((search) => ({
           id: search.id,
           label: search.name,
+          content: search.name,
           name: search.name,
           type: search.type
         }))
@@ -289,8 +326,9 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   // [ TAGS ]
   const handleTagDelete = (tagToDelete) => {
-    const updatedTags = tagOption.filter((tag) => tag.content !== tagToDelete); // content 기준으로 삭제
-    setTagOption(updatedTags); // 상태 업데이트
+    setTagOption((prevTags) =>
+      prevTags.filter((tag) => tag.content !== tagToDelete)
+    );
   };
 
   // Summary, Memo 높이 동적 계산
@@ -588,14 +626,16 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             className="detail-tag"
             type="tag"
             options={searchTagList}
-            recentTags={recentTagList}
+            recentTags={recentTags}
             Icon={TagAddIcon}
-            onSelect={() => {
-              setValues("title");
+            onSelect={(selected) => {
+              setTagOption((prev) => [...prev, selected]); // 선택된 태그 추가
             }}
             onSearchSelect={handleSearchTags} // 검색 시 호출
             onOpen={(handleFetchRecentTags)}
             setTagOption={setTagOption} // 태그 목록을 업데이트하는 함수 전달
+            linkCardId={linkCard?.id} // linkCard의 ID 전달
+            onAddValue={handleAddTagToLinkCard} // 태그 추가 로직 전달
           />
         )}
       </div>

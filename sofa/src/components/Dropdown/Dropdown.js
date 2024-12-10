@@ -7,6 +7,7 @@ import TextField from "../Textfield/Textfield";
 import "./Dropdown.css";
 import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 import SearchIcon from "../../assets/icon/SearchIcon";
+import { customTagsPost } from "../../services/tagSerivce";
 
 const Dropdown = ({
   className,
@@ -23,6 +24,7 @@ const Dropdown = ({
   onAddValue, //추가된 값 처리 함수
   setTagsOpt = () => {}, //태그 목록 수정 함수
   onSearchSelect,
+  linkCardId, // linkCard의 ID를 props로 전달받음
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
@@ -31,6 +33,7 @@ const Dropdown = ({
   // options 추가
   const [optionsList, setOptionsList] = useState(options); // options 상태
   const [addValue, setAddValue] = useState(null); //텍스트 필드 입력값
+  const [newTagValue, setNewTagValue] = useState(""); // 새 태그 생성 필드 값
 
   useEffect(() => {
     setOptionsList(options); // 외부 options가 변경될 때 optionsList 업데이트
@@ -44,26 +47,41 @@ const Dropdown = ({
       );
     }
 
-    // 중복된 값이 아니라면 추가
+    // 중복된 태그가 아닌 경우만 추가
     setTagsOpt((prevTags) => {
-      if (!prevTags.some((existingTag) => existingTag.label === value.label)) {
-        return [...prevTags, value];
+      // 중복된 태그가 있는지 검사
+      if (!prevTags.some((tag) => tag.label === value.label)) {
+        return [...prevTags, value]; // 중복이 없을 경우에만 추가
       }
-      return prevTags; // 중복된 태그가 있으면 그대로 반환
+      return prevTags; // 중복일 경우 기존 상태 반환
     });
 
+    setSelectedValue(null); // 선택된 값을 상태로 저장
     setIsOpen(false); // 드롭다운 닫기
-    onSelect(value); // 선택된 값 부모로 전달
+    onSelect(value); // 부모 컴포넌트로 선택한 값 전달
   };
+
   // 새로운 값 추가
   const handleAdd = (newValue) => {
-    if (!newValue) return; // 값이 비어있으면 추가하지 않음
-    const newOption = { content: newValue, label: newValue }; // label과 content 값 추가
-    setOptionsList((prevOptions) => [...prevOptions, newOption]); // 옵션 리스트에 추가
-    setTagsOpt((prevTags) => [...prevTags, newOption]); // 새 태그를 tags-container에 추가
-    
-    onAddValue(newValue)
+    if (!newValue) return; // 빈 값 무시
+  
+    const newOption = { name: newValue, content: newValue, label: newValue };
+    setOptionsList((prevOptions) => {
+      if (!prevOptions.some((option) => option.label === newOption.label)) {
+        return [...prevOptions, newOption];
+      }
+      return prevOptions;
+    });
+  
+    setTagsOpt((prevTags) => {
+      if (!prevTags.some((tag) => tag.label === newOption.label)) {
+        return [...prevTags, newOption];
+      }
+      return prevTags;
+    });
+  
     setAddValue(""); // 입력 필드 초기화
+    onAddValue(newValue); // 부모 컴포넌트로 값 전달
   };
 
   const toggleDropdown = () => {
@@ -78,27 +96,42 @@ const Dropdown = ({
 
   // 검색된 태그 목록 필터링
   const filteredTags = addValue
-  ? optionsList.filter((option) =>
-      option.label.toLowerCase().includes(addValue.toLowerCase())
-    )
-  : optionsList;
+    ? optionsList.filter((option) =>
+        option.label.toLowerCase().includes(addValue.toLowerCase())
+      )
+    : optionsList;
 
   const handleTagSelect = (tag) => {
-    // onSearchSelect 함수가 전달된 경우에만 호출
-    if (onSearchSelect) {
-      onSearchSelect(tag);
-    }
-
-    // 중복된 태그가 아닌 경우에만 추가
+    // 선택된 태그만 추가
     setTagsOpt((prevTags) => {
-      // 태그가 이미 존재하는지 확인
       if (!prevTags.some((existingTag) => existingTag.label === tag.label)) {
-        return [...prevTags, tag]; // 중복이 없으면 추가
+        return [...prevTags, tag];
       }
-      return prevTags; // 중복이 있으면 기존 배열 반환
+      return prevTags; // 중복 태그 무시
     });
   };
 
+  const handleAddNewTag = async (tagName) => {
+    if (!tagName.trim()) return; // 빈 값 방지
+  
+    try {
+      const data =  {
+        "name": tagName
+      }
+      const newTag = await customTagsPost(data); // 태그 생성 API 호출
+      if(newTag) {
+        console.log("태그 생성 성공:", newTag);
+  
+        // 부모 컴포넌트로 새 태그 전달
+        onAddValue({ id: newTag.id, label: newTag.name, content: newTag.name, type: newTag.type });
+    
+        setNewTagValue(""); // 입력 필드 초기화
+      }
+    } catch (error) {
+      console.error("태그 생성 실패:", error);
+    }
+  };
+  
   return (
     <div
       className={`dropdown ${className}`}
@@ -218,50 +251,49 @@ const Dropdown = ({
                 className="dropdown-tag-add"
                 Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
-                recentSearches={options} //태그검색
-                onChange={(e) => {
-                  onSearchSelect(e.target.value); // 검색 API 호출
-                }}                
                 value={addValue}
-              />
-              <div className="recent-tags">
-                {filteredTags.map((tag) => (
-                  <span key={tag.label} className="recent-tag">
-                    <Button
-                      className="tag-selectable"
-                      label={tag.label}
-                      option={tag} // 태그 정보를 option으로 전달
-                      onClick={() => handleSelect(tag)} //클릭 시 태그 추가
-                    />
-                  </span>
-                ))}
-              </div>
-
-              {/* 검색된 태그 목록 */}
-              <div className="filtered-tags">
-                {recentTags.map((tag) => (
-                  <span
-                    key={tag.label}
-                    className="tag-option"
-                    onClick={() => handleTagSelect(tag)}
-                  >
-                    <Button
-                      className="tag-selectable"
-                      label={tag.label}
-                      option={tag}
-                    />
-                  </span>
-                ))}
-              </div>
-
+                onChange={(e) => {
+                  const value = e.target.value;
+                  setAddValue(value); // 검색 필드 값 업데이트
+                  onSearchSelect(value); // 검색 API 호출
+                }}
+              />  
+              {/* 조건에 따라 태그 목록 렌더링 */}
+              {addValue && filteredTags.length > 0 ? (
+                <div className="filtered-tags">
+                  {filteredTags.map((tag) => (
+                    <span key={tag.label} className="tag-option">
+                      <Button
+                        className="tag-selectable"
+                        label={tag.label}
+                        option={tag}
+                        onClick={() => handleSelect(tag)}
+                      />
+                    </span>
+                  ))}
+                </div>
+              ) : (
+                <div className="recent-tags">
+                  {recentTags.map((tag) => (
+                    <span key={tag.label} className="recent-tag">
+                      <Button
+                        className="tag-selectable"
+                        label={tag.label}
+                        option={tag}
+                        onClick={() => handleSelect(tag)}
+                      />
+                    </span>
+                  ))}
+                </div>
+              )}
               {className === "detail-tag" && (
                 <div className="dropdown-add">
                   <TextField
                     className="add"
                     placeholder="새 태그 생성"
-                    value={addValue}
-                    onChange={(e) => setAddValue(e.target.value)} //새로운 태그 입력
-                    onAddValue={handleAdd} //새 태그 추가
+                    value={newTagValue}
+                    onChange={(e) => setNewTagValue(e.target.value)} // 새 태그 생성 값 업데이트
+                    onAddValue={() => handleAddNewTag(newTagValue)} // 새 태그 추가 함수 호출
                   />
                 </div>
               )}
