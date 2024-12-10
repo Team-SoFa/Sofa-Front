@@ -1,10 +1,11 @@
 import {tokenPost, tokenGet, tokenDel, tokenPut} from "./apiClient";
 
 // 복원
-export const recycleBinPost = async (id) => {
+export const recycleBinPost = async (id, data) => {
     try {  
-      const response = await tokenPost("/recycleBin/"+id, {}, {});
+      const response = await tokenPost("/recycleBin/"+id, data, {});
 
+      console.log(data);
       return response;
     } catch (error) {
       console.error("recycleBinPost failed:", error);
