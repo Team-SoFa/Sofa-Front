@@ -6,12 +6,18 @@ import ShowLinkCard from "../components/LinkCard/ShowLinkCard";
 import Button from "../components/Button/Button";
 import { Link } from "react-router-dom";
 // import Tagcard from "../components/Tagcard/Tagcard";
-import { folderGet, folderPost, folderDelete, folderPut} from "../services/folderService";
-
-import "../components/Layout/main-layout.css";
+import {
+  folderGet,
+  folderPost,
+  folderDelete,
+  folderPut,
+} from "../services/folderService";
 import RemovedItemsPage from "./RemovedItemsPage";
 import FolderPage from "./FolderPage";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail"; // 상세 정보 컴포넌트 import
+
+import "../components/Layout/main-layout.css";
+import RightIcon from "../assets/icon/RightIcon";
 
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const location = useLocation();
@@ -51,7 +57,16 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
               <div className="_text">
                 <p className="_title">최근에 방문한 링크</p>
                 <Link to="/homepage" className="more">
-                  더보기&gt;
+                  <span style={{ color: "var(--font-gray)" }}>
+                    더보기
+                    <RightIcon
+                      style={{
+                        width: "0.7rem",
+                        height: "0.65rem",
+                        marginLeft: "0.2rem",
+                      }}
+                    />
+                  </span>
                 </Link>
               </div>
               <ShowLinkCard
@@ -72,7 +87,16 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                   링크
                 </p>
                 <Link to="/homepage" className="more">
-                  더보기&gt;
+                  <span style={{ color: "var(--font-gray)" }}>
+                    더보기
+                    <RightIcon
+                      style={{
+                        width: "0.7rem",
+                        height: "0.65rem",
+                        marginLeft: "0.2rem",
+                      }}
+                    />
+                  </span>
                 </Link>
               </div>
               <ShowLinkCard
@@ -127,7 +151,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const toggleDetail = () => {
     if (isDetailOpen) setSelectedBookmark(null); // 닫을 때만 선택 초기화
     setIsDetailOpen(!isDetailOpen);
-    console.log('넌누구냐',bookmarks);
+    console.log("넌누구냐", bookmarks);
   };
 
   return (

@@ -1,8 +1,9 @@
-import React from 'react';
+import React from "react";
 
-const RightIcon = () => {
+const RightIcon = ({ style }) => {
   return (
     <svg
+      style={style} // 전달된 스타일 적용
       width="1.5rem"
       height="1.5rem"
       viewBox="0 -2 25 24"
