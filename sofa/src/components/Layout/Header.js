@@ -417,7 +417,13 @@ const Header = ({ type, toggleMenu }) => {
               onFetchSearches={handleHistoryKeywordGet} // 클릭 시 호출될 API 핸들러 전달
             />
             <Button className="search" label="검색" onClick={hanldeSearchGet} />
-            <Button label="초기화" />
+            <Button
+              label="초기화"
+              onClick={() => {
+                setFolderOption([]); // 폴더 초기화
+                setTagOption([]); // 태그 초기화
+              }}
+            />
           </div>
           <div className="user_info">
             <Dropdown
