@@ -3,6 +3,7 @@
     grid-template-columns: repeat(6,1fr);
     padding:1rem; padding-left:0;
     gap:0.7rem;
+    transition: transform 0.3s ease;
 }
 @media(max-width:950px) {
     .bookmark-grid {

@@ -20,13 +20,17 @@ import "../components/Layout/main-layout.css";
 import RightIcon from "../assets/icon/RightIcon";
 
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
+  // Page
   const location = useLocation();
+  // User Info
   const [username, setUsername] = useState(""); //사용자 이름
   const [mostPopularTags, setMostPopularTags] = useState(""); //탑태그
   const [loading, setLoading] = useState(true); //로딩 상태
-  const [isMenuOpen, setIsMenuOpen] = useState(false); //사이드메뉴 열림 상태
-  const [selectedBookmark, setSelectedBookmark] = useState(null);
+  //Side Menu open/close
+  const [isMenuOpen, setIsMenuOpen] = useState(false);
+  //  Link Card
   const [isDetailOpen, setIsDetailOpen] = useState(false); //자세히보기메뉴 열림 상태
+  const [selectedBookmark, setSelectedBookmark] = useState(null);
 
   const renderSection = () => {
     switch (location.pathname) {

@@ -14,29 +14,25 @@
     background-color: white;
     border-radius: 20px;
   }
-  /* 헤더는 고정 */
-.header {
-    position: fixed;
-    top: 0;
-    left: 0;
-    width: 100%;
-}
-.main-box { overflow-y:scroll; height:calc(100vh - 9rem);}
+  /* === 헤더 === */
+.header { position: fixed; top: 0; left: 0; }
 
-/* 사이드 메뉴가 열릴 때 */
+.main-box { overflow-y:scroll; height:calc(100vh - 9rem); transition: transform 0.3s ease;}
+
+/* === 사이드 메뉴  === */
 .main-page.menu-open {
-  width: calc(100% - 19rem); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
-  margin-left: 17.5rem;  /* 사이드 메뉴의 너비만큼 왼쪽 여백을 추가 */
+  width: calc(100% - 19rem); /* SideMenu 너비만큼 main-box 축소 */
+  margin-left: 17.5rem;  /* SideMenu 너비만큼 margin-left 증가 */
 }
 
-/* 북마크 상세 정보가 표시될 때 */
+/* === 북마크 상세 정보 === */
 .main-page.show-detail {
-  width: calc(100% - 33rem); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+  width: calc(100% - 33rem); /* main-box 축소 */
 }
 
 /* 사이드 메뉴와 북마크 상세 정보가 동시에 열릴 때 */
 .main-page.menu-open.show-detail {
-  width: calc(100% - 19rem - 31rem); /* 사이드 메뉴의 너비만큼 화면이 줄어듬 */
+  width: calc(100% - 19rem - 31rem);
 }
 
 .link-set { margin-top: 2rem; }
