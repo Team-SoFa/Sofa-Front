@@ -97,7 +97,7 @@ const Dropdown = ({
   // 검색된 태그 목록 필터링
   const filteredTags = addValue
     ? optionsList.filter((option) =>
-        option.label.toLowerCase().includes(addValue.toLowerCase())
+        option.label?.toLowerCase().includes(addValue?.toLowerCase())
       )
     : optionsList;
 

@@ -22,12 +22,6 @@ const SideMenu = ({ isOpen }) => {
   const location = useLocation();
   const currentPath = location.pathname;
   const isActive = (path) => currentPath === path;
-  // const [folderNames, setFolderNames] = useState({
-  //   // 폴더명 임시값
-  //   folder1: "폴더1",
-  //   folder2: "폴더2",
-  //   folder3: "폴더3",
-  // });
   const [folderNames, setFolderNames] = useState([]);
   const [folderEditOption, setFolderEditOption] = useState("");
   const folderEdit = [
@@ -69,6 +63,7 @@ const SideMenu = ({ isOpen }) => {
     }
     setFolderEditOption(option.content);
   };
+  // 폴더명 수정
   const handleFolderNameEdit = (folderId) => {
     const folder = folderNames.find((folder) => folder.id === folderId);
     const newFolderName = prompt("새 폴더 이름을 입력하세요", folder?.name);
@@ -81,7 +76,7 @@ const SideMenu = ({ isOpen }) => {
       );
     }
   };
-
+  //폴더 삭제
   const handleFolderDelete = (folderId) => {
     const folder = folderNames.find((folder) => folder.id === folderId);
     const confirmDelete = window.confirm(
@@ -108,30 +103,28 @@ const SideMenu = ({ isOpen }) => {
           <Accordion
             type="SIDE_MENU"
             title="폴더"
-            content={
-              folderNames.map((folder) => (
-                <div className="folder-component" key={folder.id}>
-                  <Link
-                    to={`/folderpage/${folder.name}`}
-                    state={{id: folder.id}}
-                    className={`folder-item ${
-                      isActive(`/folder/${folder.name}`) ? "active" : ""
-                    }`}
-                  >
-                    <span className="folder-icon">
-                      <FolderLineIcon />
-                    </span>
-                    {folder.name}
-                    <Dropdown
-                      className="dropdown-folder-edit"
-                      Icon={MenuMeatBallIcon}
-                      options={folderEdit}
-                      onSelect={() => handleFolderEditOption(folder)}
-                    />
-                  </Link>
-                </div>
-              ))
-            }
+            content={folderNames.map((folder) => (
+              <div className="folder-component" key={folder.id}>
+                <Link
+                  to={`/folderpage/${folder.name}`}
+                  state={{ id: folder.id }}
+                  className={`folder-item ${
+                    isActive(`/folder/${folder.name}`) ? "active" : ""
+                  }`}
+                >
+                  <span className="folder-icon">
+                    <FolderLineIcon />
+                  </span>
+                  {folder.name}
+                  <Dropdown
+                    className="dropdown-folder-edit"
+                    Icon={MenuMeatBallIcon}
+                    options={folderEdit}
+                    onSelect={() => handleFolderEditOption(folder)}
+                  />
+                </Link>
+              </div>
+            ))}
             onToggle={handleAccordionToggle} // Accordion 열릴 때 API 호출
           />
           {/* <Accordion
