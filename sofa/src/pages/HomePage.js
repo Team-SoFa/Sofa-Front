@@ -83,8 +83,18 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
               <div className="_text">
                 <p className="_title">
                   {username}님의 최다 태그
-                  <Button label={mostPopularTags} className="tag" />를 포함한
-                  링크
+                  <span
+                    style={{
+                      fontSize: "0.813rem",
+                      backgroundColor: "var(--purple-light)",
+                      padding: "0.3rem",
+                      marginInline: "0.3rem",
+                      borderRadius: "0.2rem",
+                    }}
+                  >
+                    {mostPopularTags}
+                  </span>
+                  를 포함한 링크
                 </p>
                 <Link to="/homepage" className="more">
                   <span style={{ color: "var(--font-gray)" }}>
