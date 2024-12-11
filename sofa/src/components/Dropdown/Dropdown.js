@@ -38,7 +38,7 @@ const Dropdown = ({
   useEffect(() => {
     setOptionsList(options); // 외부 options가 변경될 때 optionsList 업데이트
   }, [options]);
-  
+
   const handleSelect = (value) => {
     // className이 "alarm"일 때 label을 변경하지 않음
     if (className !== "alarm") {
@@ -64,7 +64,7 @@ const Dropdown = ({
   // 새로운 값 추가
   const handleAdd = (newValue) => {
     if (!newValue) return; // 빈 값 무시
-  
+
     const newOption = { name: newValue, content: newValue, label: newValue };
     setOptionsList((prevOptions) => {
       if (!prevOptions.some((option) => option.label === newOption.label)) {
@@ -72,14 +72,14 @@ const Dropdown = ({
       }
       return prevOptions;
     });
-  
+
     setTagsOpt((prevTags) => {
       if (!prevTags.some((tag) => tag.label === newOption.label)) {
         return [...prevTags, newOption];
       }
       return prevTags;
     });
-  
+
     setAddValue(""); // 입력 필드 초기화
     onAddValue(newValue); // 부모 컴포넌트로 값 전달
   };
@@ -113,15 +113,15 @@ const Dropdown = ({
 
   const handleAddNewTag = async (tagName) => {
     if (!tagName.trim()) return; // 빈 값 방지
-  
+
     try {
-      const data =  {
-        "name": tagName
-      }
+      const data = {
+        name: tagName,
+      };
       const newTag = await customTagsPost(data); // 태그 생성 API 호출
-      if(newTag) {
+      if (newTag) {
         console.log("태그 생성 성공:", newTag);
-  
+
         // 반환된 newTag 데이터의 구조를 확인하여 올바르게 매핑
         const tagData = {
           id: newTag.name, // newTag의 id
@@ -131,14 +131,14 @@ const Dropdown = ({
         };
         // 부모 컴포넌트로 새 태그 전달
         onAddValue(tagData);
-    
+
         setNewTagValue(""); // 입력 필드 초기화
       }
     } catch (error) {
       console.error("태그 생성 실패:", error);
     }
   };
-  
+
   return (
     <div
       className={`dropdown ${className}`}
@@ -264,7 +264,7 @@ const Dropdown = ({
                   setAddValue(value); // 검색 필드 값 업데이트
                   onSearchSelect(value); // 검색 API 호출
                 }}
-              />  
+              />
               {/* 조건에 따라 태그 목록 렌더링 */}
               {addValue && filteredTags.length > 0 ? (
                 <div className="filtered-tags">

@@ -15,7 +15,7 @@ import { bookmarks as initialBookmarks } from "./components/LinkCard/bookmarks";
 
 // Styls
 import Typography from "./styles/Typography/Typography";
-import "./App.css";
+import "./app.css";
 import "./styles/color.css";
 
 // Services

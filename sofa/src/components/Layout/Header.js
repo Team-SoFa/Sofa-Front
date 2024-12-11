@@ -118,9 +118,9 @@ const Header = ({ type, toggleMenu }) => {
       const response = await searchHistoryKeywordsGet();
 
       if (response) {
-        const historyData = response.map((history)=> ({
+        const historyData = response.map((history) => ({
           img: `${process.env.PUBLIC_URL}/example.png`,
-          content: history
+          content: history,
         }));
         setSearchRecent(historyData);
       }
@@ -150,7 +150,10 @@ const Header = ({ type, toggleMenu }) => {
     { img: `${process.env.PUBLIC_URL}/example.png`, content: "Frontend" },
     { img: `${process.env.PUBLIC_URL}/example.png`, content: "CSS" },
     { img: `${process.env.PUBLIC_URL}/example.png`, content: "개발자 꿀팁" },
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "html은 무엇인가" },
+    {
+      img: `${process.env.PUBLIC_URL}/example.png`,
+      content: "html은 무엇인가",
+    },
   ]);
 
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
@@ -426,7 +429,7 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="user-info"
               type="user-info"
-              userInfo={member ? member: userInfo}
+              userInfo={member ? member : userInfo}
               imgSrc={`${process.env.PUBLIC_URL}/example.png`}
               options={userPage}
               onSelect={openModal}

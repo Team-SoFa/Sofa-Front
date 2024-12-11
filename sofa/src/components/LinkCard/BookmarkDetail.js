@@ -19,7 +19,10 @@ import {
   folderPut,
 } from "../../services/folderService";
 import { linkCardGet, linkCardTagPost } from "../../services/linkCardService";
-import { searchHistoryTagsGet, searchTagsGet } from "../../services/searchService";
+import {
+  searchHistoryTagsGet,
+  searchTagsGet,
+} from "../../services/searchService";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   const [folderOption, setFolderOption] = useState([]);
@@ -32,21 +35,21 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   const handleAddTagToLinkCard = async (newTag) => {
     if (!linkCard.id || !newTag) return; // 링크 카드 ID나 태그가 없으면 실행하지 않음
-  
+
     console.log("handleAddTagToLinkCard newTag:", newTag);
     try {
       // 링크 카드 태그 추가 API 호출
       const data = {
-        "tagList": [
+        tagList: [
           {
-            "id": newTag.id,
-            "tagType": newTag.type
-          }
-        ]
-      }
+            id: newTag.id,
+            tagType: newTag.type,
+          },
+        ],
+      };
       console.log(data);
       const response = await linkCardTagPost(linkCard.id, data);
-  
+
       if (response) {
         const tagData = linkCard.tagList.map((tag) => ({
           id: tag.id,
@@ -55,23 +58,25 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
           tagType: tag.tagType,
         }));
         setTagOption(tagData);
-        console.log(`링크 카드 ${linkCard.id}에 태그 ${newTag.label} 추가 성공`);
+        console.log(
+          `링크 카드 ${linkCard.id}에 태그 ${newTag.label} 추가 성공`
+        );
       }
     } catch (error) {
       console.error("링크 카드 태그 추가 실패:", error);
     }
   };
-  
+
   const handleFetchRecentTags = async () => {
     try {
       const response = await searchHistoryTagsGet(); // 최근 태그 API 호출
       console.log("handleFetchRecentTags", response);
-      if(response) {
+      if (response) {
         const recentData = response.map((recent) => ({
           label: recent,
           content: recent,
-          name: recent
-        }))
+          name: recent,
+        }));
         setSearchTagList(recentData);
       }
     } catch (error) {
@@ -83,14 +88,14 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     try {
       const response = await searchTagsGet(query); // 태그 검색 API 호출
       console.log("handleSearchTags", response);
-      if(response) {
+      if (response) {
         const searchData = response.map((search) => ({
           id: search.id,
           label: search.name,
           content: search.name,
           name: search.name,
-          type: search.type
-        }))
+          type: search.type,
+        }));
         setSearchTagList(searchData);
       }
     } catch (error) {
@@ -101,13 +106,13 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
   const handleAddFolder = async (newFolder) => {
     try {
-      console.log("newFolder",newFolder);
+      console.log("newFolder", newFolder);
       // 새 폴더 생성 요청
       const data = {
-        "name": newFolder
+        name: newFolder,
       };
       const response = await folderPost(data);
-  
+
       if (response) {
         // 폴더 생성 성공 시 폴더 목록 업데이트
         await handleFolderGet();
@@ -200,35 +205,34 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       const fetchLinkCardGet = async () => {
         try {
           const response = await linkCardGet(bookmark.id);
-    
+
           if (response) {
             console.log("API Response:", response);
             setLinkCard(response); // 상태 업데이트
             console.log(linkCard);
-
           }
         } catch (error) {
           console.log("fetchLinkCardList error:", error);
         }
       };
-    
-      fetchLinkCardGet();  
+
+      fetchLinkCardGet();
     }
   }, [bookmarks, bookmark]);
 
   useEffect(() => {
     if (linkCard) {
       console.log("Updated linkCard:", linkCard);
-  
+
       const index = bookmarks.findIndex((item) => item.id === linkCard.id);
       setCurrentIndex(index);
-  
+
       if (linkCard.imageUrl) {
         setLinkcardImg(linkCard.imageUrl);
       } else {
         setLinkcardImg(`${process.env.PUBLIC_URL}/example.png`);
       }
-  
+
       setValues({
         title: linkCard.title || "",
         summary: linkCard.summary || "요약 내용입니다.",
@@ -241,7 +245,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
         summary: false,
         memo: false,
       });
-    
+
       // Safe handling for tagList
       if (linkCard.tagList && Array.isArray(linkCard.tagList)) {
         const tagData = linkCard.tagList.map((tag) => ({
@@ -261,7 +265,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   useEffect(() => {
     console.log("Updated tagOption:", tagOption);
   }, [tagOption]);
-  
+
   // HEADER BTNS >>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const icons = [
     { id: "left", Icon: LeftIcon },
@@ -423,10 +427,10 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       </div>
 
       <div className="detail-header">
-        <img 
-          className="detail-image" 
-          src={bookmark.imageUrl} 
-          alt={bookmark.title} 
+        <img
+          className="detail-image"
+          src={bookmark.imageUrl}
+          alt={bookmark.title}
           onError={(e) => {
             if (e.target.src !== `${process.env.PUBLIC_URL}/example.png`) {
               e.target.src = `${process.env.PUBLIC_URL}/example.png`; // 기본 이미지로 대체
@@ -633,7 +637,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
               setTagOption((prev) => [...prev, selected]); // 선택된 태그 추가
             }}
             onSearchSelect={handleSearchTags} // 검색 시 호출
-            onOpen={(handleFetchRecentTags)}
+            onOpen={handleFetchRecentTags}
             setTagOption={setTagOption} // 태그 목록을 업데이트하는 함수 전달
             linkCardId={linkCard?.id} // linkCard의 ID 전달
             onAddValue={handleAddTagToLinkCard} // 태그 추가 로직 전달
