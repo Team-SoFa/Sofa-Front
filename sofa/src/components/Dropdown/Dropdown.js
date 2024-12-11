@@ -14,11 +14,11 @@ const Dropdown = ({
   type,
   options = [],
   label,
-  Icon,
+  Icon, // header icon
   imgSrc,
   userInfo,
   onSelect = () => {},
-  onDelete = () => {}, // 옵션 삭제
+  onDelete, // 옵션 삭제
   recentTags = [], //최근 검색 태그
   onOpen,
   onAddValue, //추가된 값 처리 함수
@@ -212,7 +212,7 @@ const Dropdown = ({
           {/* 일반적인 드롭다운 메뉴 */}
           {type !== "tag" &&
             [
-              ...(className === "dropdown-folder-select"
+              ...(className === "basic"
                 ? [{ content: label, Icon: null }]
                 : []),
               ...options,
@@ -222,15 +222,14 @@ const Dropdown = ({
                 className="dropdown-option"
                 onClick={() => handleSelect(option)}
               >
-                {/* 1. 아이콘 있으면 아이콘 */}
+                {/* 1. option.아이콘 있으면 아이콘 */}
                 {option.Icon && (
                   <option.Icon className="dropdown-option-icon" />
                 )}
-                {/* 2. 옵션 */}
+                {/* 2. content */}
                 <span>{option.content}</span>
-                {/* 3. 선택 버튼 */}
-                <Button className="dropdown-select" label="선택" />
-                {/* {onDelete && (
+                {/* 3. 선택or삭제 버튼 */}
+                {onDelete ? (
                   <Button
                     className="dropdown-delete"
                     label="✕"
@@ -239,7 +238,9 @@ const Dropdown = ({
                       onDelete(option.content);
                     }}
                   />
-                )} */}
+                ) : (
+                  <Button className="dropdown-select" label="선택" />
+                )}
               </div>
             ))}
 

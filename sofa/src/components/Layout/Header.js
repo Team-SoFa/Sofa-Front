@@ -298,7 +298,7 @@ const Header = ({ type, toggleMenu }) => {
           />
           <div className="searchers">
             <Dropdown
-              className="dropdown-folder-select"
+              className="basic"
               options={folderOption}
               label="폴더 전체"
               Icon={DownIcon}
