@@ -89,7 +89,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                       backgroundColor: "var(--purple-light)",
                       padding: "0.3rem",
                       marginInline: "0.3rem",
-                      borderRadius: "0.2rem",
+                      borderRadius: "0.5rem",
                     }}
                   >
                     {mostPopularTags}
