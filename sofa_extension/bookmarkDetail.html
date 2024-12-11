@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bookmark Detail</title>
+  <link rel="stylesheet" href="bookmarkDetail.css">
+</head>
+<body>
+  <div class="bookmark-detail">
+    <div class="header-btn-container">
+      <button class="detail-header-btn" data-id="left">◀</button>
+      <button class="detail-header-btn" data-id="right">▶</button>
+      <button class="detail-header-btn" data-id="remind">🔔</button>
+      <button class="detail-header-btn" data-id="trash">🗑️</button>
+      <button class="detail-header-btn" data-id="close">❌</button>
+    </div>
+
+    <div class="detail-header">
+      <img class="detail-image" id="bookmark-image" alt="Bookmark Thumbnail">
+      <div class="detail-info">
+        <div class="row">
+          <button class="detail link-btn">링크 바로가기</button>
+          <select class="detail dropdown-folder-select">
+            <option>폴더 선택</option>
+          </select>
+        </div>
+        <div class="detail-title-container">
+          <span id="bookmark-title" class="detail-title">제목</span>
+          <textarea id="title-input" class="detail-text-input hidden"></textarea>
+        </div>
+        <button id="edit-title-btn" class="detail-edit">수정</button>
+      </div>
+    </div>
+
+    <div class="summary-container">
+      <p>자동 요약</p>
+      <div class="detail-text-container">
+        <p id="bookmark-summary" class="detail-text">요약 내용</p>
+        <textarea id="summary-input" class="detail-text-input hidden"></textarea>
+      </div>
+      <button id="edit-summary-btn" class="detail-edit">수정</button>
+    </div>
+
+    <div class="memo-container">
+      <p>메모</p>
+      <div class="detail-text-container">
+        <p id="bookmark-memo" class="detail-text">메모 내용</p>
+        <textarea id="memo-input" class="detail-text-input hidden"></textarea>
+      </div>
+      <button id="edit-memo-btn" class="detail-edit">수정</button>
+    </div>
+
+    <div class="detail-tags">
+      <p>태그</p>
+      <div id="tags-container" class="tags-container"></div>
+      <input id="tag-input" class="dropdown-tag-add" placeholder="태그를 검색해보세요.">
+    </div>
+  </div>
+
+  <script src="bookmarkDetail.js"></script>
+</body>
+</html>

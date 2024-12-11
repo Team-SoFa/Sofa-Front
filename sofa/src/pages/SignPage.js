@@ -95,9 +95,6 @@ const SignPage = () => {
         // Access Token과 Refresh Token 저장 (localStorage)
         // localStorage에 저장
         const { accessToken, refreshToken } = response.token;
-
-        localStorage.setItem("accessToken", accessToken);
-        localStorage.setItem("refreshToken", refreshToken);
         chrome.storage.local.set({ accessToken, refreshToken }, () => {
           if (chrome.runtime.lastError) {
             console.error("토큰 저장 실패:", chrome.runtime.lastError);

@@ -1,6 +1,6 @@
 {
   "manifest_version": 3,
-  "name": "SoFa Extension",
+  "name": "Chrome Extension",
   "version": "1.0",
   "description": "A simple Chrome extension for testing.",
   "permissions": ["tabs", "identity", "activeTab", "storage", "scripting", "sidePanel"],
@@ -8,8 +8,8 @@
     "service_worker": "background.js"
   },
   "side_panel": {
-    "default_path": "sidePanel.html",
-    "default_title": "SoFa Extension"
+    "default_path": "index.html",
+    "default_title": "Chrome Extension"
   },
   "action": {
     "default_popup": "popup.html",
@@ -30,18 +30,12 @@
   "web_accessible_resources": [
     {
       "resources": [
-        "dist/bundle.js",
+        "static/css/*",
         "services/*",
         "redux/*",
         "bookmarkDetail.css"
       ],
       "matches": ["<all_urls>"]
-    }
-  ],
-  "content_scripts": [
-    {
-      "matches": ["<all_urls>"],
-      "js": ["content.js", "bookmarkDetail.js"]
     }
   ]
 }
