@@ -143,7 +143,7 @@
 }
 .dropdown-header-img{width:2.8rem; height:2.8rem;}
 .dropdown.user-info .dropdown-menu{
-  right:0;
+  right:-1rem;
   width:13rem; max-height:16.5rem;
 }
 .dropdown-user-info {

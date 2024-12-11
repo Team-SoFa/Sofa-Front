@@ -97,7 +97,7 @@ const Dropdown = ({
   // 검색된 태그 목록 필터링
   const filteredTags = addValue
     ? optionsList.filter((option) =>
-        option.label.toLowerCase().includes(addValue.toLowerCase())
+        option.label?.toLowerCase().includes(addValue?.toLowerCase())
       )
     : optionsList;
 
@@ -195,11 +195,16 @@ const Dropdown = ({
           {type === "user-info" && userInfo && (
             <div className="dropdown-user-info">
               <img
-                src={userInfo.profileImage}
+                src={
+                  userInfo.profileImage ||
+                  `${process.env.PUBLIC_URL}/example.png`
+                }
                 alt="Profile"
                 className="dropdown-user-profile"
               />
-              <span className="dropdown-user-name">{userInfo.name}님</span>
+              <span className="dropdown-user-name">
+                {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}님
+              </span>
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
           )}

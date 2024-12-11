@@ -5,7 +5,7 @@ const CancelLineIcon = () => {
     <svg
       width="1.5rem"
       height="1.5rem"
-      viewBox="0 0 25 24"
+      viewBox="2 -3 30 29"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >
