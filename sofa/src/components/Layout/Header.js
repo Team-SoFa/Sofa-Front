@@ -14,6 +14,7 @@ import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
 import SettingIcon from "../../assets/icon/SettingIcon";
 import CallLineIcon from "../../assets/icon/CallLineIcon";
 import LogoutIcon from "../../assets/icon/LogoutIcon";
+import ThumbUpIcon from "../../assets/icon/ThumbUpIcon";
 
 import { memberGet } from "../../services/memberService";
 import {
@@ -28,6 +29,7 @@ import {
   searchGet,
 } from "../../services/searchService";
 import SearchIcon from "../../assets/icon/SearchIcon";
+import RestoreIcon from "../../assets/icon/RestoreIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
@@ -143,16 +145,14 @@ const Header = ({ type, toggleMenu }) => {
     name: "홍길동", // 사용자 이름
     email: "hong@example.com", // 사용자 이메일
   };
+
+  //최근 검색어 임시 데이터
   const [recentSearches, setRecentSearches] = useState([
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "React" },
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "JavaScript" },
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "Frontend" },
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "CSS" },
-    { img: `${process.env.PUBLIC_URL}/example.png`, content: "개발자 꿀팁" },
-    {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      content: "html은 무엇인가",
-    },
+    { Icon: RestoreIcon, content: "React" },
+    { Icon: RestoreIcon, content: "개발자 꿀팁" },
+    { Icon: RestoreIcon, content: "자바스크립트개발" },
+    { Icon: RestoreIcon, content: "커피" },
+    { Icon: RestoreIcon, content: "코카콜라 제로슈가" },
   ]);
 
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
@@ -177,40 +177,34 @@ const Header = ({ type, toggleMenu }) => {
       content: item,
     })
   );
-  const alarmOptions = [
+
+  // 임시 알림 >>>>>>>>>>
+  const [alarmOptions, setAlarmOptions] = useState([
     {
-      img: `${process.env.PUBLIC_URL}/example.png`,
+      Icon: RestoreIcon,
       label: "리마인드",
-      content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다.",
+      content:
+        "‘IT 직무 10가지 알아보기’ 링크 외 4개의 링크가 리마인드함에 있습니다. 리마인드함에 들어가 링크들을 확인해보세요!",
+      date: "24.11.25",
+      isNew: true,
     },
     {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      label: "어쩌구",
-      content: "또 어떤 알람이 있을까요",
+      Icon: ThumbUpIcon,
+      label: "추천 링크",
+      content:
+        "성명근님님의 관심사에 맞는 링크들을 추천합니다! ‘[위시켓] 반응형 디자인의 최종장, 그 끝은 어디까지인가’ 외 2개의 링크가 있어요.",
+      date: "24.11.25",
+      isNew: false,
     },
     {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      label: "리마인드",
+      Icon: LogoutIcon,
+      label: "업데이트 안내",
       content: "새로운 업데이트가 있습니다.",
+      date: "24.11.25",
+      isNew: true,
     },
-    {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      label: "리마인드",
-      content: "새로운 업데이트가 있습니다.",
-    },
-    {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      label: "리마인드",
-      content: "새로운 업데이트가 있습니다.",
-    },
-    {
-      img: `${process.env.PUBLIC_URL}/example.png`,
-      label: "리마인드",
-      content: "새로운 업데이트가 있습니다.",
-    },
-  ].map((item) => ({
-    ...item,
-  }));
+  ]);
+
   const profileImg = `${process.env.PUBLIC_URL}/example.png`;
 
   // <<<<<<<<<<<<<<<<<<<<< 임시 데이터
@@ -220,8 +214,16 @@ const Header = ({ type, toggleMenu }) => {
     setIsMenuOpen(!isMenuOpen);
     toggleMenu();
   };
+  // 헤더 알림 옵션 선택했을 때
   const handleAlarmSelect = (option) => {
     setAlarmOption(option.content);
+
+    // `isNew` 값을 업데이트
+    setAlarmOptions((prevOptions) =>
+      prevOptions.map((item) =>
+        item.content === option.content ? { ...item, isNew: false } : item
+      )
+    );
   };
   const handleFolderSelect = (option) => {
     setFolderOption(option.content);
@@ -320,7 +322,7 @@ const Header = ({ type, toggleMenu }) => {
               placeholder="검색어를 입력하세요."
               value={searchValue}
               onChange={handleSearchChange}
-              recentSearches={searchRecent} // 최근 검색어 전달
+              recentSearches={recentSearches} // 최근 검색어 전달
               onSearchSelect={
                 (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
               }
@@ -345,7 +347,6 @@ const Header = ({ type, toggleMenu }) => {
             />
             <Dropdown
               className="user-info"
-              type="user-info"
               userInfo={member ? member : userInfo}
               imgSrc={`${process.env.PUBLIC_URL}/example.png`}
               options={userPage}

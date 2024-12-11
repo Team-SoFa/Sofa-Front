@@ -1,5 +1,7 @@
 /* STANDARD SETTING >>>>>>>>>>> */
-.text-filed-wrapper {
+.text-field{
+}
+.text-field-wrapper {
   display: flex;
   position: relative;
   align-items: center;
@@ -9,7 +11,7 @@
   border-radius: 5rem;
   padding: 0.6rem;
   background-color: white;
-}
+}.text-field-wrapper:focus-within{border-color:transparent;}
 .text-field-img{
   width:1.5rem; height: 1.5rem; border-radius: 10px;
   margin-inline: 0.2rem;
