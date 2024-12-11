@@ -9,12 +9,17 @@
   overflow: hidden;
   text-overflow: ellipsis;
   width: auto; max-width: 5rem;
-  padding:0.7rem;
+  padding:1rem; padding-block: 0.75rem; padding-right: 2.2rem;
   color:var(--font-gray);
   background:white;
   transition: color 0.3s ease, background-color 0.3s ease;
   border:0.031rem solid var(--border-gray); border-radius: 5rem;
-}.dropdown-header-icon{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
+}
+.dropdown-header-icon{
+  position:absolute; right: 0.5rem;
+  color:black;
+  transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;
+}
 .dropdown-header:hover, .dropdown-header.open{color:white; background: var(--purple-main);}
 .dropdown-header-icon.rotated{color:white; transform:rotate(180deg);}
 
@@ -70,13 +75,14 @@
 .dropdown.search-dropdown .dropdown-delete{font-size: 0.7rem; margin-left: auto;}
 
 
-/* === 드롭다운 펼침 화살표, 옵션선택버튼 === */
-.dropdown-folder-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
-.dropdown.tag .dropdown-header-icon{order:2; margin-left: 0.2rem;}
+/* === 폴더 === */
 .dropdown-folder-select .dropdown-select{display:flex;}
-.dropdowntag .dropdown-select{display: flex;}
+.dropdown-folder-select .dropdown-header-icon{order:2; margin-left: 0.2rem;}
 
 /* === 태그 ===*/
+.dropdown.tag .dropdown-header-icon{order:2; margin-left: 0.2rem;}
+.dropdowntag .dropdown-select{display: flex;}
+
 .dropdown.tag .dropdown-menu{
   cursor:default;
   top:3.5rem;
@@ -104,7 +110,7 @@
 
 
 /* === 알림 === */
-.dropdown.alarm .dropdown-header{padding:0rem; width:2.5rem; height: 2.5rem; justify-content: center;}
+.dropdown.alarm .dropdown-header{padding:0rem; width:2.8rem; height: 2.8rem;}
 .dropdown.alarm .dropdown-header-icon{transform:rotate(0deg);}
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
@@ -132,10 +138,10 @@
 /* === 유저페이지 ===*/
 .dropdown.user-info .dropdown-header{
   padding:0;
-  width: 2.5rem; height: 2.5rem;
+  width: 2.8rem; height: 2.8rem;
   overflow: hidden;
 }
-.dropdown-header-img{width:2.5rem; height:2.5rem;}
+.dropdown-header-img{width:2.8rem; height:2.8rem;}
 .dropdown.user-info .dropdown-menu{
   right:0;
   width:13rem; max-height:16.5rem;

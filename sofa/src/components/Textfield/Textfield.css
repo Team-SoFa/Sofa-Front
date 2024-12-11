@@ -1,14 +1,12 @@
-.text-field{
-}
 .text-filed-wrapper {
   display: flex;
-  align-items: center;
   position: relative;
+  align-items: center;
   width: 15rem;
   margin-left:0.5rem;
-  border: solid 1px var(--border-gray);
-  border-radius: 20px;
-  padding: 0.5rem;
+  border: 1px solid var(--border-gray);
+  border-radius: 5rem;
+  padding: 0.6rem;
   background-color: white;
 }
 
