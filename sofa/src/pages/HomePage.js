@@ -55,7 +55,7 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
             </div>
             <div className="link-set">
               <div className="_text">
-                <p className="_title">최근에 방문한 링크</p>
+                <p className="_title">최근 방문한 링크</p>
                 <Link to="/homepage" className="more">
                   <span style={{ color: "var(--font-gray)" }}>
                     더보기
