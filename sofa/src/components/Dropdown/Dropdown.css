@@ -110,7 +110,7 @@
 
 
 /* === 알림 === */
-.dropdown.alarm .dropdown-header{padding:0rem; width:2.8rem; height: 2.8rem; justify-content: center;}
+.dropdown.alarm .dropdown-header{padding:0rem; width:2.8rem; height: 2.8rem;}
 .dropdown.alarm .dropdown-header-icon{transform:rotate(0deg);}
 .dropdown.alarm .dropdown-menu{
   width: 15rem;
