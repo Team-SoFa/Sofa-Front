@@ -1,11 +1,9 @@
 .header{
     display:flex;
     align-items: center;
-    top:0;
     width: 100%;
     z-index: 1000;
-    padding:1rem;
-    padding-top:2rem;
+    padding:1.5rem; padding-top:2rem;
     background: var(--main-bg);
 }
 .logo{ cursor:pointer; width: 50px; }
@@ -17,7 +15,11 @@
     margin:auto;
 }
 
-.user_info { display: flex; margin-right:2rem; align-items: center;}
+.user_info { 
+    display: flex;
+    margin-right:3.5rem;
+    align-items: center;
+}
 
 
 

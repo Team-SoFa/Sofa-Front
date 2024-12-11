@@ -3,7 +3,7 @@
   "name": "SoFa Extension",
   "version": "1.0",
   "description": "A simple Chrome extension for testing.",
-  "permissions": ["activeTab", "scripting", "sidePanel"],
+  "permissions": ["activeTab", "storage", "scripting", "sidePanel"],
   "background": {
     "service_worker": "background.js"
   },
@@ -19,6 +19,19 @@
       "128": "assets/logo128.png"
     }
   },
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "dist/bundle.js",
+        "services/*",
+        "redux/*"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ],
   "content_scripts": [
     {
       "matches": ["<all_urls>"],

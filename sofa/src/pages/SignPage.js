@@ -11,7 +11,7 @@ import { settingGet, settingPatch } from "../services/settingService";
 import { memberGet } from "../services/memberService";
 import { recycleBinGet, recycleBinPost, recycleBinDel } from "../services/recycleBinService";
 import { aiTagsAiGet, aiTagsDelete } from "../services/tagSerivce";
-import { searchGet } from "../services/searchService";
+import { searchGet, searchTagsGet } from "../services/searchService";
 
 const ImagePlaceholder = ({ width, height }) => {
   const placeholderStyle = {
@@ -147,9 +147,9 @@ const SignPage = () => {
 
       console.log('folderPost response:', response);  // 응답 값 확인
       
-      if (response && response.floderList) {
+      if (response && response.folderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
-        setFolderList(response.floderList);
+        setFolderList(response.folderList);
       }
     } catch (err) {
       console.error('폴더 추가 실패:', err);
@@ -162,9 +162,10 @@ const SignPage = () => {
       const headers = {};
       const response = await folderGet();
 
-      if (response && response.floderList) {
+      if (response && response.folderList) {
         // 새롭게 받아온 폴더 리스트를 상태에 저장
-        setFolderList(response.floderList);  
+        setFolderList(response.folderList);  
+        console.log(folderList[0].id);
       }
       console.log('폴더 조회 응답:', response);
     } catch (err) {
@@ -228,55 +229,49 @@ const SignPage = () => {
     }
   };
 
-  const fetchImageUrlFromPage = async (url) => {
-    try {
-      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-      const targetUrl = url;
-      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  // const fetchImageUrlFromPage = async (url) => {
+  //   try {
+  //     const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+  //     const targetUrl = url;
+  //     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-      const response = await fetch(proxyUrl + targetUrl, {
-        origin: API_BASE_URL
-      });
-      const html = await response.text(); // HTML 텍스트로 변환
+  //     const response = await fetch(proxyUrl + targetUrl, {
+  //       origin: API_BASE_URL
+  //     });
+  //     const html = await response.text(); // HTML 텍스트로 변환
   
-      const parser = new DOMParser();
-      const doc = parser.parseFromString(html, 'text/html');
+  //     const parser = new DOMParser();
+  //     const doc = parser.parseFromString(html, 'text/html');
   
-      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
-      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+  //     // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+  //     let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
   
-      if (!imageUrl) {
-        // <img> 태그에서 src 추출
-        imageUrl = doc.querySelector('img')?.src;
-      }
+  //     if (!imageUrl) {
+  //       // <img> 태그에서 src 추출
+  //       imageUrl = doc.querySelector('img')?.src;
+  //     }
   
-      if (imageUrl) {
-        return imageUrl; // 이미지 URL 반환
-      } else {
-        throw new Error('이미지를 찾을 수 없습니다.');
-      }
-    } catch (error) {
-      console.error('이미지 URL 추출 실패:', error);
-      throw error;
-    }
-  }; 
+  //     if (imageUrl) {
+  //       return imageUrl; // 이미지 URL 반환
+  //     } else {
+  //       throw new Error('이미지를 찾을 수 없습니다.');
+  //     }
+  //   } catch (error) {
+  //     console.error('이미지 URL 추출 실패:', error);
+  //     throw error;
+  //   }
+  // }; 
 
   const handleLinkCardAiPost = async () => {
     try {
       // 임의의 URL을 설정
       const url = "https://velog.io/@anhesu11/소프트웨어-공학-내용-정리2";
   
-      // URL에서 이미지 URL 추출
-      const imageUrl = await fetchImageUrlFromPage(url);
-  
       // 헤더에 이미지 URL과 URL 추가
       const data = {
         "url": url,
-        "imageUrl": imageUrl,
       };
-  
-      console.log('추출된 이미지 URL:', imageUrl);
-  
+    
       // API 요청 보내기 (예시: linkCardAiPost)
       const response = await linkCardAiPost(data);
 
@@ -305,23 +300,42 @@ const SignPage = () => {
     }
   };
 
-  // 링크카드 조회 핸들러
+  // 링크카드 폴더 조회 핸들러
   const handlelinkCardFolderListGet = async () => {
     try {
-      const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
-
-      const response = await linkCardFolderListGet(
-        lastFolder.id,
-        "RECENTLY_SAVED",
-        "ASCENDING",
-        0,
-        10
+      // const lastFolder = folderList.length > 0 ? folderList[folderList.length - 1] : null;
+      
+      // const response = await linkCardFolderListGet(
+      //   lastFolder.id,
+      //   "RECENTLY_SAVED",
+      //   "ASCENDING",
+      //   0,
+      //   10
+      // );
+      // console.log('링크카드 리스트 조회 응답:', response);
+      // if (response) {
+      //   console.log(response.data);
+      //   setLinkCardList(response.data);  
+      // }
+      const allResponses = await Promise.all(
+        folderList.map(async (folder) => {
+          const response = await linkCardFolderListGet(
+            folder.id, // 현재 폴더 ID 사용
+            "RECENTLY_SAVED",
+            "ASCENDING",
+            0,
+            10
+          );
+          console.log(response);
+          return { folderId: folder.id, data: response.data }; // 각 폴더의 데이터 반환
+        })
       );
-      console.log('링크카드 리스트 조회 응답:', response);
-      if (response) {
-        console.log(response.data);
-        setLinkCardList(response.data);  
-      }
+  
+      // 각 폴더의 응답 데이터 확인
+      console.log("모든 폴더의 링크카드 조회 응답:", allResponses);
+  
+      // 링크카드 리스트 업데이트
+      setLinkCardList(allResponses); // 필요에 따라 병합하거나 구조를 조정
     } catch (err) {
       console.log('링크카드 리스트 실패!');
     } finally {
@@ -334,22 +348,22 @@ const SignPage = () => {
     try {
       const queryString = tagsId.map((id) => `&tagsId=${id}`).join('');
 
-      const response = await searchGet(
-        0,
-        queryString,
-        "string",
-        0,
-        0,
-        10,
-        "RECENTLY_SAVED",
-        "ASCENDING"
-      );
-      // const response = await linkCardAllListGet(
-      //   "RECENTLY_SAVED",
-      //   "ASCENDING",
+      // const response = await searchGet(
       //   0,
-      //   10
+      //   queryString,
+      //   "string",
+      //   0,
+      //   0,
+      //   10,
+      //   "RECENTLY_SAVED",
+      //   "ASCENDING"
       // );
+      const response = await linkCardAllListGet(
+        "RECENTLY_SAVED",
+        "ASCENDING",
+        0,
+        10
+      );
       console.log('링크카드 리스트 조회 응답:', response);
       if (response) {
         console.log(response.data);
@@ -599,6 +613,23 @@ const SignPage = () => {
     }
   };
 
+    // 태그 삭제 핸들러
+    const handleSearchTagsGet = async () => {  
+      try {
+        const response = await searchTagsGet("test");
+  
+        if (response) {
+          // 새롭게 받아온 폴더 리스트를 상태에 저장
+          console.log(response);
+        }
+        console.log('hanldeTagDelete 응답:', response);
+      } catch (err) {
+        console.log('hanldeTagDelete 실패!');
+      } finally {
+        console.log('hanldeTagDelete 종료');  // 로딩 상태 종료
+      }
+    };
+
   return (
     <div className="signpage">
       <header className="header">
@@ -700,6 +731,10 @@ const SignPage = () => {
             <Button
               label="설정변경"
               onClick={hanldeSettingPatch}
+            />
+            <Button
+              label="태그검색"
+              onClick={handleSearchTagsGet}
             />
           </div>
         </div>

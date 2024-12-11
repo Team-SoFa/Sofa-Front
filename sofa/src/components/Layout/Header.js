@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
@@ -17,18 +17,121 @@ import LogoutIcon from "../../assets/icon/LogoutIcon";
 import ProfileFilledIcon from "../../assets/icon/ProfileFilledIcon";
 import CancelLineIcon from "../../assets/icon/CancelLineIcon";
 
+import { memberGet } from "../../services/memberService";
+import {
+  folderGet,
+  folderPost,
+  folderDelete,
+  folderPut,
+} from "../../services/folderService";
+import {
+  searchHistoryKeywordsGet,
+  searchHistoryTagsGet,
+  searchGet,
+} from "../../services/searchService";
+import SearchIcon from "../../assets/icon/SearchIcon";
+
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
   const [alarmOption, setAlarmOption] = useState("");
-  const [folderOption, setFolderOption] = useState("폴더선택");
-  const [tagOption, setTagOption] = useState("태그선택");
-  const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Modal
   const [modalContent, setModalContent] = useState(null); // 모달에 표시할 내용 상태
   const [isModalOpen, setIsModalOpen] = useState(false); // 모달 열림 상태
-  const [activeSetting, setActiveSetting] = useState("account-info");
+  const [activeSetting, setActiveSetting] = useState("");
+
+  const [folderOption, setFolderOption] = useState([]);
+  const [tagOption, setTagOption] = useState([]);
+  const [searchValue, setSearchValue] = useState(""); //검색창 최근검색어 임시 값
+  const [member, setMember] = useState([]); //검색창 최근검색어 임시 값
+  const [searchRecent, setSearchRecent] = useState("");
+  // 폴더 조회 핸들러
+  const handleFolderGet = async () => {
+    try {
+      const headers = {};
+      const response = await folderGet();
+
+      if (response && response.folderList) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        const folderData = response.folderList.map((folder) => ({
+          id: folder.id,
+          label: folder.name,
+          content: folder.name,
+        }));
+        setFolderOption(folderData);
+      }
+      console.log("handleFolderGet 응답:", response);
+    } catch (err) {
+      console.log("handleFolderGet 실패!");
+    } finally {
+      console.log("handleFolderGet 종료"); // 로딩 상태 종료
+    }
+  };
+
+  // 태그 조회 핸들러
+  const handleSearchHistoryTagsGet = async () => {
+    try {
+      const headers = {};
+      const response = await searchHistoryTagsGet();
+
+      if (response) {
+        // 새롭게 받아온 폴더 리스트를 상태에 저장
+        const tagData = response.map((tag) => ({
+          label: tag,
+          content: tag,
+        }));
+        setTagOption(tagData);
+      }
+      console.log("handleSearchHistoryTagsGet 응답:", response);
+    } catch (err) {
+      console.log("handleSearchHistoryTagsGet 실패!");
+    } finally {
+      console.log("handleSearchHistoryTagsGet 종료"); // 로딩 상태 종료
+    }
+  };
+
+  // 태그 조회 핸들러
+  const handleMemberGet = async () => {
+    try {
+      const response = await memberGet();
+
+      if (response) {
+        const memberData = {
+          profileImage: `${process.env.PUBLIC_URL}/example.png`,
+          name: response.name,
+          email: response.email,
+        };
+        setMember(memberData);
+      }
+      console.log("handleMemeberGet 응답:", response);
+    } catch (err) {
+      console.log("handleMemeberGet 실패!");
+    } finally {
+      console.log("handleMemeberGet 종료"); // 로딩 상태 종료
+    }
+  };
+
+  // 태그 조회 핸들러
+  const handleHistoryKeywordGet = async () => {
+    try {
+      const headers = {};
+      const response = await searchHistoryKeywordsGet();
+
+      if (response) {
+        const historyData = response.map((history) => ({
+          img: `${process.env.PUBLIC_URL}/example.png`,
+          content: history,
+        }));
+        setSearchRecent(historyData);
+      }
+      console.log("handleHistoryKeywordGet 응답:", response);
+    } catch (err) {
+      console.log("handleHistoryKeywordGet 실패!");
+    } finally {
+      console.log("handleHistoryKeywordGet 종료"); // 로딩 상태 종료
+    }
+  };
 
   const userPage = [
     { Icon: SettingIcon, content: "설정" },
@@ -38,17 +141,20 @@ const Header = ({ type, toggleMenu }) => {
 
   // ================ 임시 데이터 =====================
   const userInfo = {
-    profileImage: "example.png", // 프로필 이미지 URL
+    profileImage: `${process.env.PUBLIC_URL}/example.png`, // 프로필 이미지 URL
     name: "홍길동", // 사용자 이름
     email: "hong@example.com", // 사용자 이메일
   };
   const [recentSearches, setRecentSearches] = useState([
-    { img: "example.png", content: "React" },
-    { img: "example.png", content: "JavaScript" },
-    { img: "example.png", content: "Frontend" },
-    { img: "example.png", content: "CSS" },
-    { img: "example.png", content: "개발자 꿀팁" },
-    { img: "example.png", content: "html은 무엇인가" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "React" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "JavaScript" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "Frontend" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "CSS" },
+    { img: `${process.env.PUBLIC_URL}/example.png`, content: "개발자 꿀팁" },
+    {
+      img: `${process.env.PUBLIC_URL}/example.png`,
+      content: "html은 무엇인가",
+    },
   ]);
 
   const folderOpt = ["폴더1", "폴더2", "폴더3"].map((item) => ({
@@ -75,24 +181,39 @@ const Header = ({ type, toggleMenu }) => {
   );
   const alarmOptions = [
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "3일 후 휴지통에서 n개의 링크들이 영원히 빛을 잃게 됩니다.",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "어쩌구",
       content: "또 어떤 알람이 있을까요",
     },
     {
-      img: "example.png",
+      img: `${process.env.PUBLIC_URL}/example.png`,
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: `${process.env.PUBLIC_URL}/example.png`,
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: `${process.env.PUBLIC_URL}/example.png`,
+      label: "리마인드",
+      content: "새로운 업데이트가 있습니다.",
+    },
+    {
+      img: `${process.env.PUBLIC_URL}/example.png`,
       label: "리마인드",
       content: "새로운 업데이트가 있습니다.",
     },
   ].map((item) => ({
     ...item,
   }));
-  const profileImg = "example.png";
+  const profileImg = `${process.env.PUBLIC_URL}/example.png`;
 
   // <<<<<<<<<<<<<<<<<<<<< 임시 데이터
 
@@ -246,6 +367,27 @@ const Header = ({ type, toggleMenu }) => {
       ? { backgroundColor: "#F1F1F1", paddingTop: "1rem" }
       : {};
 
+  const hanldeSearchGet = async () => {
+    try {
+      const response = await searchGet(
+        null,
+        null,
+        null,
+        0,
+        10,
+        "RECENTLY_MODIFIED",
+        "DESCENDING"
+      );
+
+      console.log(searchValue);
+
+      if (response) {
+        console.log(response);
+      }
+    } catch (err) {
+      console.error("hanldeSearchGet 실패:", err);
+    }
+  };
   return (
     <header className="header" style={headerStyle}>
       {/* ========== LINK CARD PAGES ========== */}
@@ -260,10 +402,11 @@ const Header = ({ type, toggleMenu }) => {
           <div className="searchers">
             <Dropdown
               className="dropdown-folder-select"
-              options={folderOpt}
+              options={folderOption}
               label="폴더 전체"
               Icon={DownIcon}
               onSelect={handleFolderSelect}
+              onOpen={handleFolderGet}
             />
             <Dropdown
               className="tag"
@@ -276,17 +419,25 @@ const Header = ({ type, toggleMenu }) => {
             />
             <TextField
               className="text_field"
+              Icon={SearchIcon}
               placeholder="검색어를 입력하세요."
               value={searchValue}
               onChange={handleSearchChange}
-              recentSearches={recentSearches} // 최근 검색어 전달
+              recentSearches={searchRecent} // 최근 검색어 전달
               onSearchSelect={
                 (selected) => setSearchValue(selected) // 선택된 검색어를 검색창에 반영
               }
               onSearchDelete={handleSearchDelete}
+              onFetchSearches={handleHistoryKeywordGet} // 클릭 시 호출될 API 핸들러 전달
             />
-            <Button className="search" label="검색" />
-            <Button label="초기화" />
+            <Button className="search" label="검색" onClick={hanldeSearchGet} />
+            <Button
+              label="초기화"
+              onClick={() => {
+                setFolderOption([]); // 폴더 초기화
+                setTagOption([]); // 태그 초기화
+              }}
+            />
           </div>
           <div className="user_info">
             <Dropdown
@@ -298,10 +449,11 @@ const Header = ({ type, toggleMenu }) => {
             <Dropdown
               className="user-info"
               type="user-info"
-              userInfo={userInfo}
-              imgSrc="example.png"
+              userInfo={member ? member : userInfo}
+              imgSrc={`${process.env.PUBLIC_URL}/example.png`}
               options={userPage}
               onSelect={openModal}
+              onOpen={handleMemberGet}
             />
             <Modal isOpen={isModalOpen} onClose={closeModal}>
               {modalContent}
