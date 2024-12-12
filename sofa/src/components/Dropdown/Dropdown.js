@@ -5,7 +5,6 @@ import Button from "../Button/Button";
 import TextField from "../Textfield/Textfield";
 
 import "./Dropdown.css";
-import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 import SearchIcon from "../../assets/icon/SearchIcon";
 import { customTagsPost } from "../../services/tagSerivce";
 
@@ -28,7 +27,7 @@ const Dropdown = ({
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
-  const [isOpen, toggleDropdown] = OutsideClick(dropdownRef, false); //OutsideClick 사용
+  const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
   // options 추가
   const [optionsList, setOptionsList] = useState(options); // options 상태
@@ -40,13 +39,6 @@ const Dropdown = ({
   }, [options]);
 
   const handleSelect = (value) => {
-    // className이 "alarm"일 때 label을 변경하지 않음
-    if (className !== "alarm") {
-      setSelectedValue(
-        value.content === "폴더 전체" ? { label: "폴더 전체" } : value
-      );
-    }
-
     // 중복된 태그가 아닌 경우만 추가
     setTagsOpt((prevTags) => {
       // 중복된 태그가 있는지 검사
@@ -81,6 +73,16 @@ const Dropdown = ({
 
     setAddValue(""); // 입력 필드 초기화
     onAddValue(newValue); // 부모 컴포넌트로 값 전달
+  };
+
+  const toggleDropdown = () => {
+    const nextState = !isOpen; // 드롭다운의 다음 상태
+    setIsOpen(nextState); // 드롭다운 상태 업데이트
+
+    // 드롭다운이 열릴 때(onOpen이 전달된 경우에만 호출)
+    if (nextState && onOpen) {
+      onOpen(); // 드롭다운 열림 시 외부에서 전달된 핸들러 호출
+    }
   };
 
   // 검색된 태그 목록 필터링
@@ -144,39 +146,23 @@ const Dropdown = ({
         className={`dropdown-header ${isOpen ? "open" : ""}`}
         onClick={toggleDropdown}
       >
-        {/* alarm 아이콘 */}
-        {className === "alarm" ? (
+        {/* 일반적인 경우의 아이콘 */}
+        {Icon && (
           <span
             className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
             aria-label="Icon"
           >
-            {isHovered || isOpen ? <AlarmFilledIcon /> : <Icon />}{" "}
-            {/* hover 또는 메뉴가 열렸을 때 AlarmFilled */}
+            <Icon />
           </span>
-        ) : (
-          // 일반적인 경우의 아이콘
-          Icon && (
-            <span
-              className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
-              aria-label="Icon"
-            >
-              <Icon />
-            </span>
-          )
         )}
         {imgSrc && (
           <img className="dropdown-header-img" src={imgSrc} alt={"profile"} />
         )}
-
         {selectedValue ? (
           selectedValue.label
         ) : (
           <span className="dropdown-placeholder">{label}</span>
         )}
-        {className === "alarm" &&
-          options?.some((option) => option.isNew) && ( // isNew 값이 true인 항목이 하나라도 있으면 배지 표시
-            <span className="dropdown-badge"></span>
-          )}
       </div>
       {/* <<<<<<<<<< DROPDOWN HEADER */}
 
@@ -195,7 +181,7 @@ const Dropdown = ({
                 className="dropdown-user-profile"
               />
               <span>
-                {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}님
+                {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}
               </span>
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
@@ -203,7 +189,6 @@ const Dropdown = ({
 
           {/* 1. 일반적인 드롭다운 메뉴 */}
           {type !== "tag" &&
-            className !== "alarm" &&
             [
               ...(className === "basic"
                 ? [{ content: label, Icon: null }]
@@ -234,24 +219,6 @@ const Dropdown = ({
                 ) : (
                   <Button className="dropdown-select" label="선택" />
                 )}
-              </div>
-            ))}
-
-          {/* === ALARM === */}
-          {className === "alarm" &&
-            options.map((option, index) => (
-              <div className="dropdown-option" key={index}>
-                <div className="alarm-option-header">
-                  <div className="left">
-                    {option.Icon && <option.Icon className="alarm-icon" />}
-                    <h5 className="alarm-label">{option.label}</h5>
-                  </div>
-                  <div className="right">
-                    <span className="alarm-date">{option.date}</span>
-                    {option.isNew && <span className="alarm-new"></span>}
-                  </div>
-                </div>
-                <span className="alarm-content">{option.content}</span>
               </div>
             ))}
 

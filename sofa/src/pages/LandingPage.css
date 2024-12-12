@@ -1,176 +1,452 @@
-*{ margin:0; white-space: nowrap;    /* 자동 줄바꿈 방지 */}
+* {
+    margin: 0;
+    white-space: nowrap;
+    /* 자동 줄바꿈 방지 */
+}
 
+body {
+    background: #F5FBFF;
+}
 
- /* 컴포넌트 가운데 정렬 */
-.main-style{
-    display:flex;
+/* 컴포넌트 가운데 정렬 */
+.main-style {
+    display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top:3rem;
-    margin-bottom: 5rem;    /* footer와 간격 조정 */
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+    /* footer와 간격 조정 */
 }
 
-.service-icon {
-    width:4rem;
-}
 /* 단순 각 섹션에 맞는 아이콘 */
 /* 추후 삭제*/
 
-.slogan{
+.textLogo {
+    margin: 10px 0 50px 0;
+}
+
+.examplePage {
+    width: 80%;
+}
+
+.slogan {
     font-size: 1.8rem;
     margin: 1.3rem;
 }
-/* 서비스에서 가장 큰 글씨 */
-.title{
-    margin: 1.3rem;
- }
 
-.button{
+.main-style p {
+    font-size: 1rem;
+    color: var(--gray-900, #17171B);
+    text-align: center;
+    font-family: Pretendard;
+    font-size: 20px;
+    font-style: normal;
+    font-weight: 600;
+    line-height: 146%;
+    /* 35.04px */
+    letter-spacing: 0.48px;
+}
+
+
+
+/* 서비스에서 가장 큰 글씨 */
+.title {
+    margin: 1.3rem;
+}
+
+.gotoStore {
     cursor: pointer;
-    padding:10px 20px;
-    border-radius: 20px;
+    padding: 20px 28px;
+    border-radius: 10rem;
     margin-top: 2rem;
-    background-color: #D1D1D1;
-    color:black;
+    background-color: #1D0463;
+    color: white;
     font-weight: bold;
     text-decoration: none;
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
 }
-.button:hover{
+
+.gotoStore>* {
+    margin: 0 10px;
+}
+
+.gotoStore>img {
+    width: 16px;
+    height: 16px;
+}
+
+
+.button:hover {
     background-color: #C1C1C1;
 }
+
 /* button 컴포넌트 사용하면 필요 없음 */
 
 
-.content-img img{
-    margin:0.3rem;
+.content-img img {
+    margin: 0.3rem;
     width: 30rem;
     height: 8rem;
 }
 
-.grid{
+.grid {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
+    grid-template-columns: repeat(3, 1fr);
     gap: 1rem;
 }
-.card{
+
+.card {
     display: flex;
     align-items: center;
-    width:15rem;
+    width: 15rem;
     height: 5.3rem;
     background-color: cornsilk;
     border-radius: 20px;
-    padding:1rem;
+    padding: 1rem;
     overflow: hidden;
 }
-.card img{
-    width:4.5rem;
+
+.card img {
+    width: 4.5rem;
     height: 4.5rem;
     border-radius: 10px;
     margin: 0.6rem;
 }
-.card p{
+
+.card p {
     padding: 0.3rem;
     font-size: 0.8rem;
     white-space: normal;
 }
 
 
-@media(max-width:700px){
-    .grid{
-        grid-template-columns: repeat(2,1fr);
+@media(max-width:700px) {
+    .grid {
+        grid-template-columns: repeat(2, 1fr);
     }
-}
-@media(max-width:500px){
-    .grid{
-        grid-template-columns: repeat(1,1fr);
-    }
-}*{
-    margin:0;
-    white-space: nowrap;    /* 화면 크기에 따른 자동 줄바꿈 방지 */
 }
 
- /* 컴포넌트 가운데 정렬 */
-.main-style{
+@media(max-width:500px) {
+    .grid {
+        grid-template-columns: repeat(1, 1fr);
+    }
+}
+
+* {
+    margin: 0;
+    white-space: nowrap;
+    /* 화면 크기에 따른 자동 줄바꿈 방지 */
+}
+
+/* 컴포넌트 가운데 정렬 */
+.main-style {
     user-select: none;
-    display:flex;
+    display: flex;
     flex-direction: column;
     align-items: center;
-    margin-top:3rem;
-    margin-bottom: 5rem;    /* footer와 간격 조정 */
+    margin-top: 3rem;
+    margin-bottom: 5rem;
+    /* footer와 간격 조정 */
 }
 
-.service-icon {
-    width:4rem;
+.transparent {
+    position: absolute;
+    top: 91%;
+    width: 100%;
+    height: 30%;
+    background: linear-gradient(180deg, rgba(245, 251, 255, 0.00) 0%, #F5FBFF 100%);
 }
+
+.main-style .bg {
+    margin-top: 100px;
+    position: absolute;
+    overflow: hidden;
+    width: 100%;
+    height: 100%;
+
+    &::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: 100%;
+        height: 30%;
+        background: linear-gradient(to bottom, rgba(255, 255, 255, 0), rgba(255, 255, 255, 1));
+        backdrop-filter: blur(10px);
+    }
+}
+
+section {
+    margin: 50px 0;
+}
+
+.main-style section {
+    z-index: 1;
+}
+
 /* 단순 각 섹션에 맞는 아이콘 */
 /* 추후 크기 맞는 아이콘을 제작하면 필요 없을듯*/
 
-.slogan{
+.slogan {
     font-size: 1.8rem;
     margin: 1.3rem;
 }
-/* 서비스에서 가장 큰 글씨 */
-.title{
-    margin: 1.3rem;
- }
 
-.button{
+/* 서비스에서 가장 큰 글씨 */
+.title {
+    margin: 1.3rem;
+}
+
+.button {
     cursor: pointer;
-    padding:10px 20px;
+    padding: 10px 20px;
     border-radius: 20px;
     margin-top: 2rem;
     background-color: #D1D1D1;
-    color:black;
+    color: black;
     font-weight: bold;
     text-decoration: none;
 }
-.button:hover{
+
+.button:hover {
     background-color: #C1C1C1;
 }
+
 /* button 컴포넌트 사용하면 필요 없음 */
 
-
-.content-img img{
-    margin:0.3rem;
-    width: 30rem;
-    height: 8rem;
+.token {
+    color: white;
+    display: inline-flex;
+    padding: 12px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
+    flex-shrink: 0;
+    border-radius: 99999px;
+    border: 0.5px solid var(--purple-800, #4226A7);
+    background: var(--purple-800, #4226A7);
+    margin: 3rem;
 }
 
-.grid{
+.comment {
+    margin-bottom: 3rem;
+}
+
+.comment p {
+    margin: 0.5rem;
+}
+
+/* Container styling */
+.container {
     display: grid;
-    grid-template-columns: repeat(3,1fr);
-    gap: 1rem;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2rem;
+    padding: 2rem;
+    max-width: 1200px;
+    margin: 0 auto;
 }
-.card{
+
+/* Section card styling */
+.section-card {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.05);
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    align-items: center;
+    height: 350px;
+}
+
+.icon-container img {
+    width: 100px;
+    height: 100px;
+}
+
+.section-card p {
+    white-space: normal;
+    font-size: 1rem;
+    font-family: Pretendard;
+    font-style: normal;
+    font-weight: 500;
+    line-height: 146%;
+    /* 23.36px */
+    letter-spacing: 0.32px;
+}
+
+.section-card:nth-child(2n) {
+    margin-top: 250px;
+}
+
+.section-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.1);
+}
+
+/* Icon container styling */
+.icon-container {
+    width: 48px;
+    height: 48px;
     display: flex;
     align-items: center;
-    width:15rem;
-    height: 5.3rem;
-    background-color: cornsilk;
-    border-radius: 20px;
-    padding:1rem;
-    overflow: hidden;
+    justify-content: center;
+    margin-bottom: 1rem;
 }
-.card img{
-    width:4.5rem;
-    height: 4.5rem;
+
+.icon-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+}
+
+/* Typography styling */
+h2 {
+    font-size: 1.5rem;
+    font-weight: 600;
+    color: #333333;
+    margin: 0;
+}
+
+p {
+    font-size: 1rem;
+    line-height: 1.6;
+    color: #666666;
+    margin: 0;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+    .container {
+        grid-template-columns: 1fr;
+        padding: 1rem;
+    }
+
+    .section-card {
+        padding: 1.5rem;
+    }
+
+    h2 {
+        font-size: 1.25rem;
+    }
+}
+
+/* Optional: Animation for icons */
+.icon-container img {
+    transition: transform 0.3s ease;
+}
+
+.section-card:hover .icon-container img {
+    transform: scale(1.1);
+}
+
+.faq-wrapper {
+    width: 100%;
+    max-width: 800px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+}
+
+.faq-item {
+    border-bottom: 1px solid #eef0f3;
     border-radius: 10px;
-    margin: 0.6rem;
 }
-.card p{
-    padding: 0.3rem;
-    font-size: 0.8rem;
+
+.faq-item:last-child {
+    border-bottom: none;
+}
+
+.faq-trigger {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1.25rem 1.5rem;
+    background: none;
+    border: none;
+    cursor: pointer;
+    text-align: left;
+}
+
+.faq-question {
+    font-family: Pretendard;
+    font-size: 1.5rem;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 146%; /* 40.88px */
+    letter-spacing: 0.56px;
+}
+
+.faq-icon {
+    font-size: 0.75rem;
+    color: #999;
+    transition: transform 0.3s ease;
+    flex-shrink: 0;
+}
+
+.faq-icon.open-faq {
+    transform: rotate(180deg);
+}
+
+.faq-content {
+    max-height: 0;
+    overflow: hidden;
+    transition: max-height 0.3s ease-out;
+}
+
+.faq-content.open-faq {
+    max-height: 500px;
+    background-color: white;
+    color: #56575A;
+    text-align: justify;
+    font-family: Pretendard;
+    font-size: 0.7rem;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 146%; /* 35.04px */
+    letter-spacing: 0.48px;
+}
+
+.faq-answer {
+    padding: 0 1.5rem 1.25rem;
+    color: #666;
+    line-height: 1.6;
+    font-size: 0.9375rem;
     white-space: normal;
 }
 
+.faq-trigger:hover {
+    background-color: #f8f9fa;
+}
 
-@media(max-width:700px){
-    .grid{
-        grid-template-columns: repeat(2,1fr);
+.faq-item.active .faq-trigger {
+    background-color: #f8f9fa;
+}
+
+@media (max-width: 768px) {
+    .main-style {
+        padding: 1rem;
+    }
+
+    .faq-trigger {
+        padding: 1rem;
+    }
+
+    .faq-answer {
+        padding: 0 1rem 1rem;
     }
 }
-@media(max-width:500px){
-    .grid{
-        grid-template-columns: repeat(1,1fr);
-    }
+
+.footerWave{
+    position: relative;
+}
+
+.wave{
+    position: absolute;
+    width: 100%;
+    bottom: 0;
 }
