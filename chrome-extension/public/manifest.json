@@ -1,0 +1,41 @@
+{
+  "manifest_version": 3,
+  "name": "Chrome Extension",
+  "version": "1.0",
+  "description": "A simple Chrome extension for testing.",
+  "permissions": ["tabs", "identity", "activeTab", "storage", "scripting", "sidePanel"],
+  "background": {
+    "service_worker": "background.js"
+  },
+  "side_panel": {
+    "default_path": "index.html",
+    "default_title": "Chrome Extension"
+  },
+  "action": {
+    "default_popup": "popup.html",
+    "default_icon": {
+      "16": "assets/logo16.png",
+      "48": "assets/logo48.png",
+      "128": "assets/logo128.png"
+    }
+  },
+  "host_permissions": [
+    "https://your-oauth-provider.com/*",
+    "https://api.linkiving.com/*",
+    "https://linkiving.com/*"
+  ],
+  "content_security_policy": {
+    "extension_pages": "script-src 'self'; object-src 'self'"
+  },
+  "web_accessible_resources": [
+    {
+      "resources": [
+        "static/css/*",
+        "services/*",
+        "redux/*",
+        "bookmarkDetail.css"
+      ],
+      "matches": ["<all_urls>"]
+    }
+  ]
+}

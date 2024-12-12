@@ -1,3 +1,4 @@
+/* global chrome */
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"; // Redux 관련 hooks
 import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
@@ -120,6 +121,7 @@ const SignPage = () => {
 
         console.log("로그인 성공!"); // 성공 메시지 설정
         hanldeMemberGet();
+
       }
     } catch (err) {
       console.error("googleOAuthLoginGet 실패:", err);

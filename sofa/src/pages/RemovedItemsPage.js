@@ -7,13 +7,40 @@ import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
 import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
+import { recycleBinGet } from "../services/recycleBinService";
+
+import { useSelector } from "react-redux";
 
 const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const [loading, setLoading] = useState(true); //로딩 상태
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [bookMarkList, setBookmarkList] = useState([]);
   const [selectedBookmark, setSelectedBookmark] = useState(false);
   const [sortingOption, setSortingOption] = useState("최근 삭제");
   const [sortingDirOption, setSortingDirOption] = useState("오름차순");
+  const accessToken = useSelector((state) => state.auth.accessToken); // Redux 상태 구독
+
+  useEffect(() => {
+    if (!accessToken) return;
+
+    fetchTrashList();
+  }, [accessToken]);
+
+  const fetchTrashList = async () => {
+    try {
+      const response = await recycleBinGet(
+        "RECENTLY_DELETE",
+        "ASCENDING",
+        0,
+        10
+      );
+
+      console.log("fetchTrashList", response);
+      setBookmarkList(response.data);
+    } catch (error) {
+      console.error("fetchTrashList", error);
+    }
+  };
 
   const sortingOpt = ["최근 삭제", "이름순"].map((item) => ({
     label: item,
@@ -78,7 +105,7 @@ const RemovedItemsPage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
 
         <ShowLinkCard
           className="RemovedItemsPage"
-          bookmarks={bookmarks}
+          bookmarks={bookMarkList}
           onDelete={handleDelete}
           onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
           sideMenuOpen={isMenuOpen}
