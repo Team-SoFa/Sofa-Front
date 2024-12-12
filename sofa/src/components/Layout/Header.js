@@ -368,24 +368,65 @@ const Header = ({ type, toggleMenu }) => {
       )}
 
       {/* ========== Landing PAGE ========== */}
-      {location.pathname === "/" && (
-        <>
-          <img
-            className="logo"
-            src="example.png"
-            alt="logo"
-            onClick={() => window.location.reload()}
-          />
+      {location.pathname === "/" && (<>
+        <img
+        className="logo"
+        src="logo.png"
+        alt="logo"
+        onClick={() => window.location.reload()}
+      />
+        <div className="landing-page" style={{marginRight:"50px"}}>
+          {/* <Logo /> */}
           <div className="buttons">
-            <Button label="확장 프로그램 추가하기" />
+            <a
+              className="button"
+              href="https://chrome.google.com/webstore"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                margin: "0",
+                backgroundColor: "white",
+                border: "1px solid var(--border-gray)",
+                fontWeight: "400",
+              }}
+            >
+              확장프로그램 다운로드
+            </a>
+
             <Link to="/homepage">
-              <Button label="[임시]홈P" />
-            </Link>
-            <Link to="/signpage">
-              <Button label="[임시]SignP" />
+              <Button label="로그인" />
             </Link>
           </div>
-        </>
+        </div>
+        </>)}
+
+      {/* ========== SIGN PAGE ========== */}
+      {location.pathname === "/signpage" && (
+        <div className="sign-page">
+          {/* <Logo /> */}
+          <Link to="/homepage">
+            <img
+              className="logo"
+              src="Group-299.png"
+              alt="logo"
+              onClick={() => window.location.reload()}
+            />
+          </Link>
+          <a
+            className="button"
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              margin: "0",
+              backgroundColor: "white",
+              border: "1px solid var(--font-gray)",
+              fontWeight: "400",
+            }}
+          >
+            확장프로그램 다운로드
+          </a>
+        </div>
       )}
 
       {/* ========== SIGN PAGE ========== */}

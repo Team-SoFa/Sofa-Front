@@ -1,12 +1,14 @@
 .header{
     display:flex;
     align-items: center;
-    width: 100%;
+    justify-content: space-between;
+    width: 100vw;
     z-index: 1000;
     padding:1.5rem; padding-top:2rem;
     background:transparent;
 }
 .logo{ cursor:pointer; height: 2rem;}
+
 
 .searchers{
     display: flex;

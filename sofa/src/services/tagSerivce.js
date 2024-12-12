@@ -37,9 +37,10 @@ export const customTagsGet = async () => {
 export const customTagsPost = async (data) => {
     try {
         const response = await tokenPost("/custom-tag", data, {});
+        
         return response;
     } catch (error) {
-        console.error("customTagsAiGet failed:", error);
+        console.error("customTagsPost failed:", error);
         throw error;
     }
 };

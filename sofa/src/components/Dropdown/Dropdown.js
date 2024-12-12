@@ -28,7 +28,7 @@ const Dropdown = ({
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
-  const [isOpen, toggleDropdown] = OutsideClick(dropdownRef, false); //OutsideClick 사용
+  const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
   // options 추가
   const [optionsList, setOptionsList] = useState(options); // options 상태
@@ -81,6 +81,16 @@ const Dropdown = ({
 
     setAddValue(""); // 입력 필드 초기화
     onAddValue(newValue); // 부모 컴포넌트로 값 전달
+  };
+
+  const toggleDropdown = () => {
+    const nextState = !isOpen; // 드롭다운의 다음 상태
+    setIsOpen(nextState); // 드롭다운 상태 업데이트
+
+    // 드롭다운이 열릴 때(onOpen이 전달된 경우에만 호출)
+    if (nextState && onOpen) {
+      onOpen(); // 드롭다운 열림 시 외부에서 전달된 핸들러 호출
+    }
   };
 
   // 검색된 태그 목록 필터링
@@ -195,7 +205,7 @@ const Dropdown = ({
                 className="dropdown-user-profile"
               />
               <span>
-                {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}님
+                {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}
               </span>
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
