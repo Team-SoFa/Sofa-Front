@@ -398,10 +398,20 @@ const Header = ({ type, toggleMenu }) => {
             alt="logo"
             onClick={() => window.location.reload()}
           />
-          <Button
-            label="확장프로그램 다운로드"
-            style={{ marginLeft: "auto", padding: "0" }}
-          />
+          <a
+            className="button"
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              margin: "0",
+              backgroundColor: "white",
+              border: "1px solid var(--font-gray)",
+              fontWeight: "600",
+            }}
+          >
+            확장프로그램 다운로드
+          </a>
         </div>
       )}
     </header>

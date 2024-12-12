@@ -62,7 +62,7 @@ const SignPage = () => {
   const [tagsId, setTagsId] = useState(["1", "2", "3"]); // 예시 tagsId 배열
 
   // 임시 로그인 함수 호출 핸들러
-  const handleGoogleLogin2 = async () => {
+  const handleGoogleLogin = async () => {
     try {
       const response = await googleOAuthRedirectUriGet2(); // tempLogin 호출
 
@@ -127,42 +127,42 @@ const SignPage = () => {
   };
 
   // 임시 로그인 함수 호출 핸들러
-  const handleGoogleLogin = async () => {
-    try {
-      const data = {
-        email: "mg0454@gmail.com",
-        name: "성명근",
-      };
+  // const handleGoogleLogin = async () => {
+  //   try {
+  //     const data = {
+  //       email: "mg0454@gmail.com",
+  //       name: "성명근",
+  //     };
 
-      console.log("handleGoogleLogin:", data);
+  //     console.log("handleGoogleLogin:", data);
 
-      const response = await tempLogin(data); // tempLogin 호출
+  //     const response = await tempLogin(data); // tempLogin 호출
 
-      console.log("Google Login Response:", response); // 응답을 제대로 확인
+  //     console.log("Google Login Response:", response); // 응답을 제대로 확인
 
-      // 응답에서 accessToken, refreshToken 추출
-      if (
-        response &&
-        response.token.accessToken &&
-        response.token.refreshToken
-      ) {
-        console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
+  //     // 응답에서 accessToken, refreshToken 추출
+  //     if (
+  //       response &&
+  //       response.token.accessToken &&
+  //       response.token.refreshToken
+  //     ) {
+  //       console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
 
-        dispatch(
-          setTokens(response.token.accessToken, response.token.refreshToken)
-        ); // 토큰 저장
+  //       dispatch(
+  //         setTokens(response.token.accessToken, response.token.refreshToken)
+  //       ); // 토큰 저장
 
-        console.log("로그인 성공!"); // 성공 메시지 설정
-        hanldeMemberGet();
-      } else {
-        console.log("로그인 응답에 문제가 있습니다."); // 응답이 없거나 이상할 때 처리
-      }
-    } catch (err) {
-      console.log("Login Error:", err);
-    } finally {
-      console.log("로딩 종료"); // 로딩 상태 종료
-    }
-  };
+  //       console.log("로그인 성공!"); // 성공 메시지 설정
+  //       hanldeMemberGet();
+  //     } else {
+  //       console.log("로그인 응답에 문제가 있습니다."); // 응답이 없거나 이상할 때 처리
+  //     }
+  //   } catch (err) {
+  //     console.log("Login Error:", err);
+  //   } finally {
+  //     console.log("로딩 종료"); // 로딩 상태 종료
+  //   }
+  // };
 
   // 폴더 추가 핸들러
   const hanldeFolderPost = async () => {
@@ -713,11 +713,6 @@ const SignPage = () => {
           label="Google 계정으로 로그인"
           onClick={handleGoogleLogin}
         />
-        {/* <Button
-          imgSrc="google-logo.png"
-          label="Google 계정으로 로그인2"
-          onClick={handleGoogleLogin2}
-        /> */}
       </main>
     </div>
   );
