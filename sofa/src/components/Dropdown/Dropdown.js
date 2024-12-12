@@ -14,11 +14,11 @@ const Dropdown = ({
   type,
   options = [],
   label,
-  Icon,
+  Icon, // header icon
   imgSrc,
   userInfo,
   onSelect = () => {},
-  onDelete = () => {}, // 옵션 삭제
+  onDelete, // 옵션 삭제
   recentTags = [], //최근 검색 태그
   onOpen,
   onAddValue, //추가된 값 처리 함수
@@ -28,7 +28,7 @@ const Dropdown = ({
 }) => {
   const dropdownRef = useRef(null); //드롭다운 요소 참조를 위한 ref 생성
   const [isHovered, setIsHovered] = useState(false); // hover 상태 관리
-  const [isOpen, setIsOpen] = OutsideClick(dropdownRef, false); //OutsideClick 사용
+  const [isOpen, toggleDropdown] = OutsideClick(dropdownRef, false); //OutsideClick 사용
   const [selectedValue, setSelectedValue] = useState(null); //선택된 값 상태 관리
   // options 추가
   const [optionsList, setOptionsList] = useState(options); // options 상태
@@ -57,7 +57,6 @@ const Dropdown = ({
     });
 
     setSelectedValue(null); // 선택된 값을 상태로 저장
-    setIsOpen(false); // 드롭다운 닫기
     onSelect(value); // 부모 컴포넌트로 선택한 값 전달
   };
 
@@ -82,16 +81,6 @@ const Dropdown = ({
 
     setAddValue(""); // 입력 필드 초기화
     onAddValue(newValue); // 부모 컴포넌트로 값 전달
-  };
-
-  const toggleDropdown = () => {
-    const nextState = !isOpen; // 드롭다운의 다음 상태
-    setIsOpen(nextState); // 드롭다운 상태 업데이트
-
-    // 드롭다운이 열릴 때(onOpen이 전달된 경우에만 호출)
-    if (nextState && onOpen) {
-      onOpen(); // 드롭다운 열림 시 외부에서 전달된 핸들러 호출
-    }
   };
 
   // 검색된 태그 목록 필터링
@@ -150,20 +139,22 @@ const Dropdown = ({
         e.preventDefault();
       }}
     >
+      {/*DROPDOWN HEADER >>>>>>>>>> */}
       <div
         className={`dropdown-header ${isOpen ? "open" : ""}`}
         onClick={toggleDropdown}
       >
-        {/* alarm 클래스일 경우만 아이콘을 A, B로 지정 */}
+        {/* alarm 아이콘 */}
         {className === "alarm" ? (
           <span
             className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
             aria-label="Icon"
           >
             {isHovered || isOpen ? <AlarmFilledIcon /> : <Icon />}{" "}
-            {/* hover 또는 메뉴가 열렸을 때 B 아이콘 */}
+            {/* hover 또는 메뉴가 열렸을 때 AlarmFilled */}
           </span>
         ) : (
+          // 일반적인 경우의 아이콘
           Icon && (
             <span
               className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
@@ -182,17 +173,18 @@ const Dropdown = ({
         ) : (
           <span className="dropdown-placeholder">{label}</span>
         )}
-        {className === "alarm" && options?.length > 0 && (
-          <span className="dropdown-badge"></span>
-        )}
+        {className === "alarm" &&
+          options?.some((option) => option.isNew) && ( // isNew 값이 true인 항목이 하나라도 있으면 배지 표시
+            <span className="dropdown-badge"></span>
+          )}
       </div>
       {/* <<<<<<<<<< DROPDOWN HEADER */}
 
       {/* DROPDOWN MENU >>>>>>>>>> */}
       {(isOpen || className === "search-dropdown") && (
         <div className="dropdown-menu">
-          {/* type이 user-info일 경우 */}
-          {type === "user-info" && userInfo && (
+          {/* 유저페이지 유저 정보 */}
+          {className === "user-info" && userInfo && (
             <div className="dropdown-user-info">
               <img
                 src={
@@ -202,17 +194,18 @@ const Dropdown = ({
                 alt="Profile"
                 className="dropdown-user-profile"
               />
-              <span className="dropdown-user-name">
+              <span>
                 {userInfo.name ? `${userInfo.name}님` : "이름없는 방문자"}님
               </span>
               <span className="dropdown-user-email">{userInfo.email}</span>
             </div>
           )}
 
-          {/* 일반적인 드롭다운 메뉴 */}
+          {/* 1. 일반적인 드롭다운 메뉴 */}
           {type !== "tag" &&
+            className !== "alarm" &&
             [
-              ...(className === "dropdown-folder-select"
+              ...(className === "basic"
                 ? [{ content: label, Icon: null }]
                 : []),
               ...options,
@@ -222,15 +215,14 @@ const Dropdown = ({
                 className="dropdown-option"
                 onClick={() => handleSelect(option)}
               >
-                {/* 1. 아이콘 있으면 아이콘 */}
+                {/* 1. option.아이콘 있으면 아이콘 */}
                 {option.Icon && (
                   <option.Icon className="dropdown-option-icon" />
                 )}
-                {/* 2. 옵션 */}
+                {/* 2. content */}
                 <span>{option.content}</span>
-                {/* 3. 선택 버튼 */}
-                <Button className="dropdown-select" label="선택" />
-                {/* {onDelete && (
+                {/* 3. 선택or삭제 버튼 */}
+                {onDelete ? (
                   <Button
                     className="dropdown-delete"
                     label="✕"
@@ -239,7 +231,27 @@ const Dropdown = ({
                       onDelete(option.content);
                     }}
                   />
-                )} */}
+                ) : (
+                  <Button className="dropdown-select" label="선택" />
+                )}
+              </div>
+            ))}
+
+          {/* === ALARM === */}
+          {className === "alarm" &&
+            options.map((option, index) => (
+              <div className="dropdown-option" key={index}>
+                <div className="alarm-option-header">
+                  <div className="left">
+                    {option.Icon && <option.Icon className="alarm-icon" />}
+                    <h5 className="alarm-label">{option.label}</h5>
+                  </div>
+                  <div className="right">
+                    <span className="alarm-date">{option.date}</span>
+                    {option.isNew && <span className="alarm-new"></span>}
+                  </div>
+                </div>
+                <span className="alarm-content">{option.content}</span>
               </div>
             ))}
 
@@ -247,10 +259,11 @@ const Dropdown = ({
           {type === "add" && (
             <div className="dropdown-add">
               <TextField
-                className="add"
+                className="inside-dropdown"
                 placeholder="새 폴더 생성"
                 onChange={(e) => setAddValue(e.target.value)}
                 value={addValue}
+                options={options}
                 onAddValue={handleAdd} //부모로부터 값 추가 처리
               />
             </div>
@@ -260,10 +273,11 @@ const Dropdown = ({
           {type === "tag" && (
             <div className="dropdown-tag-menu">
               <TextField
-                className="dropdown-tag-add"
+                className="inside-dropdown"
                 Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
                 value={addValue}
+                options={options}
                 onChange={(e) => {
                   const value = e.target.value;
                   setAddValue(value); // 검색 필드 값 업데이트
@@ -301,9 +315,10 @@ const Dropdown = ({
               {className === "detail-tag" && (
                 <div className="dropdown-add">
                   <TextField
-                    className="add"
+                    className="inside-dropdown"
                     placeholder="새 태그 생성"
                     value={newTagValue}
+                    options={options}
                     onChange={(e) => setNewTagValue(e.target.value)} // 새 태그 생성 값 업데이트
                     onAddValue={() => handleAddNewTag(newTagValue)} // 새 태그 추가 함수 호출
                   />

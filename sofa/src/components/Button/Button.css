@@ -112,6 +112,7 @@
 .btn.linkcard.link{
   bottom:0.7rem;left:0.7rem;
   margin-left:0px;
+  gap:0;
 }
 .btn.linkcard.link .btn-icon > svg {width:1.3rem; height: 1.1rem;}
 .btn.linkcard.delete-forever{

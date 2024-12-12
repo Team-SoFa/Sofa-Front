@@ -1,10 +1,10 @@
-import React from 'react';
+import React from "react";
 
 const DropdownDownIcon = () => {
   return (
     <svg
-      width="1rem"
-      height="1rem"
+      width="0.8rem"
+      height="0.8rem"
       viewBox="4.8 2.5 15 15"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
