@@ -1,34 +1,49 @@
+/* STANDARD SETTING >>>>>>>>>>> */
 .text-field{
-
 }
-.text-filed-wrapper {
+.text-field-wrapper {
   display: flex;
-  align-items: center;
   position: relative;
+  align-items: center;
   width: 15rem;
   margin-left:0.5rem;
-  border: none;
-  border-radius: 20px;
-  padding: 0.5rem;
+  border: 1px solid var(--border-gray);
+  border-radius: 5rem;
+  padding: 0.6rem;
   background-color: white;
+}.text-field-wrapper:focus-within{border-color:transparent;}
+.text-field-img{
+  width:1.5rem; height: 1.5rem; border-radius: 10px;
+  margin-inline: 0.2rem;
 }
+.text-field-input {
+  font-size: 1rem;
+  border:none;
+  background-color: transparent;
+}
+.text-field-input::placeholder{
+  font-size:0.8rem;
+  color:#a6a6a6;
+}
+.text-field-input:focus {outline: none;}
+/* <<<<<<<<<< STANDARD SETTING */
 
-  .text-field-img{
-    width:1.5rem; height: 1.5rem; border-radius: 10px;
-    margin-inline: 0.2rem;
-  }
-  
-  .text-field-input {
-    font-size: 1rem;
-    border:none;
-    background-color: transparent;
-  }
-  .text-field-input::placeholder{
-    font-size:0.8rem;
-    color:#a6a6a6;
-  }
-  
-  .text-field-input:focus {
-    outline: none;
-  }
-  
+
+/* 드롭다운 내부 >>>>>>>>>>> */
+.add .text-filed-wrapper{
+  padding-block:0.8rem;
+  margin-block:0.3rem;
+  width:12rem; height: 0.8rem;
+}
+.dropdown-tag-input .text-field-input{
+  border-radius: 1rem;
+  padding:0.3rem;
+}
+.dropdown-tag-add .text-filed-wrapper{width:12rem;}
+/* <<<<<<<<<< 드롭다운 내부 */
+
+
+/* 라디오 박스 "기타" >>>>>>>>>>> */
+.radio-textField{
+  margin:0rem; margin-left: 1rem;
+}

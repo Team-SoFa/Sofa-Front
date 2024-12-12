@@ -60,3 +60,5 @@
     background:var(--purple-main);
     padding:0.2rem;
 }
+
+.add-folder{order:3;}
