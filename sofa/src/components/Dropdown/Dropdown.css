@@ -171,6 +171,7 @@
 
 
 /* === SHOW NOTIFICATION === */
+.dropdown.show-notification .dropdown-option{border-radius: 1rem;}
 .dropdown.show-notification .dropdown-header {
   padding: 0rem;
   width: 2.8rem; height: 2.8rem;
@@ -190,11 +191,13 @@
 
 /* 알림 옵션 컨텐츠 style*/
 .dropdown.show-notification .dropdown-option{
-  display: flex; flex-direction: column;
+  display: flex;
+  flex-direction: row;
+  align-items:start;
   transition: opacity 0.1s ease, background-color 0.3s ease;
 }
 .dropdown.show-notification .dropdown-option:hover{border-radius: 1rem;}
-
+.notification-content{width:95%;}
 .notification-option-header{
   display: flex;
   width:100%;
@@ -203,9 +206,7 @@
 }
 .left{display: flex; align-items: center; gap:0.2rem;}
 .right{display: flex; align-items: center; gap:0.4rem;}
-
-.notification-content{width: 100%;}
-.dropdown.show-notification .dropdown-option span {
+.dropdown.show-notification span {
   color:var(--font-gray);
   font-size: 0.875rem;
   white-space: normal;

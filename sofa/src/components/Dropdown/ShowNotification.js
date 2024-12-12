@@ -75,19 +75,21 @@ const ShowNotification = ({ contents, onSelect = () => {} }) => {
                 key={index}
                 onClick={() => handleSelect(content)}
               >
-                <div className="notification-option-header">
-                  <div className="left">
-                    {icon && <span className="notification-icon">{icon}</span>}
-                    <h5 className="notification-label">{label}</h5>
-                  </div>
-                  <div className="right">
+                <div className="notification-content">
+                  <div className="notification-option-header">
+                    <div className="left">
+                      {icon && (
+                        <span className="notification-icon">{icon}</span>
+                      )}
+                      <h5 className="notification-label">{label}</h5>
+                    </div>
                     <span className="notification-date">{content.date}</span>
-                    {content.isNew && (
-                      <span className="notification-new"></span>
-                    )}
                   </div>
+                  <span className="notification-detail">{content.content}</span>
                 </div>
-                <span className="notification-content">{content.content}</span>
+                <div className="notification-new-badge">
+                  {content.isNew && <span className="notification-new"></span>}
+                </div>
               </div>
             );
           })}
