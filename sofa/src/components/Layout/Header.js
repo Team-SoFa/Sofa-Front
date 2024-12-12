@@ -15,6 +15,7 @@ import SettingIcon from "../../assets/icon/SettingIcon";
 import CallLineIcon from "../../assets/icon/CallLineIcon";
 import LogoutIcon from "../../assets/icon/LogoutIcon";
 import ThumbUpIcon from "../../assets/icon/ThumbUpIcon";
+// import Logo from "../../assets/icon/Logo";
 
 import { memberGet } from "../../services/memberService";
 import {
@@ -264,11 +265,6 @@ const Header = ({ type, toggleMenu }) => {
     setIsModalOpen(false); // 모달 닫기
   };
 
-  const headerStyle =
-    type === "ONBOARDING"
-      ? { backgroundColor: "#F1F1F1", paddingTop: "1rem" }
-      : {};
-
   const hanldeSearchGet = async () => {
     try {
       const response = await searchGet(
@@ -291,9 +287,9 @@ const Header = ({ type, toggleMenu }) => {
     }
   };
   return (
-    <header className="header" style={headerStyle}>
+    <header className="header">
       {/* ========== LINK CARD PAGES ========== */}
-      {location.pathname !== "/" && (
+      {location.pathname !== "/" && location.pathname !== "/signpage" && (
         <>
           <Button
             className={`menu-img ${isMenuOpen ? "menu-open" : ""}`}
@@ -390,6 +386,23 @@ const Header = ({ type, toggleMenu }) => {
             </Link>
           </div>
         </>
+      )}
+
+      {/* ========== SIGN PAGE ========== */}
+      {location.pathname === "/signpage" && (
+        <div className="sign-page">
+          {/* <Logo /> */}
+          <img
+            className="logo"
+            src="Group-299.png"
+            alt="logo"
+            onClick={() => window.location.reload()}
+          />
+          <Button
+            label="확장프로그램 다운로드"
+            style={{ marginLeft: "auto", padding: "0" }}
+          />
+        </div>
       )}
     </header>
   );
