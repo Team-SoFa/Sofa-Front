@@ -22,8 +22,6 @@ const LinkCard = ({ className, bookmark, onDelete, onEdit, onClick }) => {
     ...item,
   }));
 
-  console.log("bookmarkUrl", bookmark.imageUrl);
-
   const folderOpt = ["Documents", "Pictures", "Music", "Videos"].map(
     (item) => ({
       label: item,
@@ -63,19 +61,11 @@ const LinkCard = ({ className, bookmark, onDelete, onEdit, onClick }) => {
       onClick={onClick}
     >
       <div className="link-card-top">
-        <img
-          className="image"
-          src={bookmark.imageUrl}
-          alt={bookmark.title}
-          onError={(e) => {
-            if (e.target.src !== `${process.env.PUBLIC_URL}/example.png`) {
-              e.target.src = `${process.env.PUBLIC_URL}/example.png`; // 기본 이미지로 대체
-            }
-          }}
-        />
+        <img className="image" src={bookmark.img} alt={bookmark.title} />
+
         {hover && // hover 상태에서만 메뉴 표시
           (className === "RemovedItemsPage" ? (
-            // RemovedItemsPage
+            // RemovedItemsPage일 경우 다른 메뉴 표시
             <div className="RemovedItemsPage">
               <Dropdown
                 className={`linkcard folder-name ${className}`}
@@ -86,7 +76,6 @@ const LinkCard = ({ className, bookmark, onDelete, onEdit, onClick }) => {
               <Button
                 className="linkcard link"
                 Icon={LinkIcon}
-                label="링크 바로가기"
                 onClick={() =>
                   window.open(bookmark.url, "_blank", "noopener noreferrer")
                 }
@@ -111,7 +100,6 @@ const LinkCard = ({ className, bookmark, onDelete, onEdit, onClick }) => {
               <Button
                 className="linkcard link"
                 Icon={LinkIcon}
-                label="링크 바로가기"
                 onClick={() =>
                   window.open(bookmark.url, "_blank", "noopener noreferrer")
                 }

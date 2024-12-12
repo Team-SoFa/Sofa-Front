@@ -1,15 +1,16 @@
 .side-menu {
     position: fixed;
-    top: 6.5rem; left: 0;
+    top: 6.5rem;
+    left: 0;
     width: 15rem; height: calc(100vh - 8rem);
     overflow: visible; overflow-y: scroll;
     margin-left: 1rem;
     padding-top: 1rem;
     color: white;
     background: var(--purple-main);
-    border-radius: 1rem;  /* 모든 모서리 둥글게 */
     transform:translateX(-17.5rem);
     transition: transform 0.3s ease; /* 애니메이션 */
+    border-radius: 1rem;  /* 모든 모서리 둥글게 */
   }
 
 /* 사이드 메뉴가 열릴 때 */

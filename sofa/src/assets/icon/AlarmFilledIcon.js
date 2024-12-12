@@ -1,11 +1,11 @@
-import React from "react";
+import React from 'react';
 
 const AlarmFilledIcon = () => {
   return (
     <svg
       width="1.5rem"
       height="1.5rem"
-      viewBox="3 -1 25 24"
+      viewBox="-0.5 -2 26 26"
       fill="none"
       xmlns="http://www.w3.org/2000/svg"
     >

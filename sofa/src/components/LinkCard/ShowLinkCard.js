@@ -33,17 +33,16 @@ const ShowLinkCard = ({
           200
       ); // 둘다 열렸을 때
     } else if (sideMenuOpen) {
-      // 사이드메뉴 열렸을 때
       columns = Math.floor(
         (windowWidth -
-          17 *
+          30 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
-      );
+      ); // 사이드메뉴 열렸을 때
     } else if (bookmarkDetailOpen) {
       columns = Math.floor(
         (windowWidth -
-          34 *
+          40 *
             parseFloat(getComputedStyle(document.documentElement).fontSize)) /
           200
       ); // 자세히보기 열렸을 때

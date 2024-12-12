@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./Toggle.css";
 
-function Toggle({ label }) {
+function Toggle() {
   const [isToggled, setIsToggled] = useState(false);
 
   const handleToggle = () => {
@@ -9,14 +9,11 @@ function Toggle({ label }) {
   };
 
   return (
-    <div className="toggle">
-      <p>{label}</p>
-      <div
-        onClick={handleToggle}
-        className={`toggle-case ${isToggled ? "toggled" : ""}`}
-      >
-        <div className="toggle-circle" />
-      </div>
+    <div
+      onClick={handleToggle}
+      className={`toggle-case ${isToggled ? "toggled" : ""}`}
+    >
+      <div className="toggle-circle" />
     </div>
   );
 }

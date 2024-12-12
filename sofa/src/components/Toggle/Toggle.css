@@ -1,32 +1,30 @@
-.toggle{
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
 .toggle-case {
-    position: relative;
     cursor: pointer;
-    width: 3.2rem; height: 1.8rem;
-    border-radius: 1rem;
-    background-color: var(--border-gray);
+    width: 45px;
+    height: 25px;
+    border-radius: 15px;
+    background-color: gray;
+    position: relative;
     transition: background-color 0.3s ease;
+    margin: 10px;
   }
   
   .toggle-case.toggled {
-    background-color: #4FF7BA;
+    background-color: skyblue;
   }
   
   .toggle-circle {
-    position: absolute;
-    top: 0.3rem;left: 0.3rem;
-    width: 1.2rem;height: 1.2rem;
+    width: 17px;
+    height: 17px;
     background-color: white;
     border-radius: 50%;
+    position: absolute;
+    top: 4px;
+    left: 4px;
     transition: left 0.3s ease;
   }
   
   .toggled .toggle-circle {
-    left: 1.8rem;
+    left: 23px;
   }
   
