@@ -1,7 +1,7 @@
 export const bookmarks = [
   { id: 1, 
-    title: "Google", 
-    url: "https://www.google.com", 
+    title: "", 
+    url: "", 
     imageUrl: "",
   },
   {

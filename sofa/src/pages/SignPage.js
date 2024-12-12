@@ -95,13 +95,9 @@ const SignPage = () => {
         // Access Token과 Refresh Token 저장 (localStorage)
         // localStorage에 저장
         const { accessToken, refreshToken } = response.token;
-        chrome.storage.local.set({ accessToken, refreshToken }, () => {
-          if (chrome.runtime.lastError) {
-            console.error("토큰 저장 실패:", chrome.runtime.lastError);
-          } else {
-            console.log("Tokens saved to Chrome Storage");
-          }
-        });    
+        
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken); 
         dispatch(setTokens(response.token.accessToken, response.token.refreshToken)); // 토큰 저장
         
         console.log('로그인 성공!');  // 성공 메시지 설정
@@ -111,7 +107,6 @@ const SignPage = () => {
           window.opener.postMessage({ accessToken, refreshToken }, "*");
           window.close();
         }
-        hanldeMemberGet();
       }
     } catch (err) {
       console.error('googleOAuthLoginGet 실패:', err);

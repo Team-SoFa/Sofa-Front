@@ -26,6 +26,8 @@ import {
 } from "./services/oAuthService"; // Google 로그인 서비스 호출
 import { useDispatch } from "react-redux"; // Redux 관련 hooks
 import { setTokens } from "./redux/actions/authActions"; // 액션 임포트
+import { setMember } from "./redux/actions/memberAction";
+import { memberGet } from "./services/memberService";
 
 function App() {
   const dispatch = useDispatch(); // Redux 디스패치 가져오기
@@ -53,6 +55,7 @@ function App() {
           dispatch(
             setTokens(response.token.accessToken, response.token.refreshToken)
           );
+          hanldeMemberGet();
           console.log("로그인 성공!");
         } else {
           console.log("로그인 응답에 문제가 있습니다.");
@@ -65,7 +68,24 @@ function App() {
     };
 
     handleGoogleLogin();
-  }, [dispatch]); // 의존성 배열에 dispatch 추가
+
+  }, []); // 의존성 배열에 dispatch 추가
+
+  const hanldeMemberGet = async () => {
+    try {
+      const response = await memberGet();
+
+      console.log('멤버 조회 응답:', response);
+      dispatch(
+        setMember(response.email, response.name)
+      )
+    } catch (err) {
+      console.log('멤버 조회 실패!');
+    } finally {
+      console.log('로딩 종료');  // 로딩 상태 종료
+    }
+  };
+
   const [bookmarks, setBookmarks] = useState(initialBookmarks);
 
   const handleAddBookmark = (newBookmark) => {

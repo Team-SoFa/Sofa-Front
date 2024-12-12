@@ -3,15 +3,10 @@ import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
 
 import "./BookmarkDetail.css";
-import BookmarkIcon from "../../assets/icon/BookmarkIcon";
-import LeftIcon from "../../assets/icon/LeftIcon";
-import RightIcon from "../../assets/icon/RightIcon";
 import RemindOnIcon from "../../assets/icon/RemindOnIcon";
 import RemindOffIcon from "../../assets/icon/RemindOffIcon";
-import TrashIcon from "../../assets/icon/TrashLineIcon";
 import CloseIcon from "../../assets/icon/CloseIcon";
 import DownIcon from "../../assets/icon/DownIcon";
-import LinkIcon from "../../assets/icon/LinkIcon";
 import TagAddIcon from "../../assets/icon/TagAddIcon";
 import {
   folderGet,
@@ -19,78 +14,115 @@ import {
   folderDelete,
   folderPut,
 } from "../../services/folderService";
-import { linkCardAiPost, linkCardGet, linkCardTagPost } from "../../services/linkCardService";
+import { linkCardAiPost, linkCardGet, linkCardPost, linkCardTagPost } from "../../services/linkCardService";
 import { searchHistoryTagsGet, searchTagsGet } from "../../services/searchService";
 import BookmarkNone from "../../assets/icon/BookmarkNone";
 import LibraryIcon from "../../assets/icon/LibraryIcon";
-import { oAuth2RefreshPost } from "../../services/oAuthService";
 import store from "../../redux/store";
 import { setTokens } from "../../redux/actions/authActions";
 import { memberGet } from "../../services/memberService";
+import BookmarkIcon from "../../assets/icon/BookmarkIcon";
+import "./Skeleton.css";
 
 const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
-  const [folderOption, setFolderOption] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const [tagOption, setTagOption] = useState([]);
 
-  const [selectedTag, setSelectedTag] = useState("");
   const [linkCard, setLinkCard] = useState([]); // 초기값은 빈 배열로 설정
-  const [recentTagList, setRecentTagList] = useState([]);
   const [searchTagList, setSearchTagList] = useState([]);
-  const [linkCardListDetail, setLinkCardListDetail] = useState([]);
+
+  const [isReminderActive, setIsReminderActive] = useState(false);
+  const [isBookMarkActive, setIsBookMarkActive] = useState(false);
+
+  const [folderOption, setFolderOption] = useState([]);
+  const [selectedFolder, setSelectedFolder] = useState();
+  const [selectUrl, setSelectUrl] =useState();
+  const [recentTags, setRecentTags] = useState(
+    ["Documents", "Pictures", "오잉", "웅", "모던웹을위한Javascript"].map(
+      (item) => ({
+        label: item,
+        content: item,
+      })
+    )
+  );
+    // 현재 북마크의 인덱스
+    const [currentIndex, setCurrentIndex] = useState(() => {
+      if (!bookmark || !Array.isArray(bookmarks)) {
+        return -1; // 초기 값으로 -1 설정
+      }
+      return bookmarks.findIndex((item) => item?.id === bookmark?.id);
+    });
+    //
+    const titleRef = useRef(null);
+    const [values, setValues] = useState({
+      title: bookmark?.title || "",
+      summary: bookmark?.summary || "",
+      memo: bookmark?.memo || "",
+    });
+    const originalValuesRef = useRef({
+      title: "",
+      summary: "",
+      memo: "",
+    });
+    const [isEditing, setIsEditing] = useState({
+      title: true,
+      summary: true,
+      memo: true,
+    });
+
+  const fetchTokens = () => {
+    // eslint-disable-next-line no-undef
+    chrome.storage.local.get(["accessToken", "refreshToken"], (tokens) => {
+      const { accessToken, refreshToken } = tokens;
+      if (accessToken && refreshToken) {
+        console.log("토큰 발견:", { accessToken, refreshToken });
+        store.dispatch(setTokens(accessToken, refreshToken));
+
+        hanldeMemberGet();
+        handleLinkCardAiPost();
+        // const response = oAuth2RefreshPost();
+        // console.log(response);
+        // if (response) {
+        //   response.then(data => {
+        //     console.log(data);
+        //     const { accessToken, refreshToken } = data;
+
+        //     // eslint-disable-next-line no-undef
+        //     chrome.storage.local.clear(()=>{});
+
+        //     // eslint-disable-next-line no-undef
+        //     chrome.storage.local.set({ accessToken, refreshToken }, () => {
+        //       // eslint-disable-next-line no-undef
+        //       if (chrome.runtime.lastError) {
+        //         // eslint-disable-next-line no-undef
+        //         console.error("토큰 저장 실패:", chrome.runtime.lastError);
+        //       } else {
+        //         console.log("Tokens saved to Chrome Storage");
+        //       }
+        //     });
+        //     store.dispatch(setTokens(data.accessToken, data.refreshToken));
+        //     console.log("토큰 재저장 완료")
+
+        // 토큰이 있는 경우 멤버 조회 바로 호출 
+      } else {
+        console.warn("Chrome Storage에 저장된 토큰이 없습니다.");
+      }
+    });
+  };
+
+  // 메시지 리스너 추가
+  const handleMessage = (message) => {
+    if (message.action === "tokensSaved") {
+      console.log("Tokens saved message received. Fetching tokens...");
+      fetchTokens();
+    }
+  };
+
 
   // Chrome Storage에서 토큰 가져오기
   useEffect(() => {
-    const fetchTokens = () => {
-      // eslint-disable-next-line no-undef
-      chrome.storage.local.get(["accessToken", "refreshToken"], (tokens) => {
-        const { accessToken, refreshToken } = tokens;
-        if (accessToken && refreshToken) {
-          console.log("토큰 발견:", { accessToken, refreshToken });
-          store.dispatch(setTokens(accessToken, refreshToken));
-
-          const response = oAuth2RefreshPost();
-          console.log(response);
-          if (response) {
-            response.then(data => {
-              console.log(data);
-              const { accessToken, refreshToken } = data;
-
-              localStorage.setItem("accessToken", accessToken);
-              localStorage.setItem("refreshToken", refreshToken);
-              // eslint-disable-next-line no-undef
-              chrome.storage.local.set({ accessToken, refreshToken }, () => {
-                // eslint-disable-next-line no-undef
-                if (chrome.runtime.lastError) {
-                  // eslint-disable-next-line no-undef
-                  console.error("토큰 저장 실패:", chrome.runtime.lastError);
-                } else {
-                  console.log("Tokens saved to Chrome Storage");
-                }
-              });
-              store.dispatch(setTokens(data.accessToken, data.refreshToken));
-              console.log("토큰 재저장 완료")
-
-              // 토큰이 있는 경우 멤버 조회 바로 호출 
-              hanldeMemberGet();
-              handleLinkCardAiPost();
-            });
-          }
-        } else {
-          console.warn("Chrome Storage에 저장된 토큰이 없습니다.");
-        }
-      });
-    };
-
-    // 메시지 리스너 추가
-    const handleMessage = (message) => {
-      if (message.action === "tokensSaved") {
-        console.log("Tokens saved message received. Fetching tokens...");
-        fetchTokens();
-      }
-    };
-    // eslint-disable-next-line no-undef
-    chrome.runtime.onMessage.addListener(handleMessage);
-
+  // eslint-disable-next-line no-undef
+  chrome.runtime.onMessage.addListener(handleMessage);
     // 컴포넌트 unmount 시 리스너 제거
     // eslint-disable-next-line no-undef
     return () => chrome.runtime.onMessage.removeListener(handleMessage);
@@ -125,6 +157,8 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       const url = decodeURIComponent(encodedUrl); // 디코딩된 URL
       console.log("Decoded URL:", url);
 
+      setSelectUrl(url);
+
       // 헤더에 URL 추가
       const data = {
         url: url, // 디코딩된 URL 사용
@@ -147,11 +181,33 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
           memo: "Default memo text", // 기본 메모 추가
           summary: response.summary || "Default summary",
         };
+        const data = {
+          id: response.folder?.id,
+          label: response.folder?.name,
+          content: response.folder?.name
+        }
+        setSelectedFolder(data);
 
-        // 상태 업데이트
-        setLinkCardListDetail(transformedData); // 배열 형태로 상태에 저장
-        console.log("가공된 데이터:", transformedData);
+        setValues({
+          title: transformedData.title || "",
+          summary: transformedData.summary || "요약 내용입니다.",
+          memo: transformedData.memo || "메모 내용입니다.",
+        });
+        // Safe handling for tagList
+        if (transformedData.tagList) {
+          const tagData = response.tags.map((tag) => ({
+            id: tag.id,
+            label: tag.name,
+            content: tag.name,
+            tagType: tag.tagType,
+          }));
+          setTagOption(tagData);
+        } else {
+          console.log("No tags found in linkCard");
+          setTagOption([]);
+        }
       }
+      setIsLoading(false);
     } catch (err) {
       console.error("링크카드 생성 실패:", err);
     }
@@ -159,35 +215,9 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
 
 
   const handleAddTagToLinkCard = async (newTag) => {
-    if (!linkCard.id || !newTag) return; // 링크 카드 ID나 태그가 없으면 실행하지 않음
 
-    console.log("handleAddTagToLinkCard newTag:", newTag);
-    try {
-      // 링크 카드 태그 추가 API 호출
-      const data = {
-        "tagList": [
-          {
-            "id": newTag.id,
-            "tagType": newTag.type
-          }
-        ]
-      }
-      console.log(data);
-      const response = await linkCardTagPost(linkCard.id, data);
-
-      if (response) {
-        const tagData = linkCard.tagList.map((tag) => ({
-          id: tag.id,
-          label: tag.name,
-          content: tag.name,
-          tagType: tag.tagType,
-        }));
-        setTagOption(tagData);
-        console.log(`링크 카드 ${linkCard.id}에 태그 ${newTag.label} 추가 성공`);
-      }
-    } catch (error) {
-      console.error("링크 카드 태그 추가 실패:", error);
-    }
+    setTagOption([...tagOption,newTag]);
+    console.log("newTag 완료");
   };
 
   const handleFetchRecentTags = async () => {
@@ -200,7 +230,7 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
           content: recent,
           name: recent
         }))
-        setSearchTagList(recentData);
+        setRecentTags(recentData)
       }
     } catch (error) {
       console.error("Failed to fetch recent tags:", error);
@@ -245,32 +275,6 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     }
   };
 
-  // 현재 북마크의 인덱스
-  const [currentIndex, setCurrentIndex] = useState(() => {
-    if (!bookmark || !Array.isArray(bookmarks)) {
-      return -1; // 초기 값으로 -1 설정
-    }
-    return bookmarks.findIndex((item) => item?.id === bookmark?.id);
-  });
-  //
-  const titleRef = useRef(null);
-  const [values, setValues] = useState({
-    title: bookmark?.title || "",
-    summary: bookmark?.summary || "요약 내용입니다",
-    memo: bookmark?.memo || "메모 내용입니다",
-  });
-  const originalValuesRef = useRef({
-    title: "",
-    summary: "",
-    memo: "",
-  });
-  const [isEditing, setIsEditing] = useState({
-    title: false,
-    summary: false,
-    memo: false,
-  });
-
-  const [linkcardImg, setLinkcardImg] = useState(""); //링크카드 대표이미지 변수
 
   const handleFolderGet = async () => {
     try {
@@ -293,35 +297,8 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
       console.log("handleFolderGet 종료"); // 로딩 상태 종료
     }
   };
-  // 임시 데이터 >>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>>
-  const [isReminderActive, setIsReminderActive] = useState(false);
-  const [tagsOpt, setTagsOpt] = useState([
-    { label: "Documents", content: "Documents" },
-    { label: "Pictures", content: "Pictures" },
-    { label: "PICTURES", content: "PICTURES" },
-    { label: "오잉", content: "오잉" },
-  ]);
-  //최근 검색 태그
-  const [recentTags, setRecentTags] = useState(
-    ["Documents", "Pictures", "오잉", "웅", "모던웹을위한Javascript"].map(
-      (item) => ({
-        label: item,
-        content: item,
-      })
-    )
-  );
-  const folderOpt = [
-    "폴더1",
-    "오렌지방구는누가꼈나",
-    "어쩌구",
-    "컬러버스",
-    "우와우",
-  ].map((item) => ({
-    label: item,
-    content: item,
-  }));
 
-  // // Activates Updating Bookmark
+  // Activates Updating Bookmark
   // useEffect(() => {
   //   if (bookmarks.length > 0 && bookmark) {
   //     // Update ID
@@ -390,58 +367,58 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
   //   console.log("Updated tagOption:", tagOption);
   // }, [tagOption]);
 
+
+  const linkCardSave = async() => {
+    const transformedData = {
+      title: values.title || "Default Title",
+      url: selectUrl || "naver.com", // 디코딩된 URL 사용
+      folderId: selectedFolder?.id || "default-folder-id", // 폴더 ID
+      tagList: tagOption?.map(tag => ({
+        id: tag.id || 0,
+        tagType: tag.tagType || "AI/CUSTOM",
+      })) || [],
+      memo: values.memo || "Default memo text", // 기본 메모 추가
+      summary: values.summary || "Default summary",
+    };
+    console.log(transformedData);
+    const response = await linkCardPost(transformedData);
+    if(response) {
+      console.log('링크카드추가성공일듯',response);
+    }
+  }
   // HEADER BTNS >>>>>>>>>>>>>>>>>>>>>>>>>>>>
   const icons = [
-    { id: "linkiving", Icon: LibraryIcon },
+    { id: "library", Icon: LibraryIcon },
     { id: "remind", Icon: isReminderActive ? RemindOnIcon : RemindOffIcon },
-    { id: "bookmark", Icon: BookmarkNone }
+    { id: "bookmark", Icon: isBookMarkActive ? BookmarkIcon : BookmarkNone }
   ];
   const handleIconClick = (id) => {
     switch (id) {
-      case "left":
-        if (currentIndex > 0) {
-          const prevBookmark = bookmarks[currentIndex - 1];
-          setCurrentIndex(currentIndex - 1);
-          // 북마크 정보 업데이트
-          setValues((prevValues) => ({
-            ...prevValues,
-            title: prevBookmark.title,
-            summary: prevBookmark.summary,
-            memo: prevBookmark.memo,
-          }));
-        } else {
-          //❗알림 추가❗
-        }
+      case "library": 
+        window.open("https://linkiving.com/homepage", "_blank");
         break;
-      case "right":
-        if (currentIndex < bookmarks.length - 1) {
-          const nextBookmark = bookmarks[currentIndex + 1];
-          setCurrentIndex(currentIndex + 1);
-          // 북마크 정보 업데이트
-          setValues((nextValues) => ({
-            ...nextValues,
-            title: nextBookmark.title,
-            summary: nextBookmark.summary,
-            memo: nextBookmark.memo,
-          }));
-        } else {
-          //❗알림 추가❗
+      case "bookmark":
+        if(!isBookMarkActive) {
+          setIsBookMarkActive(!isBookMarkActive);
+          linkCardSave();
         }
         break;
       case "remind":
         setIsReminderActive(!isReminderActive);
         break;
-      case "trash":
-        if (currentIndex < bookmarks.length - 1) {
-          const nextBookmark = bookmarks[currentIndex + 1];
-          // ❗북마크 삭제 로직 추가❗
-          setCurrentIndex(currentIndex + 1);
-        } else if (currentIndex > 0) {
-          const prevBookmark = bookmarks[currentIndex - 1];
-          console.log("Bookmark deleted:", bookmark.id);
-          setCurrentIndex(currentIndex - 1);
-        }
-        break;
+      // case "trash":
+      //   if (currentIndex < bookmarks.length - 1) {
+      //     const nextBookmark = bookmarks[currentIndex + 1];
+      //     // ❗북마크 삭제 로직 추가❗
+      //     setCurrentIndex(currentIndex + 1);
+      //   } else if (currentIndex > 0) {
+      //     const prevBookmark = bookmarks[currentIndex - 1];
+      //     console.log("Bookmark deleted:", bookmark.id);
+      //     setCurrentIndex(currentIndex - 1);
+      //   }
+      // break;
+
+
       case "close":
         toggleDetail();
         break;
@@ -528,26 +505,28 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
     }));
   };
 
-  //태그..?
-  const handleSearchSelect = (tag) => {
-    setSelectedTag(tag);
-    console.log("선택된 태그:", tag); // 선택된 태그를 처리하는 코드
-  };
-
-  if (!bookmark) return null;
-
   return (
-    <div className="bookmark-detail-background">
+    <div className={"bookmark-detail-background"}>
       <div className="header-btn-container">
         <div>
-          {icons.map(({ id, Icon }) => (
-            <Button
+          <Button
               className="detail-header-btn"
-              Icon={Icon}
-              label={id == "bookmark" ? "링크 저장" : null}
-              onClick={() => handleIconClick(id)}
-            />
-          ))}
+              Icon={icons[0].Icon}
+              onClick={() => handleIconClick(icons[0].id)}
+          />
+          {/* <Button
+              className="detail-header-btn"
+              Icon={icons[1].Icon}
+              style= { isReminderActive ? {background: "var(--purple-main)", color:"white"} : {}}
+              onClick={() => handleIconClick(icons[1].id)}
+          /> */}
+          <Button
+              className="detail-header-btn"
+              Icon={icons[2].Icon}
+              label={isBookMarkActive ? "저장한 링크" : "링크 저장"}
+              style= { isBookMarkActive ? {background: "var(--purple-main)", color:"white"} : {}}
+              onClick={() => handleIconClick(icons[2].id)}
+          />
         </div>
         <Button
           className="detail-close-btn"
@@ -556,35 +535,24 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
           style={{ background: "none", border: 0 }}
         />
       </div>
-      <div className={`bookmark-detail ${isOpen ? "open" : ""}`}>
+      <div className={`bookmark-detail ${isOpen ? "open" : ""} ${isLoading ? "skeleton-loading" : ""}`}>
         <div>
           <p>제목</p>
-          <div className="detail-text-container">
-            {isEditing.title ? (
+            {/* {isEditing.title ? ( */}
               <textarea
                 ref={titleRef}
-                className="detail-text-input"
-                value={values.title}
-                onChange={(e) => handleChange(e, "title")}
+                className={`detail-text-container detail-text-input ${isLoading&&"skeleton"}`}
                 onInput={(e) => {
                   const target = e.target;
                   target.style.height = "4rem"; // 높이를 초기화
                   target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
                 }}
+                value={values.title}
+                onChange={(e) => handleChange(e, "title")}
                 onBlur={() => {
-                  handleCancel("title");
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault(); // 기본 동작 방지
-                    handleSave("title");
-                  }
+                  handleSave("title"); // 포커스 해제 시 저장
                 }}
               />
-            ) : (
-              <span className="detail-text">{values.title}</span>
-            )}
-          </div>
         </div>
         <div className="detail-folder">
           <p>폴더</p>
@@ -593,10 +561,10 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             type="add"
             options={folderOption}
             Icon={DownIcon}
-            label="폴더선택"
-            onSelect={() => {
-              setValues("title");
-              //❗추후 수정
+            label={selectedFolder?.content||"전체폴더"}
+            onSelect={(value)=>{
+              console.log("선택된 폴더", value.content);
+              setSelectedFolder(value); // 선택된 폴더 상태 업데이트
             }}
             onAddValue={handleAddFolder}
             onOpen={handleFolderGet}
@@ -635,62 +603,40 @@ const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
             />
           )}
         </div>
-        <div className="summary-container" style={{ height: summaryHeight }}>
+        <div className="summary-container">
           <p>자동 요약</p>
-          <div className="detail-text-container">
-            {isEditing.summary ? (
-              <textarea
-                ref={summaryRef}
-                className="detail-text-input"
-                value={values.summary}
-                onChange={(e) => handleChange(e, "summary")}
-                onInput={(e) => {
-                  const target = e.target;
-                  target.style.height = "6rem"; // 높이를 초기화
-                  target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
-                }}
-                onBlur={() => {
-                  handleCancel("summary");
-                }} // 입력 필드에서 포커스 해제 시 저장
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault(); // 기본 동작 방지
-                    handleSave("summary");
-                  }
-                }}
-              />
-            ) : (
-              <p className="detail-text">{values.summary}</p>
-            )}
-          </div>
+          <textarea className={`detail-text-container detail-text-input ${isLoading&&"skeleton"}`}
+            ref={summaryRef}
+            onChange={(e) => handleChange(e, "summary")}
+            onInput={(e) => {
+              const target = e.target;
+              target.style.height = "6rem"; // 높이를 초기화
+              target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
+            }}
+            value={values.summary}
+            onBlur={() => {
+              handleSave("summary");
+            }} // 입력 필드에서 포커스 해제 시 저장
+          >
+          </textarea>
         </div>
         {/* 메모 */}
-        <div className="memo-container" style={{ height: memoHeight }}>
+        <div className="memo-container" >
           <p>메모</p>
-          <div className="detail-text-container">
-            {isEditing.memo ? (
-              <textarea
-                ref={memoRef}
-                className="detail-text-input"
-                value={values.memo}
-                onChange={(e) => handleChange(e, "memo")}
-                onInput={(e) => {
-                  const target = e.target;
-                  target.style.height = "6rem"; // 높이를 초기화
-                  target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
-                }}
-                onBlur={() => handleCancel("memo")} // 포커스 해제 시 저장
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    e.preventDefault(); // 엔터키 기본 동작 방지
-                    handleSave("memo"); // 수정 완료 처리
-                  }
-                }}
-              />
-            ) : (
-              <p className="detail-text">{values.memo}</p>
-            )}
-          </div>
+          <textarea className={`detail-text-container detail-text-input ${isLoading&&"skeleton"}`}
+            ref={memoRef}
+            onChange={(e) => handleChange(e, "memo")}
+            onInput={(e) => {
+              const target = e.target;
+              target.style.height = "6rem"; // 높이를 초기화
+              target.style.height = `${target.scrollHeight}px`; // 내용 기반으로 높이 조정
+            }}
+            value={values.memo}
+            onBlur={() => {
+              handleSave("memo");
+            }} // 입력 필드에서 포커스 해제 시 저장
+          >
+          </textarea>
         </div>
       </div>
     </div>

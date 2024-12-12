@@ -38,3 +38,30 @@
     transform: rotate(360deg);
   }
 }
+
+/* 모던한 스크롤바 */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #f3f4f6;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #9ca3af;
+  border-radius: 10px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #6b7280;
+}
+
+::-webkit-scrollbar {
+  display: none; /* 기본적으로 스크롤바 숨김 */
+}
+
+body:hover::-webkit-scrollbar {
+  display: block; /* 마우스 호버 시 스크롤바 표시 */
+}

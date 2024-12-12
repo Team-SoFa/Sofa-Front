@@ -274,7 +274,10 @@ const Dropdown = ({
                         className="tag-selectable"
                         label={tag.label}
                         option={tag}
-                        onClick={() => handleSelect(tag)}
+                        onClick={() => {
+                          handleSelect(tag)
+                          setAddValue("");
+                        }}
                       />
                     </span>
                   ))}

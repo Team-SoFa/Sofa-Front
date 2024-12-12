@@ -12,6 +12,8 @@ import "../components/Layout/main-layout.css";
 import RemovedItemsPage from "./RemovedItemsPage";
 import FolderPage from "./FolderPage";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail"; // 상세 정보 컴포넌트 import
+import store from "../redux/store";
+import { articleRecommendGet } from "../services/articleService";
 
 const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   const location = useLocation();
@@ -89,11 +91,20 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     }
   };
 
+  const getName = () => {
+    const state = store.getState();
+    return state.member.name
+  }
+
   useEffect(() => {
+    console.log("Hello");
     const fetchUserInfo = async () => {
       try {
         // USER INFO
-        const userData = { nickname: "000" };
+
+        const name = getName();
+        console.log("name", name);
+        const userData = { nickname: name };
         setUsername(userData.nickname);
 
         // MOST_POPULAR_TAGS
@@ -107,7 +118,20 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
       }
     };
     fetchUserInfo();
+
+    fetchArticleRecommendGet();
+
   }, []);
+
+  const fetchArticleRecommendGet = async () => {
+    try {
+      const response = await articleRecommendGet();
+
+      console.log('fetchArticleRecommendGet', response);
+    } catch(error) {
+      console.error('error', error);
+    }
+  };
 
   const handleEdit = (id) => {
     //추후 수정 기능 코드 추가

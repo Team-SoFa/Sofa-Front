@@ -26,11 +26,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.action === "openSidePanel") {
     console.log("Checking for existing tokens...");
-  
+
     // Chrome Storage에서 토큰 확인
     chrome.storage.local.get(["accessToken", "refreshToken"], (tokens) => {
       const { accessToken, refreshToken } = tokens;
-  
+
       if (accessToken && refreshToken) {
         // 토큰이 이미 있는 경우
         console.log("Tokens already exist. Skipping popup.");
@@ -44,7 +44,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         // 토큰이 없는 경우 팝업 열기
         const loginUrl = "https://linkiving.com/signpage";
         console.log("No tokens found. Opening popup window at:", loginUrl);
-  
+
         try {
           // Windows API를 사용하여 팝업 창 열기
           chrome.windows.create(
@@ -56,7 +56,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
             },
             (newWindow) => {
               console.log("New popup window opened with ID:", newWindow.id);
-  
+
               const checkInterval = setInterval(() => {
                 chrome.tabs.query({ windowId: newWindow.id }, (tabs) => {
                   if (tabs.length === 0) {
@@ -64,7 +64,7 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                     clearInterval(checkInterval);
                     return;
                   }
-  
+
                   // 첫 번째 탭에서 localStorage의 토큰 가져오기
                   chrome.scripting.executeScript(
                     {
@@ -81,27 +81,28 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
                         console.warn("Waiting for tokens...");
                         return;
                       }
-  
+
                       const { accessToken, refreshToken } = results[0].result;
                       if (accessToken && refreshToken) {
                         console.log("Tokens found:", { accessToken, refreshToken });
-  
+
+                        chrome.storage.local.clear(() => { });
+
                         // Chrome Storage에 토큰 저장
                         chrome.storage.local.set({ accessToken, refreshToken }, () => {
                           console.log("Tokens saved to Chrome Storage");
                         });
-  
+
                         clearInterval(checkInterval);
-  
-                        // // 팝업 창 닫기
-                        // chrome.windows.remove(newWindow.id, () => {
-                        //   console.log("Popup window closed after retrieving tokens.");
-                        // });
 
                         // BookmarkDetail.js에 알림 전송
                         chrome.runtime.sendMessage({ action: "tokensSaved" }, (response) => {
                           console.log("Message sent to BookmarkDetail.js, response:", response);
                         });
+                        // 팝업 창 닫기
+                        // chrome.windows.remove(newWindow.id, () => {
+                        //   console.log("Popup window closed after retrieving tokens.");
+                        // });
                       }
                     }
                   );
@@ -115,11 +116,11 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
         }
       }
     });
-  
+
     // 비동기 처리를 위해 true 반환
     return true;
   }
-  
+
 });
 
 

@@ -18,7 +18,7 @@
     folderDelete,
     folderPut,
   } from "../../services/folderService";
-  import { linkCardGet, linkCardTagPost } from "../../services/linkCardService";
+  import { linkCardDelete, linkCardGet, linkCardTagPost } from "../../services/linkCardService";
   import { searchHistoryTagsGet, searchTagsGet } from "../../services/searchService";
 
   const BookmarkDetail = ({ bookmark, bookmarks, isOpen, toggleDetail }) => {
@@ -29,6 +29,19 @@
     const [linkCard, setLinkCard] = useState([]); // 초기값은 빈 배열로 설정
     const [recentTagList, setRecentTagList] = useState([]);
     const [searchTagList, setSearchTagList] = useState([]);
+
+    const TrahslinkCardDelete = async (id) => {
+      try {
+        console.log("도착한 id",id);
+        const response = await linkCardDelete(id);
+
+        if (response) {
+          console.log("TrahslinkCardDelete", response);
+        }
+      } catch (error) {
+        console.error("TrahslinkCardDelete", error);
+      }
+    };
 
     const handleAddTagToLinkCard = async (newTag) => {
       if (!linkCard.id || !newTag) return; // 링크 카드 ID나 태그가 없으면 실행하지 않음
@@ -266,7 +279,6 @@
     const icons = [
       { id: "left", Icon: LeftIcon },
       { id: "right", Icon: RightIcon },
-      { id: "remind", Icon: isReminderActive ? RemindOnIcon : RemindOffIcon },
       { id: "trash", Icon: TrashIcon },
       { id: "close", Icon: CloseIcon },
     ];
@@ -307,6 +319,8 @@
           break;
         case "trash":
           if (currentIndex < bookmarks.length - 1) {
+            console.log("현재 id",bookmarks[currentIndex].id);
+            TrahslinkCardDelete(bookmarks[currentIndex].id);
             const nextBookmark = bookmarks[currentIndex + 1];
             // ❗북마크 삭제 로직 추가❗
             setCurrentIndex(currentIndex + 1);

@@ -9,12 +9,13 @@
   align-items: center;
   overflow: hidden;
   text-overflow: ellipsis;
-  width: auto; max-width: 5rem;
+  width: auto; max-width: 6rem;
   padding:0.7rem;
   color:var(--font-gray);
   background:white;
   transition: color 0.3s ease, background-color 0.3s ease;
   border:0.031rem solid var(--border-gray); border-radius: 5rem;
+  justify-content: space-between;
 }.dropdown-header-icon{color:black; transition: transform 0.2s ease-in-out, color 0.2s ease-in-out;}
 .dropdown-header:hover, .dropdown-header.open{color:white; background: var(--purple-main);}
 .dropdown-header-icon.rotated{color:white; transform:rotate(180deg);}

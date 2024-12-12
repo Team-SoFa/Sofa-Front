@@ -53,6 +53,18 @@
 /*수정 버튼 위치 지정을 위함*/
 .summary-container, .memo-container{ position: relative; margin-bottom: 1.25rem;}
 
+textarea.detail-text-container{
+  border:0;
+  background-color: var(--box-gray);
+  padding: 0.7rem;
+  font-size: 0.9rem; /* 약 14.4px */
+  line-height: 1.4;
+  white-space: normal; /* 줄바꿈 허용 */
+}
+textarea.detail-text-container:focus{
+  border: 0.5px solid var(--purple-main);
+}
+
 .detail-title-container,
 .detail-text-container {
   min-height: 6rem;
@@ -69,7 +81,7 @@
   width: 100%; max-height: 15rem;
   box-sizing: border-box;
   padding:0; margin:0;
-  background-color: transparent;
+  /* background-color: transparent; */
 
 }.detail-text-input:focus{outline: none; border:none;}
 
@@ -80,6 +92,7 @@
   word-wrap: break-word; /* 텍스트가 컨테이너 너비에 맞춰 줄바꿈 */
 }
 
+.
 
 /* 태그 */
 .tags-container {
