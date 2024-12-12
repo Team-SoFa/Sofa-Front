@@ -15,7 +15,12 @@ import {
 import RemovedItemsPage from "./RemovedItemsPage";
 import FolderPage from "./FolderPage";
 import BookmarkDetail from "../components/LinkCard/BookmarkDetail"; // 상세 정보 컴포넌트 import
-
+import store from "../redux/store";
+import { articleRecommendGet } from "../services/articleService";
+import { bookmarks } from "../components/LinkCard/bookmarks";
+import { bookmarks2 } from "../components/LinkCard/bookmarks2";
+import { bookmarks3 } from "../components/LinkCard/bookmarks3";
+import { bookmarks4 } from "../components/LinkCard/bookmarks4";
 import "../components/Layout/main-layout.css";
 import RightIcon from "../assets/icon/RightIcon";
 
@@ -31,13 +36,125 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
   //  Link Card
   const [isDetailOpen, setIsDetailOpen] = useState(false); //자세히보기메뉴 열림 상태
   const [selectedBookmark, setSelectedBookmark] = useState(null);
+  const [bookmarks11, setBookmarks11] = useState([]);
+  const [bookmarks22, setBookmarks22] = useState([]);
+  const [bookmarks33, setBookmarks33] = useState([]);
+  const [bookmarks44, setBookmarks44] = useState([]);
+
+  useEffect(() => {
+    fetchBookmarkData11();
+    fetchBookmarkData22();
+    // fetchBookmarkData33();
+    // fetchBookmarkData44();
+    console.log("let's start!");
+  }, []);
+  
+  const fetchBookmarkData11 = async () => {
+    const bookmarkData = await Promise.all(
+      bookmarks.map(async (bookmark) => {
+        const imageUrl = await fetchImageUrlFromPage(bookmark.url);
+        console.log(bookmark.title, imageUrl);
+        return {
+          id: bookmark.id,
+          title: bookmark.title,
+          url: bookmark.url,
+          imageUrl: imageUrl
+        };
+      })
+    );
+    setBookmarks11(bookmarkData);
+  };
+
+  const fetchBookmarkData22 = async () => {
+    const bookmarkData = await Promise.all(
+      bookmarks2.map(async (bookmark) => {
+        console.log(bookmark.title);
+        const imageUrl = await fetchImageUrlFromPage(bookmark.url);
+        console.log(imageUrl);
+        return {
+          id: bookmark.id,
+          title: bookmark.title,
+          url: bookmark.url,
+          imageUrl: imageUrl
+        };
+      })
+    );
+    setBookmarks22(bookmarkData);
+  };
+
+  const fetchBookmarkData33 = async () => {
+    const bookmarkData = await Promise.all(
+      bookmarks3.map(async (bookmark) => {
+        console.log(bookmark.title);
+        const imageUrl = await fetchImageUrlFromPage(bookmark.url);
+        console.log(imageUrl);
+        return {
+          id: bookmark.id,
+          title: bookmark.title,
+          url: bookmark.url,
+          imageUrl: imageUrl
+        };
+      })
+    );
+    setBookmarks33(bookmarkData);
+  };
+
+  const fetchBookmarkData44 = async () => {
+    const bookmarkData = await Promise.all(
+      bookmarks3.map(async (bookmark) => {
+        console.log(bookmark.title);
+        const imageUrl = await fetchImageUrlFromPage(bookmark.url);
+        console.log(imageUrl);
+        return {
+          id: bookmark.id,
+          title: bookmark.title,
+          url: bookmark.url,
+          imageUrl: imageUrl
+        };
+      })
+    );
+    setBookmarks44(bookmarkData);
+  };
+  
+  const fetchImageUrlFromPage = async (url) => {
+    try {
+      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+      const targetUrl = url;
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+
+      const response = await fetch(proxyUrl + targetUrl, {
+        origin: API_BASE_URL
+      });
+      const html = await response.text(); // HTML 텍스트로 변환
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+
+      if (!imageUrl) {
+        // <img> 태그에서 src 추출
+        imageUrl = doc.querySelector('img')?.src;
+      }
+
+      if (imageUrl) {
+        return imageUrl; // 이미지 URL 반환
+      } else {
+        throw new Error('이미지를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('이미지 URL 추출 실패:', error);
+      throw error;
+    }
+  };
 
   const renderSection = () => {
     switch (location.pathname) {
       case "/removeditemspage":
         return <RemovedItemsPage />;
       case "/folderpage":
-        return <FolderPage bookmarks={bookmarks} />;
+        return <FolderPage bookmarks={bookmarks11} />;
       default:
         return (
           <div className="main-box">
@@ -48,13 +165,13 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 <p className="_title">{username}님께 추천하는 링크</p>
               </div>
               <ShowLinkCard
-                bookmarks={bookmarks}
+                bookmarks={bookmarks11}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLinkCardClick={handleBookmarkClick} // 북마크 클릭 핸들러 전달
                 sideMenuOpen={isMenuOpen}
                 bookmarkDetailOpen={selectedBookmark}
-                // sortingOption={sortingOption}
+              // sortingOption={sortingOption}
               />
             </div>
             <div className="link-set">
@@ -74,13 +191,13 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
                 </Link>
               </div>
               <ShowLinkCard
-                bookmarks={bookmarks}
+                bookmarks={bookmarks22}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
                 onLinkCardClick={handleBookmarkClick}
                 sideMenuOpen={isMenuOpen}
                 bookmarkDetailOpen={selectedBookmark}
-                // sortingOption={sortingOption}
+              // sortingOption={sortingOption}
               />
             </div>
             <div className="link-set">
@@ -127,11 +244,20 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
     }
   };
 
+  const getName = () => {
+    const state = store.getState();
+    return state.member.name
+  }
+
   useEffect(() => {
+    console.log("Hello");
     const fetchUserInfo = async () => {
       try {
         // USER INFO
-        const userData = { nickname: "000" };
+
+        const name = getName();
+        console.log("name", name);
+        const userData = { nickname: name };
         setUsername(userData.nickname);
 
         // MOST_POPULAR_TAGS
@@ -145,7 +271,20 @@ const HomePage = ({ bookmarks, onAddBookmark, onDeleteBookmark }) => {
       }
     };
     fetchUserInfo();
+
+    fetchArticleRecommendGet();
+
   }, []);
+
+  const fetchArticleRecommendGet = async () => {
+    try {
+      const response = await articleRecommendGet();
+
+      console.log('fetchArticleRecommendGet', response);
+    } catch (error) {
+      console.error('error', error);
+    }
+  };
 
   const handleEdit = (id) => {
     //추후 수정 기능 코드 추가

@@ -78,4 +78,9 @@ export const bookmarks = [
     url: "https://velog.io/@moreso/designing-complex-components-flexibly",
     imageUrl: "",
   },
-];
+    title:
+      "리액트 레이아웃 컴포넌트 제작",
+    url: "https://blog.pumpkin-raccoon.com/70",
+    imageUrl: "",
+  },
+

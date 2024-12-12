@@ -369,6 +369,7 @@ const Header = ({ type, toggleMenu }) => {
       )}
 
       {/* ========== Landing PAGE ========== */}
+
       {location.pathname === "/" && (
         <div className="landing-page">
           {/* <Logo /> */}
@@ -394,10 +395,41 @@ const Header = ({ type, toggleMenu }) => {
               확장프로그램 다운로드
             </a>
 
+
             <Link to="/signpage">
+
               <Button label="로그인" />
             </Link>
           </div>
+        </div>
+        </>)}
+
+      {/* ========== SIGN PAGE ========== */}
+      {location.pathname === "/signpage" && (
+        <div className="sign-page">
+          {/* <Logo /> */}
+          <Link to="/homepage">
+            <img
+              className="logo"
+              src="Group-299.png"
+              alt="logo"
+              onClick={() => window.location.reload()}
+            />
+          </Link>
+          <a
+            className="button"
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              margin: "0",
+              backgroundColor: "white",
+              border: "1px solid var(--font-gray)",
+              fontWeight: "400",
+            }}
+          >
+            확장프로그램 다운로드
+          </a>
         </div>
       )}
 

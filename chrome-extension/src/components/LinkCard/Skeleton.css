@@ -1,0 +1,82 @@
+/* Skeleton animation */
+@keyframes shimmer {
+    0% {
+        background-position: -468px 0;
+    }
+
+    100% {
+        background-position: 468px 0;
+    }
+}
+
+.skeleton {
+    background: #f6f7f8;
+    background-image: linear-gradient(to right,
+            #f6f7f8 0%,
+            #edeef1 20%,
+            #f6f7f8 40%,
+            #f6f7f8 100%);
+    background-repeat: no-repeat;
+    background-size: 800px 100%;
+    animation: shimmer 1.5s infinite linear;
+}
+
+/* Skeleton UI for bookmark detail */
+.bookmark-detail.skeleton-loading .detail-image {
+    height: 150px;
+    background: #eee;
+    margin-bottom: 1rem;
+}
+
+.bookmark-detail.skeleton-loading .detail-title-container {
+    height: 4.7rem;
+    background: #eee;
+    margin-bottom: 1rem;
+}
+
+.bookmark-detail.skeleton-loading .detail-text-container {
+    height: 6rem;
+    background: #eee;
+    margin-bottom: 1.25rem;
+}
+
+/* Skeleton tags */
+.bookmark-detail.skeleton-loading .tags-container {
+    display: flex;
+    gap: 0.3125rem;
+}
+
+.bookmark-detail.skeleton-loading .tag-item {
+    width: 60px;
+    height: 24px;
+    background: #eee;
+    border-radius: 0.9375rem;
+}
+
+/* Add skeleton class to elements */
+.bookmark-detail.skeleton-loading .detail-image,
+.bookmark-detail.skeleton-loading .detail-title-container,
+.bookmark-detail.skeleton-loading .detail-text-container,
+.bookmark-detail.skeleton-loading .tag-item {
+    position: relative;
+    overflow: hidden;
+}
+
+/* Preserve border radius during animation */
+.bookmark-detail.skeleton-loading .detail-image {
+    border-radius: 0.5rem;
+}
+
+.bookmark-detail.skeleton-loading .detail-title-container,
+.bookmark-detail.skeleton-loading .detail-text-container {
+    border-radius: 0.625rem;
+}
+
+/* Optional: Add subtle transition when loading completes */
+.bookmark-detail {
+    transition: opacity 0.3s ease;
+}
+
+.bookmark-detail.skeleton-loading {
+    pointer-events: none;
+}

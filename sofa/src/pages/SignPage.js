@@ -1,3 +1,4 @@
+/* global chrome */
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux"; // Redux 관련 hooks
 import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
@@ -113,13 +114,23 @@ const SignPage = () => {
       // 응답에서 accessToken, refreshToken 추출
       if (response) {
         console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
+        // Access Token과 Refresh Token 저장 (localStorage)
+        // localStorage에 저장
+        const { accessToken, refreshToken } = response.token;
 
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken);
         dispatch(
           setTokens(response.token.accessToken, response.token.refreshToken)
         ); // 토큰 저장
 
         console.log("로그인 성공!"); // 성공 메시지 설정
-        hanldeMemberGet();
+
+        // SidePanel에서 호출할 수 있도록 메시지 전송
+        if (window.opener) {
+          window.opener.postMessage({ accessToken, refreshToken }, "*");
+          window.close();
+        }
       }
     } catch (err) {
       console.error("googleOAuthLoginGet 실패:", err);
@@ -168,7 +179,7 @@ const SignPage = () => {
   const hanldeFolderPost = async () => {
     try {
       const data = {
-        name: "ㅗㅗㅗ",
+        name: "IT",
       };
 
       console.log("hanldeFolderPost:", data);
@@ -236,11 +247,11 @@ const SignPage = () => {
   // 폴더 수정 핸들러
   const hanldeFolderPut = async () => {
     const lastFolder =
-      folderList.length > 0 ? folderList[folderList.length - 1] : null;
+      folderList.length > 0 ? folderList[folderList.length] : null;
 
     try {
       const data = {
-        name: "김데데",
+        name: "프론트",
       };
       const response = await folderPut(data, lastFolder.id);
       console.log("folderPut response:", response); // 응답 값 확인
@@ -260,38 +271,38 @@ const SignPage = () => {
     }
   };
 
-  // const fetchImageUrlFromPage = async (url) => {
-  //   try {
-  //     const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
-  //     const targetUrl = url;
-  //     const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  const fetchImageUrlFromPage = async (url) => {
+    try {
+      const proxyUrl = "https://thingproxy.freeboard.io/fetch/";
+      const targetUrl = url;
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-  //     const response = await fetch(proxyUrl + targetUrl, {
-  //       origin: API_BASE_URL
-  //     });
-  //     const html = await response.text(); // HTML 텍스트로 변환
+      const response = await fetch(proxyUrl + targetUrl, {
+        origin: API_BASE_URL,
+      });
+      const html = await response.text(); // HTML 텍스트로 변환
 
-  //     const parser = new DOMParser();
-  //     const doc = parser.parseFromString(html, 'text/html');
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, "text/html");
 
-  //     // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
-  //     let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
 
-  //     if (!imageUrl) {
-  //       // <img> 태그에서 src 추출
-  //       imageUrl = doc.querySelector('img')?.src;
-  //     }
+      if (!imageUrl) {
+        // <img> 태그에서 src 추출
+        imageUrl = doc.querySelector("img")?.src;
+      }
 
-  //     if (imageUrl) {
-  //       return imageUrl; // 이미지 URL 반환
-  //     } else {
-  //       throw new Error('이미지를 찾을 수 없습니다.');
-  //     }
-  //   } catch (error) {
-  //     console.error('이미지 URL 추출 실패:', error);
-  //     throw error;
-  //   }
-  // };
+      if (imageUrl) {
+        return imageUrl; // 이미지 URL 반환
+      } else {
+        throw new Error("이미지를 찾을 수 없습니다.");
+      }
+    } catch (error) {
+      console.error("이미지 URL 추출 실패:", error);
+      throw error;
+    }
+  };
 
   const handleLinkCardAiPost = async () => {
     try {
@@ -449,7 +460,7 @@ const SignPage = () => {
   // 링크카드 삭제 핸들러
   const hanldeLinkCardDelete = async () => {
     const lastLinkCard =
-      linkCardList.length > 0 ? linkCardList[linkCardList.length - 1] : null;
+      linkCardList.length > 0 ? linkCardList[linkCardList.length] : null;
 
     if (!lastLinkCard) {
       console.log("삭제할 링크 카드가 없습니다."); // 폴더가 없음을 로그로 출력
