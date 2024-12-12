@@ -4,9 +4,9 @@
     width: 100%;
     z-index: 1000;
     padding:1.5rem; padding-top:2rem;
-    background: var(--main-bg);
+    background:transparent;
 }
-.logo{ cursor:pointer; width: 50px; }
+.logo{ cursor:pointer; height: 2rem;}
 
 .searchers{
     display: flex;
@@ -21,6 +21,14 @@
     align-items: center;
 }
 
+/* SIGN PAGE */
+.sign-page{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-right: 3rem;
+    width: 100%;
+}
 
 
 @media (max-width: 600px){
