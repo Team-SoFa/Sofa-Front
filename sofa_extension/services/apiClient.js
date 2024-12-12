@@ -17,6 +17,11 @@ const getAccessToken = () => {
   return state.auth.accessToken;   // authReducer에서 관리하는 accessToken 가져오기
 };
 
+const getRefreshToken = () => {
+  const state = store.getState();  // store 상태 가져오기
+  return state.auth.refreshToken;   // authReducer에서 관리하는 accessToken 가져오기
+};
+
 // GET 요청을 위한 함수 (토큰 없는 기본 GET 요청)
 export const get = async (url, params = {}, headers = {}) => {
   const response = await apiClient.get(url, { params, headers });
@@ -51,7 +56,6 @@ export const tokenGet = async (url, params = {}, headers = {}) => {
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
-
   const response = await apiClient.get(url, { params, headers });
   return response.data;
 };
@@ -62,10 +66,18 @@ export const tokenPost = async (url, data = {}, headers = {}) => {
   
   if (accessToken) {
     headers['Authorization'] = `Bearer ${accessToken}`;
-  }
+  }  
+  const response = await apiClient.post(url, data, { headers });
+  return response.data;
+};
 
-  console.log('tlqkf',data);
+export const refreshPost = async (url, data = {}, headers = {}) => {
+  const refreshToken = getRefreshToken();
   
+  if (refreshToken) {
+    headers['Authorization'] = `Bearer ${refreshToken}`;
+  }  
+  console.log("refreshToken",refreshToken);
   const response = await apiClient.post(url, data, { headers });
   return response.data;
 };
@@ -98,7 +110,7 @@ export const tokenDel = async (url, headers = {}) => {
 };
 
 // Patch 요청을 위한 함수 (accessToken이 필요한 DELETE 요청)
-export const tokenPatch = async (url, headers = {}) => {
+export const tokenPatch = async (url, data = {}, headers = {}) => {
   const accessToken = getAccessToken();
 
   // accessToken이 있으면 Authorization 헤더 추가
@@ -106,6 +118,6 @@ export const tokenPatch = async (url, headers = {}) => {
     headers['Authorization'] = `Bearer ${accessToken}`;
   }
 
-  const response = await apiClient.patch(url, { headers });
+  const response = await apiClient.patch(url, data, { headers });
   return response.data;
 };

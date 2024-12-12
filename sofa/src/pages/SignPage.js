@@ -1,3 +1,4 @@
+/* global chrome */
 import React, { useState, useEffect } from "react";
 import { useDispatch } from "react-redux";  // Redux 관련 hooks
 import { setTokens } from "../redux/actions/authActions"; // 액션 임포트
@@ -91,11 +92,21 @@ const SignPage = () => {
       // 응답에서 accessToken, refreshToken 추출
       if (response) {
         console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
-
+        // Access Token과 Refresh Token 저장 (localStorage)
+        // localStorage에 저장
+        const { accessToken, refreshToken } = response.token;
+        
+        localStorage.setItem("accessToken", accessToken);
+        localStorage.setItem("refreshToken", refreshToken); 
         dispatch(setTokens(response.token.accessToken, response.token.refreshToken)); // 토큰 저장
         
         console.log('로그인 성공!');  // 성공 메시지 설정
-        hanldeMemberGet();
+
+        // SidePanel에서 호출할 수 있도록 메시지 전송
+        if (window.opener) {
+          window.opener.postMessage({ accessToken, refreshToken }, "*");
+          window.close();
+        }
       }
     } catch (err) {
       console.error('googleOAuthLoginGet 실패:', err);
