@@ -25,6 +25,7 @@
 
 /* SIGN PAGE */
 .sign-page, .landing-page{
+
     display: flex;
     justify-content: space-between;
     align-items: center;

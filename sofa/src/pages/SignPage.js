@@ -114,8 +114,6 @@ const SignPage = () => {
       // 응답에서 accessToken, refreshToken 추출
       if (response) {
         console.log(response.token.accessToken, response.token.refreshToken); // 토큰 저장
-        // Access Token과 Refresh Token 저장 (localStorage)
-        // localStorage에 저장
         const { accessToken, refreshToken } = response.token;
 
         localStorage.setItem("accessToken", accessToken);

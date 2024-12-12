@@ -461,6 +461,33 @@ const Header = ({ type, toggleMenu }) => {
           </a>
         </div>
       )}
+
+      {/* ========== SIGN PAGE ========== */}
+      {location.pathname === "/signpage" && (
+        <div className="sign-page">
+          {/* <Logo /> */}
+          <img
+            className="logo"
+            src="Group-299.png"
+            alt="logo"
+            onClick={() => window.location.reload()}
+          />
+          <a
+            className="button"
+            href="https://chrome.google.com/webstore"
+            target="_blank"
+            rel="noreferrer"
+            style={{
+              margin: "0",
+              backgroundColor: "white",
+              border: "1px solid var(--font-gray)",
+              fontWeight: "600",
+            }}
+          >
+            확장프로그램 다운로드
+          </a>
+        </div>
+      )}
     </header>
   );
 };
