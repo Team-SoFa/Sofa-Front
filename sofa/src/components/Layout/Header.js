@@ -170,13 +170,16 @@ const Header = ({ type, toggleMenu }) => {
     )
   );
 
-  //선택된 태그
-  const tagsOpt = ["Documents", "Pictures", "PICTURES", "태그어쩌구1"].map(
-    (item) => ({
-      label: item,
-      content: item,
-    })
-  );
+  //전체 태그
+  const [tagsOpt, setTagsOpt] = [
+    "Documents",
+    "Pictures",
+    "PICTURES",
+    "태그어쩌구1",
+  ].map((item) => ({
+    label: item,
+    content: item,
+  }));
 
   // 임시 알림 >>>>>>>>>>
   const [alarmOptions, setAlarmOptions] = useState([
@@ -329,7 +332,13 @@ const Header = ({ type, toggleMenu }) => {
               onSearchDelete={handleSearchDelete}
               onFetchSearches={handleHistoryKeywordGet} // 클릭 시 호출될 API 핸들러 전달
             />
-            <Button className="search" label="검색" onClick={hanldeSearchGet} />
+            <Link to="/searchedpage">
+              <Button
+                className="search"
+                label="검색"
+                onClick={hanldeSearchGet}
+              />
+            </Link>
             <Button
               label="초기화"
               onClick={() => {

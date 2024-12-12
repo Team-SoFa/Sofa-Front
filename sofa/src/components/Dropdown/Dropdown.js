@@ -259,10 +259,11 @@ const Dropdown = ({
           {type === "add" && (
             <div className="dropdown-add">
               <TextField
-                className="add"
+                className="inside-dropdown"
                 placeholder="새 폴더 생성"
                 onChange={(e) => setAddValue(e.target.value)}
                 value={addValue}
+                options={options}
                 onAddValue={handleAdd} //부모로부터 값 추가 처리
               />
             </div>
@@ -272,10 +273,11 @@ const Dropdown = ({
           {type === "tag" && (
             <div className="dropdown-tag-menu">
               <TextField
-                className="dropdown-tag-add"
+                className="inside-dropdown"
                 Icon={SearchIcon}
                 placeholder="태그를 검색해보세요."
                 value={addValue}
+                options={options}
                 onChange={(e) => {
                   const value = e.target.value;
                   setAddValue(value); // 검색 필드 값 업데이트
@@ -313,9 +315,10 @@ const Dropdown = ({
               {className === "detail-tag" && (
                 <div className="dropdown-add">
                   <TextField
-                    className="add"
+                    className="inside-dropdown"
                     placeholder="새 태그 생성"
                     value={newTagValue}
+                    options={options}
                     onChange={(e) => setNewTagValue(e.target.value)} // 새 태그 생성 값 업데이트
                     onAddValue={() => handleAddNewTag(newTagValue)} // 새 태그 추가 함수 호출
                   />

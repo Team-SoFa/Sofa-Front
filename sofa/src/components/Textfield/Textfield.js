@@ -13,7 +13,6 @@ const TextField = forwardRef(
       value,
       onChange,
       placeholder,
-      type = "text",
       required = false,
       Icon,
       recentSearches,
@@ -70,7 +69,7 @@ const TextField = forwardRef(
           {/* 입력 받는 부분 */}
           <input
             className="text-field-input"
-            type={type}
+            type="text"
             value={value}
             onChange={onChange}
             onFocus={handleFocus}
@@ -88,15 +87,27 @@ const TextField = forwardRef(
             />
           )}
         </div>
-        {isDropdownOpen && recentSearches.length > 0 && (
-          <Dropdown
-            className="search-dropdown"
-            options={recentSearches}
-            label="최근검색"
-            onSelect={handleSelectSearch}
-            onDelete={onSearchDelete}
-          />
-        )}
+        {className !== "inside-dropdown"
+          ? isDropdownOpen &&
+            recentSearches.length > 0 && (
+              <Dropdown
+                className="search-dropdown"
+                options={recentSearches}
+                label="최근검색"
+                onSelect={handleSelectSearch}
+                onDelete={onSearchDelete}
+              />
+            )
+          : isDropdownOpen && (
+              // <DropdownSearch
+              //   className="dropdown-searchers"
+              //   options={recentSearches}
+              //   label=""
+              //   onSelect={handleSelectSearch}
+              // />
+              // 나중에 하자. 문제는 DropdownSearch.js에 있음
+              <span></span>
+            )}
       </div>
     );
   }

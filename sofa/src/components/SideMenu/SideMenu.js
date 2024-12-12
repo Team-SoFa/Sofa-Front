@@ -30,8 +30,8 @@ const SideMenu = ({ isOpen }) => {
   ].map((item) => ({
     ...item,
   }));
-
   const [isFetching, setIsFetching] = useState(false); // 로딩 상태 관리
+  const isModal = "true";
 
   const handleAccordionToggle = async (isOpen) => {
     if (isOpen && folderNames.length === 0) {
@@ -103,6 +103,7 @@ const SideMenu = ({ isOpen }) => {
           <Accordion
             type="SIDE_MENU"
             title="폴더"
+            isModal={isModal}
             content={folderNames.map((folder) => (
               <div className="folder-component" key={folder.id}>
                 <Link

@@ -296,12 +296,21 @@
   max-height: 3.5rem;
 }
 
-.dropdown.linkcard.folder-name.RemovedItemsPage .dropdown-menu {
-  width: 6rem;
-  max-height: none;
-  top: 0rem;
-  right: 2.3rem;
+.dropdown.linkcard.folder-name.RemovedItemsPage .dropdown-header{
+  width:1rem; height: 1rem;
 }
+
+.dropdown.linkcard.folder-name.RemovedItemsPage .dropdown-menu {
+  width: 6rem; height: 5rem;
+  max-height: none;
+  top: 1.9rem;
+  left: 0;
+}
+.dropdown.linkcard.folder-name.RemovedItemsPage .dropdown-option{
+  margin:0.2rem;
+  padding-block: 0.2rem;
+}
+
 
 /* ============== 사이드 메뉴 ==============*/
 .dropdown.dropdown-folder-edit .dropdown-header {
@@ -323,10 +332,9 @@
 
 /* === SORGING === */
 .dropdown.sorting .dropdown-header {
-  gap: 0.2rem;
   border-radius: 0.5rem;
   padding: 0.3rem;
-  padding-right: 0.7rem;
+  padding-right: 1.5rem;
 }
 
 .dropdown.sorting .dropdown-header-icon {
@@ -395,4 +403,18 @@
   box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
   z-index: 9999;
   overflow-y: auto;
+}
+
+
+
+
+/* 임시 */
+.dropdown.add-folder .dropdown-header{
+  margin-left: 3rem;
+  background-color: transparent;
+  border-color: transparent;
+  color:white;
+}
+.dropdown.add-folder .dropdown-header-icon {
+  color: white;
 }
