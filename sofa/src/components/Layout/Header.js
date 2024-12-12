@@ -3,6 +3,7 @@ import { Link, useLocation } from "react-router-dom";
 import TextField from "../Textfield/Textfield";
 import Button from "../Button/Button";
 import Dropdown from "../Dropdown/Dropdown";
+import ShowNotification from "../Dropdown/ShowNotification";
 import Modal from "../Modal/Modal"; // Modal 컴포넌트 import
 import Toggle from "../Toggle/Toggle";
 
@@ -10,11 +11,9 @@ import "./HeaderStyle.css";
 import "../Modal/Modal.css";
 import MenuIcon from "../../assets/icon/MenuIcon";
 import DownIcon from "../../assets/icon/DownIcon";
-import AlarmLineIcon from "../../assets/icon/AlarmLineIcon";
 import SettingIcon from "../../assets/icon/SettingIcon";
 import CallLineIcon from "../../assets/icon/CallLineIcon";
 import LogoutIcon from "../../assets/icon/LogoutIcon";
-import ThumbUpIcon from "../../assets/icon/ThumbUpIcon";
 // import Logo from "../../assets/icon/Logo";
 
 import { memberGet } from "../../services/memberService";
@@ -34,7 +33,6 @@ import RestoreIcon from "../../assets/icon/RestoreIcon";
 
 const Header = ({ type, toggleMenu }) => {
   const location = useLocation();
-  const [alarmOption, setAlarmOption] = useState("");
   const [isHovered, setIsHovered] = useState(false);
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   // Modal
@@ -183,27 +181,34 @@ const Header = ({ type, toggleMenu }) => {
   }));
 
   // 임시 알림 >>>>>>>>>>
-  const [alarmOptions, setAlarmOptions] = useState([
+  //type:remind->Icon=RestoreIcon, label="리마인드"
+  //type:recomend->Icon=ThumbupIcon, label="추천 링크"
+  //type:update->Icon=LogoutIcon, label="업데이트 안내"
+  //type:announcement->Icon=Announcement, label="서비스 공지사항"
+  const [notificationOptions, setNotificationOptions] = useState([
     {
-      Icon: RestoreIcon,
-      label: "리마인드",
+      type: "remeind",
       content:
         "‘IT 직무 10가지 알아보기’ 링크 외 4개의 링크가 리마인드함에 있습니다. 리마인드함에 들어가 링크들을 확인해보세요!",
       date: "24.11.25",
       isNew: true,
     },
     {
-      Icon: ThumbUpIcon,
-      label: "추천 링크",
+      type: "recomend",
       content:
         "성명근님님의 관심사에 맞는 링크들을 추천합니다! ‘[위시켓] 반응형 디자인의 최종장, 그 끝은 어디까지인가’ 외 2개의 링크가 있어요.",
       date: "24.11.25",
       isNew: false,
     },
     {
-      Icon: LogoutIcon,
-      label: "업데이트 안내",
+      type: "update",
       content: "새로운 업데이트가 있습니다.",
+      date: "24.11.25",
+      isNew: true,
+    },
+    {
+      type: "announcement",
+      content: "새로운 서비스 공지사항이 있습니다.",
       date: "24.11.25",
       isNew: true,
     },
@@ -219,11 +224,9 @@ const Header = ({ type, toggleMenu }) => {
     toggleMenu();
   };
   // 헤더 알림 옵션 선택했을 때
-  const handleAlarmSelect = (option) => {
-    setAlarmOption(option.content);
-
+  const handleNotificationSelect = (option) => {
     // `isNew` 값을 업데이트
-    setAlarmOptions((prevOptions) =>
+    setNotificationOptions((prevOptions) =>
       prevOptions.map((item) =>
         item.content === option.content ? { ...item, isNew: false } : item
       )
@@ -344,11 +347,9 @@ const Header = ({ type, toggleMenu }) => {
             />
           </div>
           <div className="user_info">
-            <Dropdown
-              className="alarm"
-              options={alarmOptions}
-              Icon={AlarmLineIcon}
-              onSelect={handleAlarmSelect}
+            <ShowNotification
+              contents={notificationOptions}
+              onSelect={handleNotificationSelect}
             />
             <Dropdown
               className="user-info"
@@ -369,28 +370,7 @@ const Header = ({ type, toggleMenu }) => {
 
       {/* ========== Landing PAGE ========== */}
       {location.pathname === "/" && (
-        <>
-          <img
-            className="logo"
-            src="example.png"
-            alt="logo"
-            onClick={() => window.location.reload()}
-          />
-          <div className="buttons">
-            <Button label="확장 프로그램 추가하기" />
-            <Link to="/homepage">
-              <Button label="[임시]홈P" />
-            </Link>
-            <Link to="/signpage">
-              <Button label="[임시]SignP" />
-            </Link>
-          </div>
-        </>
-      )}
-
-      {/* ========== SIGN PAGE ========== */}
-      {location.pathname === "/signpage" && (
-        <div className="sign-page">
+        <div className="landing-page">
           {/* <Logo /> */}
           <img
             className="logo"
@@ -398,6 +378,41 @@ const Header = ({ type, toggleMenu }) => {
             alt="logo"
             onClick={() => window.location.reload()}
           />
+          <div className="buttons">
+            <a
+              className="button"
+              href="https://chrome.google.com/webstore"
+              target="_blank"
+              rel="noreferrer"
+              style={{
+                margin: "0",
+                backgroundColor: "white",
+                border: "1px solid var(--border-gray)",
+                fontWeight: "400",
+              }}
+            >
+              확장프로그램 다운로드
+            </a>
+
+            <Link to="/signpage">
+              <Button label="로그인" />
+            </Link>
+          </div>
+        </div>
+      )}
+
+      {/* ========== SIGN PAGE ========== */}
+      {location.pathname === "/signpage" && (
+        <div className="sign-page">
+          {/* <Logo /> */}
+          <Link to="/homepage">
+            <img
+              className="logo"
+              src="Group-299.png"
+              alt="logo"
+              onClick={() => window.location.reload()}
+            />
+          </Link>
           <a
             className="button"
             href="https://chrome.google.com/webstore"
@@ -407,7 +422,7 @@ const Header = ({ type, toggleMenu }) => {
               margin: "0",
               backgroundColor: "white",
               border: "1px solid var(--font-gray)",
-              fontWeight: "600",
+              fontWeight: "400",
             }}
           >
             확장프로그램 다운로드

@@ -22,7 +22,7 @@
 }
 
 /* SIGN PAGE */
-.sign-page{
+.sign-page, .landing-page{
     display: flex;
     justify-content: space-between;
     align-items: center;
