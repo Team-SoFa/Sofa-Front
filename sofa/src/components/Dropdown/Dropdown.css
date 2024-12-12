@@ -170,37 +170,35 @@
 }
 
 
-/* === 헤더 알림 === */
-.dropdown.alarm .dropdown-header {
+/* === SHOW NOTIFICATION === */
+.dropdown.show-notification .dropdown-option{border-radius: 1rem;}
+.dropdown.show-notification .dropdown-header {
   padding: 0rem;
-  width: 2.8rem;
-  height: 2.8rem;
+  width: 2.8rem; height: 2.8rem;
 }
-.dropdown.alarm .dropdown-header-icon { transform: rotate(0deg); }
-.dropdown-badge {
-  position: absolute; top: -0.2rem; right: -0.2rem;
+.dropdown.show-notification .dropdown-header-icon { transform: rotate(0deg); }
+.notification-badge {
+  position: absolute; top: -0.1rem; right: -0.1rem;
   width: 1rem; height: 1rem;
   background-color: #FF4500;
   border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
 }
-
-.dropdown.alarm .dropdown-menu {
+.dropdown.show-notification .dropdown-menu {
   width: 15rem;
   right: -3rem;
   max-height: 15rem;
 }
 
 /* 알림 옵션 컨텐츠 style*/
-.dropdown.alarm .dropdown-option span {
-  color:var(--font-gray);
-  font-size: 0.875rem;
-  white-space: normal;
-  word-break: break-word;
+.dropdown.show-notification .dropdown-option{
+  display: flex;
+  flex-direction: row;
+  align-items:start;
+  transition: opacity 0.1s ease, background-color 0.3s ease;
 }
-.dropdown.alarm .dropdown-option{display: flex; flex-direction: column;}
-.dropdown.alarm .dropdown-option:hover{border-radius: 1rem;}
-.alarm-option-header{
+.dropdown.show-notification .dropdown-option:hover{border-radius: 1rem;}
+.notification-content{width:95%;}
+.notification-option-header{
   display: flex;
   width:100%;
   justify-content: space-between;
@@ -208,10 +206,15 @@
 }
 .left{display: flex; align-items: center; gap:0.2rem;}
 .right{display: flex; align-items: center; gap:0.4rem;}
-.alarm-new{
-  background:#4FF7BA;
-  width: 0.4rem;
-  height: 0.4rem;
+.dropdown.show-notification span {
+  color:var(--font-gray);
+  font-size: 0.875rem;
+  white-space: normal;
+  word-break: break-word;
+}
+.notification-new{
+  background:var(--green300);
+  width: 0.4rem; height: 0.4rem;
   border-radius: 1rem;
 }
 

@@ -5,7 +5,6 @@ import Button from "../Button/Button";
 import TextField from "../Textfield/Textfield";
 
 import "./Dropdown.css";
-import AlarmFilledIcon from "../../assets/icon/AlarmFilledIcon";
 import SearchIcon from "../../assets/icon/SearchIcon";
 import { customTagsPost } from "../../services/tagSerivce";
 
@@ -40,13 +39,6 @@ const Dropdown = ({
   }, [options]);
 
   const handleSelect = (value) => {
-    // className이 "alarm"일 때 label을 변경하지 않음
-    if (className !== "alarm") {
-      setSelectedValue(
-        value.content === "폴더 전체" ? { label: "폴더 전체" } : value
-      );
-    }
-
     // 중복된 태그가 아닌 경우만 추가
     setTagsOpt((prevTags) => {
       // 중복된 태그가 있는지 검사
@@ -154,39 +146,23 @@ const Dropdown = ({
         className={`dropdown-header ${isOpen ? "open" : ""}`}
         onClick={toggleDropdown}
       >
-        {/* alarm 아이콘 */}
-        {className === "alarm" ? (
+        {/* 일반적인 경우의 아이콘 */}
+        {Icon && (
           <span
             className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
             aria-label="Icon"
           >
-            {isHovered || isOpen ? <AlarmFilledIcon /> : <Icon />}{" "}
-            {/* hover 또는 메뉴가 열렸을 때 AlarmFilled */}
+            <Icon />
           </span>
-        ) : (
-          // 일반적인 경우의 아이콘
-          Icon && (
-            <span
-              className={`dropdown-header-icon ${isOpen ? "rotated" : ""}`}
-              aria-label="Icon"
-            >
-              <Icon />
-            </span>
-          )
         )}
         {imgSrc && (
           <img className="dropdown-header-img" src={imgSrc} alt={"profile"} />
         )}
-
         {selectedValue ? (
           selectedValue.label
         ) : (
           <span className="dropdown-placeholder">{label}</span>
         )}
-        {className === "alarm" &&
-          options?.some((option) => option.isNew) && ( // isNew 값이 true인 항목이 하나라도 있으면 배지 표시
-            <span className="dropdown-badge"></span>
-          )}
       </div>
       {/* <<<<<<<<<< DROPDOWN HEADER */}
 
@@ -213,7 +189,6 @@ const Dropdown = ({
 
           {/* 1. 일반적인 드롭다운 메뉴 */}
           {type !== "tag" &&
-            className !== "alarm" &&
             [
               ...(className === "basic"
                 ? [{ content: label, Icon: null }]
@@ -244,24 +219,6 @@ const Dropdown = ({
                 ) : (
                   <Button className="dropdown-select" label="선택" />
                 )}
-              </div>
-            ))}
-
-          {/* === ALARM === */}
-          {className === "alarm" &&
-            options.map((option, index) => (
-              <div className="dropdown-option" key={index}>
-                <div className="alarm-option-header">
-                  <div className="left">
-                    {option.Icon && <option.Icon className="alarm-icon" />}
-                    <h5 className="alarm-label">{option.label}</h5>
-                  </div>
-                  <div className="right">
-                    <span className="alarm-date">{option.date}</span>
-                    {option.isNew && <span className="alarm-new"></span>}
-                  </div>
-                </div>
-                <span className="alarm-content">{option.content}</span>
               </div>
             ))}
 
