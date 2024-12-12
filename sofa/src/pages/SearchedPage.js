@@ -8,6 +8,7 @@ import BookmarkDetail from "../components/LinkCard/BookmarkDetail";
 
 import "../components/Layout/main-layout.css";
 import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
+import { bookmarks5 } from "../components/LinkCard/bookmarks5";
 
 import {
   linkCardGet,
@@ -57,35 +58,89 @@ const SearchedPage = ({ bookmarks, onDeleteBookmark }) => {
   };
 
   useEffect(() => {
-    if (!accessToken || !folderId) return;
+    fetchBookmarkData55();
+    console.log("let's start!");
+  }, []);
+  
+  const fetchBookmarkData55 = async () => {
+    const bookmarkData = await Promise.all(
+      bookmarks5.map(async (bookmark) => {
+        const imageUrl = await fetchImageUrlFromPage(bookmark.url);
 
-    setLinkCardList([]); // 기존 데이터 초기화
+        console.log(bookmark.title, imageUrl);
+        return {
+          id: bookmark.id,
+          title: bookmark.title,
+          url: bookmark.url,
+          imageUrl: imageUrl
+        };
+      })
+    );
+    setLinkCardList(bookmarkData);
+  };
 
-    const fetchLinkCardList = async () => {
-      try {
-        const response = await linkCardFolderListGet(
-          folderId,
-          "RECENTLY_SAVED",
-          "ASCENDING",
-          0,
-          10
-        );
+  const fetchImageUrlFromPage = async (url) => {
+    try {
+      const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+      const targetUrl = url;
+      const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
 
-        if (response) {
-          console.log("API Response:", response.data);
-          setLinkCardList(response.data); // 상태 업데이트
-        }
-      } catch (error) {
-        console.log("fetchLinkCardList error:", error);
+      const response = await fetch(proxyUrl + targetUrl, {
+        origin: API_BASE_URL
+      });
+      const html = await response.text(); // HTML 텍스트로 변환
+
+      const parser = new DOMParser();
+      const doc = parser.parseFromString(html, 'text/html');
+
+      // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+      let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+
+      if (!imageUrl) {
+        // <img> 태그에서 src 추출
+        imageUrl = doc.querySelector('img')?.src;
       }
-    };
 
-    fetchLinkCardList();
-  }, [accessToken, folderId]);
+      if (imageUrl) {
+        return imageUrl; // 이미지 URL 반환
+      } else {
+        throw new Error('이미지를 찾을 수 없습니다.');
+      }
+    } catch (error) {
+      console.error('이미지 URL 추출 실패:', error);
+      throw error;
+    }
+  };
+  // useEffect(() => {
+  //   if (!accessToken || !folderId) return;
 
-  useEffect(() => {
-    console.log("Updated linkCardList:", linkCardList);
-  }, [linkCardList]);
+  //   setLinkCardList([]); // 기존 데이터 초기화
+
+  //   const fetchLinkCardList = async () => {
+  //     try {
+  //       const response = await linkCardFolderListGet(
+  //         folderId,
+  //         "RECENTLY_SAVED",
+  //         "ASCENDING",
+  //         0,
+  //         10
+  //       );
+
+  //       if (response) {
+  //         console.log("API Response:", response.data);
+  //         setLinkCardList(response.data); // 상태 업데이트
+  //       }
+  //     } catch (error) {
+  //       console.log("fetchLinkCardList error:", error);
+  //     }
+  //   };
+
+  //   fetchLinkCardList();
+  // }, [accessToken, folderId]);
+
+  // useEffect(() => {
+  //   console.log("Updated linkCardList:", linkCardList);
+  // }, [linkCardList]);
 
   const handleDelete = (id) => onDeleteBookmark(id);
   const handleEdit = (id) => {

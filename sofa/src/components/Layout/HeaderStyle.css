@@ -1,12 +1,13 @@
 .header{
     display:flex;
     align-items: center;
-    width: 100%;
+    justify-content: space-between;
+    width: 100vw;
     z-index: 1000;
     padding:1.5rem; padding-top:2rem;
-    background: var(--main-bg);
+    background: TANS;
 }
-.logo{ cursor:pointer; width: 50px; }
+.logo{ cursor:pointer;}
 
 .searchers{
     display: flex;

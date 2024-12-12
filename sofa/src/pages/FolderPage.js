@@ -12,6 +12,7 @@ import DropdownDownIcon from "../assets/icon/DropdownDownIcon";
 import { linkCardGet, linkCardPost, linkCardAiPost, linkCardAllListGet, linkCardFolderListGet, linkCardDelete, linkCardInfoPatch, linkCardEnterPost } from "../services/linkCardService";
 import store from '../redux/store'; // store 가져오기
 import { useSelector } from "react-redux";
+import { bookmarks6 } from "../components/LinkCard/bookmarks6";
 
 const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const [loading, setLoading] = useState(true); //로딩 상태
@@ -27,6 +28,81 @@ const FolderPage = ({ bookmarks, onDeleteBookmark }) => {
   const state = store.getState();  // store 상태 가져오기
   const accessToken = useSelector((state) => state.auth.accessToken); // Redux 상태 구독
 
+    useEffect(() => {
+      fetchBookmarkData55();
+
+      const response = {
+        tagList: [
+          {id: 'bJtRCV9n2j7P5_nUVNinbw==', tagType: 'AI'},
+          {id: 'O9z9-b7gldXqjKCESXcwvQ==', tagType: 'AI'},
+          {id: 'gEKihwVefYy9AIZ4kNNbhg==', tagType: 'AI'}
+        ]
+      };
+      const transformedData = {
+        title: "프론트 개발자의 CORS 에러 대응법법",
+        url: "https://bohyeon-n.github.io/deploy/web/cors.html", // 디코딩된 URL 사용
+        folderId: "프론트엔드드", // 폴더 ID
+        tagList: response.tagList?.map(tag => ({
+          id: tag.id || 0,
+          tagType: tag.tagType || "AI/CUSTOM",
+        })) || [],
+        memo: "CORS관련 오류해결 메모", // 기본 메모 추가
+        summary: "CORS(Cross-Origin Resource Sharing)는 웹 어플리케이션에서 다른 도메인의 리소스에 접근할 때 발생하는 보안 이슈를 해결하는 표준 방법이다. CORS 에러를 해결하기 위해 서버 측에서 설정을 해야 하지만, 프론트 개발자도 withCredentials 옵션을 추가하여 처리할 수 있다. HTTPS에서 HTTP로 요청하거나 CDN을 사용할 때 CORS 에러가 발생할 수 있으며, 크롬을 보안 해제 모드로 실행하여 CORS 에러를 무시할 수도 있다. 결론적으로, CORS 에러를 처리하려면 서버와 프론트에서 협력해야 하며 전반적인 웹보안을 고려해야 한다. ",
+      };
+      setSelectedBookmark(transformedData);
+      console.log("let's start!");
+    }, []);
+    
+    const fetchBookmarkData55 = async () => {
+      const bookmarkData = await Promise.all(
+        bookmarks6.map(async (bookmark) => {
+          const imageUrl = await fetchImageUrlFromPage(bookmark.url);
+
+          console.log(bookmark.title, imageUrl);
+          return {
+            id: bookmark.id,
+            title: bookmark.title,
+            url: bookmark.url,
+            imageUrl: imageUrl
+          };
+        })
+      );
+      setLinkCardList(bookmarkData);
+    };
+
+    const fetchImageUrlFromPage = async (url) => {
+      try {
+        const proxyUrl = 'https://thingproxy.freeboard.io/fetch/';
+        const targetUrl = url;
+        const API_BASE_URL = process.env.REACT_APP_API_BASE_URL;
+  
+        const response = await fetch(proxyUrl + targetUrl, {
+          origin: API_BASE_URL
+        });
+        const html = await response.text(); // HTML 텍스트로 변환
+  
+        const parser = new DOMParser();
+        const doc = parser.parseFromString(html, 'text/html');
+  
+        // <meta> 태그에서 이미지 URL 추출 (OG 이미지 등)
+        let imageUrl = doc.querySelector('meta[property="og:image"]')?.content;
+  
+        if (!imageUrl) {
+          // <img> 태그에서 src 추출
+          imageUrl = doc.querySelector('img')?.src;
+        }
+  
+        if (imageUrl) {
+          return imageUrl; // 이미지 URL 반환
+        } else {
+          throw new Error('이미지를 찾을 수 없습니다.');
+        }
+      } catch (error) {
+        console.error('이미지 URL 추출 실패:', error);
+        throw error;
+      }
+    };
+  
   const sortingOpt = ["최근저장", "오래된저장", "이름순"].map((item) => ({
     label: item,
     content: item,

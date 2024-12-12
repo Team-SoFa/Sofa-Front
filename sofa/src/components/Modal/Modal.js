@@ -20,7 +20,7 @@ const Modal = ({ isOpen, onClose, initialSetting }) => {
   const [isActive, setIsActive] = OutsideClick(modalRef, isOpen);
   const [activeSetting, setActiveSetting] = useState("account-info"); // 내부 상태 관리
   const userInfo = {
-    email: "user@example.com", // 임시 사용자 정보
+    email: "mg0454@gmail.com", // 임시 사용자 정보
   };
 
   // 외부 클릭 Close
