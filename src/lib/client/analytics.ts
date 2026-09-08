@@ -1,4 +1,8 @@
-export const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID ?? 'G-Q714Z1ZKWF';
+const configuredMeasurementId = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID?.trim();
+
+export const GA_MEASUREMENT_ID = configuredMeasurementId || null;
+export const IS_GA_ENABLED =
+  process.env.NEXT_PUBLIC_ANALYTICS_ENABLED === 'true' && GA_MEASUREMENT_ID !== null;
 
 const GA_CLIENT_ID_TIMEOUT_MS = 1000;
 
@@ -20,6 +24,10 @@ declare global {
 }
 
 export const getGaClientId = (timeoutMs = GA_CLIENT_ID_TIMEOUT_MS): Promise<string | null> => {
+  if (!IS_GA_ENABLED || !GA_MEASUREMENT_ID) {
+    return Promise.resolve(null);
+  }
+
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') {
     return Promise.resolve(null);
   }
@@ -55,6 +63,7 @@ export const getGaClientId = (timeoutMs = GA_CLIENT_ID_TIMEOUT_MS): Promise<stri
 };
 
 export const setGaUserId = (userId: string | null | undefined) => {
+  if (!IS_GA_ENABLED) return;
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
 
   const gtag = window.gtag;
@@ -64,6 +73,7 @@ export const setGaUserId = (userId: string | null | undefined) => {
 };
 
 export const trackEvent = (name: string, params?: Record<string, unknown>) => {
+  if (!IS_GA_ENABLED) return;
   if (typeof window === 'undefined' || typeof window.gtag !== 'function') return;
 
   window.gtag('event', name, params ?? {});
@@ -71,7 +81,7 @@ export const trackEvent = (name: string, params?: Record<string, unknown>) => {
 
 export const trackQueryFeedback = (queryId: string, feedbackValue: 'up' | 'down') => {
   trackEvent('query_feedback', {
-    query_id: queryId,
+    app_query_id: queryId,
     feedback_value: feedbackValue,
   });
 };

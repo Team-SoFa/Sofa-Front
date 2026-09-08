@@ -643,7 +643,7 @@ export default function Chat() {
     (message: ChatMessage, link: ChatSocketLink, resultRank: number) => {
       if (message.queryId) {
         trackEvent('query_result_click', {
-          query_id: message.queryId,
+          app_query_id: message.queryId,
           result_rank: resultRank,
         });
       }

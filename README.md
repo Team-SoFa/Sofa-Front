@@ -81,14 +81,16 @@ _이제 Linkiving과 함께 스마트하고 효율적인 북마크 관리를 시
 
 ## Environment variables
 
-| 키                         | 용도                                                                     | 사용처                               |
-| -------------------------- | ------------------------------------------------------------------------ | ------------------------------------ |
-| `NEXT_PUBLIC_BASE_API_URL` | Linkiving API 베이스 URL                                                 | App / CI / Vercel / Chromatic        |
-| `NEXT_PUBLIC_WS_BASE_URL`  | Linkiving API WebSocket 베이스 URL                                       | App / CI / Vercel / Chromatic        |
-| `AUTH_REFRESH_ENDPOINT`    | Access/Refresh Token 재발급 API 경로 (기본값: `/v1/auth/reissue`)        | App / CI / Vercel                    |
-| `NEXT_PUBLIC_API_TOKEN`    | API Bearer 토큰                                                          | App / CI / Vercel / Chromatic        |
-| `CHROMATIC_PROJECT_TOKEN`  | Chromatic 퍼블리시 토큰                                                  | Chromatic 워크플로우 / 로컬 퍼블리시 |
-| `STORYBOOK_TOKEN`          | Chromatic 토큰 대체용 (로컬/CI에서 CHROMATIC_PROJECT_TOKEN 부재 시 대체) | Chromatic 로컬 퍼블리시              |
+| 키                              | 용도                                                                     | 사용처                               |
+| ------------------------------- | ------------------------------------------------------------------------ | ------------------------------------ |
+| `NEXT_PUBLIC_BASE_API_URL`      | Linkiving API 베이스 URL                                                 | App / CI / Vercel / Chromatic        |
+| `NEXT_PUBLIC_WS_BASE_URL`       | Linkiving API WebSocket 베이스 URL                                       | App / CI / Vercel / Chromatic        |
+| `AUTH_REFRESH_ENDPOINT`         | Access/Refresh Token 재발급 API 경로 (기본값: `/v1/auth/reissue`)        | App / CI / Vercel                    |
+| `NEXT_PUBLIC_API_TOKEN`         | API Bearer 토큰                                                          | App / CI / Vercel / Chromatic        |
+| `NEXT_PUBLIC_ANALYTICS_ENABLED` | GA4 계측 활성화 여부 (`true`일 때만 활성화)                              | App / Vercel Production              |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | 환경별 GA4 측정 ID                                                       | App / Vercel Production              |
+| `CHROMATIC_PROJECT_TOKEN`       | Chromatic 퍼블리시 토큰                                                  | Chromatic 워크플로우 / 로컬 퍼블리시 |
+| `STORYBOOK_TOKEN`               | Chromatic 토큰 대체용 (로컬/CI에서 CHROMATIC_PROJECT_TOKEN 부재 시 대체) | Chromatic 로컬 퍼블리시              |
 
 로컬 실행:
 
@@ -108,3 +110,4 @@ GitHub Secrets (Repository → Settings → Secrets and variables → Actions):
 Vercel (Project Settings → Environment Variables):
 
 - Production/Preview에 `NEXT_PUBLIC_BASE_API_URL`, `NEXT_PUBLIC_WS_BASE_URL`, `NEXT_PUBLIC_API_TOKEN`을 추가해 빌드/런타임에서 사용합니다.
+- 운영 GA4 계측은 Production에만 `NEXT_PUBLIC_ANALYTICS_ENABLED=true`와 `NEXT_PUBLIC_GA_MEASUREMENT_ID`를 설정합니다. 로컬과 Preview는 기본적으로 계측하지 않습니다.
