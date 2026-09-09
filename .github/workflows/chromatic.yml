@@ -10,6 +10,10 @@ on:
     branches: [main]
     paths: ['**/*.stories.tsx']
 
+permissions:
+  contents: read
+  pull-requests: write
+
 jobs:
   storybook-deploy:
     runs-on: ubuntu-latest
@@ -18,18 +22,17 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
         with:
           fetch-depth: 0
 
-      # pnpm 설치 (package.json의 packageManager 버전과 맞추면 더 좋음)
       - name: Setup pnpm
-        uses: pnpm/action-setup@v4
+        uses: pnpm/action-setup@ea17c68df8912ef543352723c149a84f56e3d413 # v6.1.0
         with:
           version: 10.19.0
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
         with:
           node-version: '22.x'
           cache: 'pnpm'
@@ -39,13 +42,20 @@ jobs:
 
       - name: Publish Chromatic
         id: chromatic
-        uses: chromaui/action@v1
+        uses: chromaui/action@2a0b63f30233c48591844a46d451b9cf68128186 # v18.7.2
         with:
           projectToken: ${{ secrets.CHROMATIC_PROJECT_TOKEN }}
-          buildScriptName: build-storybook  # package.json에 "build-storybook": "storybook build" 필요
+          buildScriptName: build-storybook
 
       - name: PR Comment
         if: ${{ github.event_name == 'pull_request' }}
-        uses: thollander/actions-comment-pull-request@v2
+        uses: actions/github-script@3a2844b7e9c422d3c10d287c895573f7108da1b3 # v9.0.0
+        env:
+          STORYBOOK_URL: ${{ steps.chromatic.outputs.storybookUrl }}
         with:
-          message: "🚀 **storybook url**: ${{ steps.chromatic.outputs.storybookUrl }}"
+          script: |
+            await github.rest.issues.createComment({
+              ...context.repo,
+              issue_number: context.issue.number,
+              body: `🚀 **storybook url**: ${process.env.STORYBOOK_URL}`,
+            });
